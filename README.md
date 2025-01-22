@@ -25,11 +25,11 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ## Preview
 
-![Thumbnail image](docs/thumbnail.png)
+![Gif](./docs/Simulator%20Screen%20Recording%20-%20iPhone%2016%20Pro.gif)
 
 ```tsx
 
-export default function App() {
+export default function InnerShadowExample() {
 
   return (
     <View style={styles.container}>
