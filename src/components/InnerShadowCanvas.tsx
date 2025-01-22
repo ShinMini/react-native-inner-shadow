@@ -1,7 +1,6 @@
 import React from 'react';
 import {Canvas, RoundedRect, Shadow} from '@shopify/react-native-skia';
-
-import type {InnerShadowProps} from './utils';
+import {InnerShadowProps} from '../types';
 
 /**
  * ShadowCanvas
@@ -42,7 +41,7 @@ export default function ShadowCanvas({
    * Note: more advanced logic may be needed to handle differing
    * corner radii on each corner.
    */
-  const boxRadius = Number(style.borderRadius) || 0;
+  const boxRadius = Number(style['borderRadius']) || 0;
 
   return (
     <Canvas
@@ -63,10 +62,10 @@ export default function ShadowCanvas({
       <RoundedRect
         // Shift the drawn box inward by shadowSpace.dx, shadowSpace.dy
         // to avoid clipping the shadow edges.
-        x={shadowSpace.dx}
-        y={shadowSpace.dy}
-        width={width - shadowSpace.dx * 2}
-        height={height - shadowSpace.dy * 2}
+        x={shadowSpace}
+        y={shadowSpace}
+        width={width - shadowSpace * 2}
+        height={height - shadowSpace * 2}
         r={boxRadius}
         color={backgroundColor} // The background fill of the rect
       >

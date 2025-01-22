@@ -1,13 +1,9 @@
 import React from 'react';
-import { Pressable } from 'react-native';
+import {Pressable} from 'react-native';
 
-import {
-  DEFAULT_SHADOW_SPACE,
-  getBackgroundColor,
-  getShadowProperty,
-  LinearInnerShadowViewProps,
-} from './utils';
+import {getBackgroundColor, getShadowProperty} from '../utils';
 import LinearShadowCanvas from './LinearInnerShadowCanvas';
+import {LinearInnerShadowViewProps, DEFAULT_SHADOW_SPACE} from '../types';
 
 /**
  * LinearShadowView
@@ -26,7 +22,7 @@ const LinearShadowView: React.FunctionComponent<LinearInnerShadowViewProps> = ({
    * Local state to store the measured width and height of the Pressable container.
    * This ensures we can accurately size the underlying Skia canvas.
    */
-  const [boxSize, setBoxSize] = React.useState({ width: 0, height: 0 });
+  const [boxSize, setBoxSize] = React.useState({width: 0, height: 0});
 
   /**
    * Determine the background color, which may come from props or fallback defaults.
@@ -45,9 +41,11 @@ const LinearShadowView: React.FunctionComponent<LinearInnerShadowViewProps> = ({
        * onLayout callback captures the size of this component once rendered.
        * We store width and height so the <Canvas> knows its exact dimensions.
        */
-      onLayout={({ nativeEvent: { layout: { width, height } } }) =>
-        setBoxSize({ width, height })
-      }
+      onLayout={({
+        nativeEvent: {
+          layout: {width, height},
+        },
+      }) => setBoxSize({width, height})}
       {...props}
       style={[
         props.style,
@@ -56,8 +54,7 @@ const LinearShadowView: React.FunctionComponent<LinearInnerShadowViewProps> = ({
           // is responsible for rendering the actual background/gradient.
           backgroundColor: 'transparent',
         },
-      ]}
-    >
+      ]}>
       {/**
        * Only render the <LinearShadowCanvas> once we have non-zero dimensions.
        * This avoids rendering a canvas too early or at incorrect sizes.

@@ -1,7 +1,12 @@
 import React from 'react';
-import { Canvas, LinearGradient, vec, RoundedRect, Shadow } from '@shopify/react-native-skia';
-
-import type { LinearInnerShadowViewProps } from './utils';
+import {
+  Canvas,
+  LinearGradient,
+  vec,
+  RoundedRect,
+  Shadow,
+} from '@shopify/react-native-skia';
+import {LinearInnerShadowViewProps} from '../types';
 
 /**
  * LinearShadowCanvas
@@ -27,7 +32,6 @@ export default function LinearShadowCanvas({
   colors = ['#FFFFFF', '#FFFFFF'],
   ...props
 }: LinearInnerShadowViewProps) {
-
   /**
    * Determine if the reflected light (highlight) should be rendered.
    * If `isReflectedLightEnabled` is provided, that value is used;
@@ -42,7 +46,7 @@ export default function LinearShadowCanvas({
    * Extract a uniform border radius from the style object,
    * falling back to 0 if none is defined.
    */
-  const boxRadius = Number(style.borderRadius) || 0;
+  const boxRadius = Number(style['borderRadius']) || 0;
 
   // Prepare vector coordinates for the gradient directions.
   // The 'top' and 'bottom' are centered horizontally,
@@ -50,12 +54,12 @@ export default function LinearShadowCanvas({
   const top = vec(width / 2, 0);
   const bottom = vec(width / 2, height);
 
-  const left = vec(shadowSpace.dx, height / 2);
-  const right = vec(width - shadowSpace.dx * 2, height / 2);
+  const left = vec(shadowSpace, height / 2);
+  const right = vec(width - shadowSpace * 2, height / 2);
 
   // A lookup object so we can easily set the gradient start/end
   // based on the 'from' and 'to' props.
-  const direction = { top, bottom, left, right };
+  const direction = {top, bottom, left, right};
 
   return (
     <Canvas
@@ -69,17 +73,15 @@ export default function LinearShadowCanvas({
           width,
           height,
         },
-      ]}
-    >
+      ]}>
       <RoundedRect
         // Inset the rectangle by shadowSpace.dx/dy so the shadow
         // won't be clipped at the edges.
-        x={shadowSpace.dx}
-        y={shadowSpace.dy}
-        width={width - shadowSpace.dx * 2}
-        height={height - shadowSpace.dy * 2}
-        r={boxRadius}
-      >
+        x={shadowSpace}
+        y={shadowSpace}
+        width={width - shadowSpace * 2}
+        height={height - shadowSpace * 2}
+        r={boxRadius}>
         {/*
           Linear Gradient Fill:
           ---------------------

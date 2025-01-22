@@ -2,12 +2,8 @@ import React from 'react';
 import {Pressable} from 'react-native';
 
 import ShadowCanvas from './InnerShadowCanvas';
-import {
-  DEFAULT_SHADOW_SPACE,
-  getBackgroundColor,
-  getShadowProperty,
-  InnerShadowProps,
-} from './utils';
+import {getBackgroundColor, getShadowProperty} from '../utils';
+import {DEFAULT_SHADOW_SPACE, InnerShadowProps} from '../types';
 
 /**
  * ShadowView

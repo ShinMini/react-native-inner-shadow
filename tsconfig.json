@@ -28,6 +28,7 @@
   },
   "exclude": ["node_modules"],
   "include": [
+    "src/types.d.ts",
     "global.d.ts",
     "photo.d.ts",
     "**/*.ts",
@@ -36,7 +37,8 @@
     "index.js",
     ".eslintrc.js",
     "metro.config.js",
-    "babel.config.js"
+    "babel.config.js",
+    "src/index.tsㅌ"
   ],
   "extends": "expo/tsconfig.base"
 }

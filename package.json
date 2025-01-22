@@ -7,8 +7,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "prepare": "babel --extensions \".ts,.tsx\" --out-dir dist src",
-    "test": "npx jest src",
-    "prepack": "npx copyfiles \"./../README.md\" ./README.md"
+    "test": "npx jest src"
   },
   "author": "ShinMini",
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
