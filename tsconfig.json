@@ -1,0 +1,42 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es2021",
+    "sourceMap": true,
+    "lib": ["ES2021"],
+    "jsx": "react-native",
+    "module": "commonjs" /* Specify what module code is generated. */,
+    "moduleResolution": "Node",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"],
+      "Config": ["src/constants/config.ts"]
+    },
+    "types": [
+      "react-native",
+      "node"
+    ] /* Specify type package names to be included without being referenced in a source file. */,
+    "resolveJsonModule": true /* Enable importing .json files */,
+    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the `checkJS` option to get errors from these files. */,
+    "noEmit": true /* Disable emitting files from a compilation. */,
+    "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+    "allowSyntheticDefaultImports": true /* Allow 'import x from y' when a module doesn't have a default export. */,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+    "noImplicitAny": false
+  },
+  "exclude": ["node_modules"],
+  "include": [
+    "global.d.ts",
+    "photo.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "index.js",
+    ".eslintrc.js",
+    "metro.config.js",
+    "babel.config.js"
+  ],
+  "extends": "expo/tsconfig.base"
+}
