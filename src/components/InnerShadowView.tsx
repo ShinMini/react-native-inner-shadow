@@ -45,6 +45,7 @@ const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
           // We set the parent’s background to transparent because
           // the Skia canvas will handle the actual background fill.
           backgroundColor: 'transparent',
+          overflow: 'hidden',
         },
       ]}>
       {/**

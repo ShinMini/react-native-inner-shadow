@@ -1,15 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-import ShadowView from './src/components/InnerShadowView';
-import LinearShadowView from './src/components/LinearInnerShadowView';
+import {InnerShadowView, LinearShadowView} from './src/index';
 
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <ShadowView inset style={styles.shadowView}>
+      <InnerShadowView inset style={styles.shadowView}>
         <Text style={styles.context}>Inner Shadow</Text>
-      </ShadowView>
+      </InnerShadowView>
 
       <LinearShadowView
         style={styles.shadowView}

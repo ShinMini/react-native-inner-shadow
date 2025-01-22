@@ -1,8 +1,8 @@
 import LinearShadowView from './components/LinearInnerShadowView';
 import InnerShadowView from './components/InnerShadowView';
 
-import LinearShadowCanvas from 'components/LinearInnerShadowCanvas';
-import InnerShadowCanvas from 'components/InnerShadowCanvas';
+import LinearShadowCanvas from './components/LinearInnerShadowCanvas';
+import InnerShadowCanvas from './components/InnerShadowCanvas';
 
 import {getBackgroundColor, getShadowProperty} from './utils';
 

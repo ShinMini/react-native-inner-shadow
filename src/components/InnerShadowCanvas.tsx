@@ -55,6 +55,7 @@ export default function ShadowCanvas({
           left: 0,
           top: 0,
           backgroundColor: 'transparent',
+          overflow: 'hidden',
           width,
           height,
         },

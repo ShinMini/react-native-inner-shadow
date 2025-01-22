@@ -53,6 +53,7 @@ const LinearShadowView: React.FunctionComponent<LinearInnerShadowViewProps> = ({
           // The parent background is transparent, since the Skia canvas
           // is responsible for rendering the actual background/gradient.
           backgroundColor: 'transparent',
+          overflow: 'hidden',
         },
       ]}>
       {/**
