@@ -34,9 +34,9 @@ export default function InnerShadowExample() {
   return (
     <View style={styles.container}>
 
-      <ShadowView inset style={styles.shadowView}>
+      <InnerShadowView inset style={styles.shadowView}>
         <Text style={styles.context}>Inner Shadow</Text>
-      </ShadowView>
+      </InnerShadowView>
 
       <LinearShadowView style={styles.shadowView}
         colors={['#d3d0c9', '#393939']}
