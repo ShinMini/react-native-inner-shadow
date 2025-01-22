@@ -1,4 +1,4 @@
-package com.reactnativeinnershaodw
+package com.reactnativeinnershadow
 
 import android.app.Application
 import com.facebook.react.PackageList
