@@ -25,9 +25,10 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ## Preview
 
-![Thumbnail-1](./docs/thumbnail1.png)
-
-![Thumbnail-2](./docs/thumbnail2.png)
+<div style="display: flex; justify-content: space-between">
+  <img src="./docs/thumbnail1.png" alt="thumbnail 1" width="40%"/>
+  <img src="./docs/thumbnail2.png" alt="thumbnail 2" width="40%"/>
+</div>
 
 ```tsx
 import React from 'react';
@@ -107,7 +108,6 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
 
 ```
 
