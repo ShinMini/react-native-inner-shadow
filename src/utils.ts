@@ -1,5 +1,4 @@
 import {
-  InnerShadowProps,
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_SHADOW_OFFSET_SCALE,
   DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE,
@@ -7,6 +6,7 @@ import {
   DEFAULT_REFLECTED_LIGHT_BLUR,
   DEFAULT_SHADOW_COLOR,
   DEFAULT_REFLECTED_LIGHT_COLOR,
+  type InnerShadowProps,
 } from './types';
 
 /**
@@ -19,7 +19,7 @@ import {
  * This ensures there is always a valid color for the component’s background.
  */
 export function getBackgroundColor(
-  props: Pick<InnerShadowProps, 'backgroundColor' | 'style' | 'children'>,
+  props: Pick<InnerShadowProps, 'backgroundColor' | 'style' | 'children'>
 ) {
   const backgroundColor =
     props.backgroundColor ??
@@ -70,7 +70,7 @@ export function getShadowProperty(props: Omit<InnerShadowProps, 'children'>) {
   const shadowBlur = Math.max(props.shadowBlur ?? DEFAULT_SHADOW_BLUR, 0);
   const reflectedLightBlur = Math.max(
     props.reflectedLightBlur ?? DEFAULT_REFLECTED_LIGHT_BLUR,
-    0,
+    0
   );
 
   // Fallback to the provided defaults if the user doesn't specify a color.
@@ -104,11 +104,11 @@ function setReflectedLightDirectionAndScale({
   shadowOffset,
 }: {
   inset?: boolean;
-  reflectedOffset: number;
+  reflectedOffset?: number;
   shadowOffset: number;
 }) {
   // When user provides a reflected light offset, use that.
-  if (reflectedOffset) {
+  if (reflectedOffset !== undefined) {
     return reflectedOffset;
   }
 

@@ -38,7 +38,7 @@
     ".eslintrc.js",
     "metro.config.js",
     "babel.config.js",
-    "src/index.tsㅌ"
+    "src/index.ts"
   ],
   "extends": "expo/tsconfig.base"
 }

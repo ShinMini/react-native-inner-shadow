@@ -1,15 +1,15 @@
-import React, {useMemo} from 'react';
-import {Pressable} from 'react-native';
+import React, { useMemo } from 'react';
+import { Pressable } from 'react-native';
 
 import ShadowCanvas from './ShadowCanvas';
-import {getBackgroundColor, getShadowProperty} from '../utils';
-import {InnerShadowProps, LinearInnerShadowProps} from '../types';
+import { getBackgroundColor, getShadowProperty } from '../utils';
 import LinearShadowCanvas from './LinearShadowCanvas';
+import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
 
 const _ShadowView: React.FunctionComponent<
   InnerShadowProps & LinearInnerShadowProps
-> = ({...props}) => {
-  const [boxSize, setBoxSize] = React.useState({width: 0, height: 0});
+> = ({ ...props }) => {
+  const [boxSize, setBoxSize] = React.useState({ width: 0, height: 0 });
 
   // Determine the final background color (pulling from `props.style` or a default).
   const backgroundColor = getBackgroundColor(props);
@@ -18,7 +18,8 @@ const _ShadowView: React.FunctionComponent<
   const shadowProperties = getShadowProperty(props);
 
   const isLinear = useMemo(() => {
-    return !!props.colors[0];
+    // @ts-ignore
+    return props.colors[0] === -Math.PI ? false : true;
   }, [props.colors]);
 
   return (
@@ -29,16 +30,17 @@ const _ShadowView: React.FunctionComponent<
        */
       onLayout={({
         nativeEvent: {
-          layout: {width, height},
+          layout: { width, height },
         },
-      }) => setBoxSize({width, height})}
+      }) => setBoxSize({ width, height })}
       {...props}
       style={[
         props.style,
         {
           backgroundColor: 'transparent',
         },
-      ]}>
+      ]}
+    >
       {/**
        * We only render the <Canvas> if the measured width and height are non-zero.
        * This prevents rendering issues if the layout hasn't been established yet.
@@ -77,8 +79,10 @@ const _ShadowView: React.FunctionComponent<
  * using a Skia-based <Canvas>. The shadow parameters (color, blur, offsets) and background
  * color can be customized via props.
  */
-const ShadowView: React.FunctionComponent<InnerShadowProps> = ({...props}) => {
-  const colors = [null];
+const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
+  ...props
+}) => {
+  const colors = [-Math.PI];
   return <_ShadowView {...props} colors={colors} />;
 };
 
@@ -96,4 +100,4 @@ const LinearShadowView: React.FunctionComponent<LinearInnerShadowProps> = ({
   return <_ShadowView {...props} />;
 };
 
-export {ShadowView, LinearShadowView};
+export { ShadowView, LinearShadowView };

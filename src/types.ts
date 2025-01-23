@@ -1,6 +1,6 @@
-import {AnimatedProp, Color} from '@shopify/react-native-skia';
-import {ReactNode} from 'react';
-import type {PressableProps, ViewStyle} from 'react-native';
+import type { AnimatedProp, Color } from '@shopify/react-native-skia';
+import type { ReactNode } from 'react';
+import type { PressableProps, ViewStyle } from 'react-native';
 
 // These two scales are opposite each other to create a "reflected light" effect.
 const DEFAULT_SHADOW_OFFSET_SCALE = 2 as const;
@@ -54,7 +54,7 @@ export type InnerShadowProps = {
    * For an inset shadow, positive offsets often move the shadow "downward/rightward."
    * @default { width: 2, height: 2 }
    */
-  shadowOffset?: {width: number; height: number};
+  shadowOffset?: { width: number; height: number };
 
   /**
    * The blur radius for the main shadow. Higher values create softer, larger shadows.
@@ -82,7 +82,7 @@ export type InnerShadowProps = {
    * of the main shadow offset to appear on the “opposite” side.
    * @default { width: -2, height: -2 }
    */
-  reflectedLightOffset?: {width: number; height: number};
+  reflectedLightOffset?: { width: number; height: number };
 
   /**
    * The blur radius for the reflected light highlight.
@@ -112,6 +112,20 @@ export type InnerShadowProps = {
   style?: ViewStyle;
 } & PressableProps;
 
+export type ShadowCanvasProps = InnerShadowProps & {
+  width: number;
+  height: number;
+  shadowOffset: { width: number; height: number };
+  shadowBlur: number;
+  shadowColor: string;
+  backgroundColor: string;
+
+  reflectedLightColor: string;
+  reflectedLightOffset: { width: number; height: number };
+  reflectedLightBlur: number;
+  isReflectedLightEnabled?: boolean;
+};
+
 /**
  * LINEAR_DIRECTION defines the four basic directions for
  * linear gradients. Additional or diagonal directions can be
@@ -132,8 +146,10 @@ export type LinearInnerShadowProps = {
   from?: LINEAR_DIRECTION;
   to?: LINEAR_DIRECTION;
   colors: AnimatedProp<Color[]>;
-} & InnerShadowProps &
-  PressableProps;
+} & InnerShadowProps;
+
+export type LinearShadowCanvasProps = LinearInnerShadowProps &
+  ShadowCanvasProps;
 
 export {
   DEFAULT_SHADOW_OFFSET_SCALE,

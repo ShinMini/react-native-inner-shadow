@@ -1,9 +1,9 @@
-import {ShadowView, LinearShadowView} from './components/ShadowView';
+import { ShadowView, LinearShadowView } from './components/ShadowView';
 
 import LinearShadowCanvas from './components/LinearShadowCanvas';
 import InnerShadowCanvas from './components/ShadowCanvas';
 
-import {getBackgroundColor, getShadowProperty} from './utils';
+import { getBackgroundColor, getShadowProperty } from './utils';
 
 import {
   DEFAULT_SHADOW_OFFSET_SCALE,
@@ -33,7 +33,7 @@ export {
 };
 
 // Export the types and constants for use in other modules.
-export {getBackgroundColor, getShadowProperty};
+export { getBackgroundColor, getShadowProperty };
 
 // Export the main components and utility functions.
-export {ShadowView, LinearShadowView, InnerShadowCanvas, LinearShadowCanvas};
+export { ShadowView, LinearShadowView, InnerShadowCanvas, LinearShadowCanvas };

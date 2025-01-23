@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import { useMemo } from 'react';
 import {
   Canvas,
   LinearGradient,
@@ -6,7 +6,7 @@ import {
   RoundedRect,
   Shadow,
 } from '@shopify/react-native-skia';
-import {LinearInnerShadowProps} from '../types';
+import type { LinearShadowCanvasProps } from '../types';
 
 /**
  * LinearShadowCanvas
@@ -30,13 +30,13 @@ export default function LinearShadowCanvas({
   to = 'bottom',
   colors = ['#FFFFFF', '#FFFFFF'],
   ...props
-}: LinearInnerShadowProps) {
+}: LinearShadowCanvasProps) {
   const isReflectedLightEnabled =
     props.isReflectedLightEnabled !== undefined
       ? props.isReflectedLightEnabled
       : inset;
 
-  const boxRadius = Number(style['borderRadius']) || 0;
+  const boxRadius = Number(style ? style.borderRadius : 0) || 0;
 
   const top = vec(width / 2, 0);
   const bottom = vec(width / 2, height);
@@ -44,7 +44,7 @@ export default function LinearShadowCanvas({
   const left = vec(0, height / 2);
   const right = vec(width, height / 2);
 
-  const direction = {top, bottom, left, right};
+  const direction = { top, bottom, left, right };
 
   const outerShadowOffset = useMemo(() => {
     if (!inset) {
@@ -56,7 +56,7 @@ export default function LinearShadowCanvas({
       };
     }
     return null;
-  }, [inset, shadowColor, shadowBlur]);
+  }, [inset, shadowColor, shadowBlur, shadowOffset]);
 
   return (
     <Canvas
@@ -71,7 +71,8 @@ export default function LinearShadowCanvas({
           width,
           height,
         },
-      ]}>
+      ]}
+    >
       <RoundedRect x={0} y={0} width={width} height={height} r={boxRadius}>
         <LinearGradient
           start={direction[from]}

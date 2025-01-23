@@ -1,6 +1,20 @@
-import React, {useMemo} from 'react';
-import {Canvas, RoundedRect, Shadow} from '@shopify/react-native-skia';
-import {InnerShadowProps} from '../types';
+import { useMemo } from 'react';
+import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
+import type { ShadowCanvasProps } from '../types';
+
+/*
+  width: number;
+  height: number;
+  shadowOffset: { width: number; height: number };
+  shadowBlur: number;
+  shadowColor: string;
+  backgroundColor: string;
+
+  reflectedLightColor: string;
+  reflectedLightOffset: { width: number; height: number };
+  reflectedLightBlur: number;
+  isReflectedLightEnabled?: boolean;
+  */
 
 /**
  * ShadowCanvas
@@ -23,7 +37,7 @@ export default function ShadowCanvas({
   reflectedLightOffset,
   reflectedLightBlur,
   ...props
-}: InnerShadowProps) {
+}: ShadowCanvasProps) {
   /**
    * Determine if the reflected light layer should be rendered.
    * If `isReflectedLightEnabled` is explicitly set, use that.
@@ -40,7 +54,7 @@ export default function ShadowCanvas({
    * Note: more advanced logic may be needed to handle differing
    * corner radii on each corner.
    */
-  const boxRadius = Number(style['borderRadius']) || 0;
+  const boxRadius = Number(style ? style.borderRadius : 0) || 0;
 
   // Prepare the shadow offset and blur for the main shadow layer.
   // You can overwrite these values with `style` property.
@@ -50,11 +64,11 @@ export default function ShadowCanvas({
         shadowColor: inset ? 'transparent' : shadowColor,
         shadowOffset,
         // blur: 0 ~ 20, opacity: 0 ~ 1
-        shadowOpacity: shadowBlur / 20,
+        shadowOpacity: shadowBlur ? shadowBlur / 20 : 0.4,
       };
     }
     return null;
-  }, [inset, shadowColor, shadowBlur]);
+  }, [inset, shadowColor, shadowBlur, shadowOffset]);
 
   return (
     <Canvas
@@ -69,7 +83,8 @@ export default function ShadowCanvas({
           width,
           height,
         },
-      ]}>
+      ]}
+    >
       <RoundedRect
         x={0}
         y={0}
