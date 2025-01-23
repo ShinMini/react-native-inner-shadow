@@ -35,12 +35,10 @@ const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
           layout: {width, height},
         },
       }) => setBoxSize({width, height})}
-      {...props} // Spread remaining props (like onPress, accessible props, etc.).
+      {...props}
       style={[
         props.style,
         {
-          // We set the parent’s background to transparent because
-          // the Skia canvas will handle the actual background fill.
           backgroundColor: 'transparent',
         },
       ]}>
@@ -50,9 +48,7 @@ const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
        */}
       {boxSize.width === 0 && boxSize.height === 0 ? null : (
         <ShadowCanvas
-          // Forward the main props...
           {...props}
-          // ...plus the computed shadow properties
           {...shadowProperties}
           backgroundColor={backgroundColor}
           shadowSpace={shadowSpace}

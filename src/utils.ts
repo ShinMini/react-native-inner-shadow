@@ -67,9 +67,11 @@ export function getShadowProperty(props: Omit<InnerShadowProps, 'children'>) {
 
   // "Blur" here maps to how soft or large the shadow/highlight is.
   // The higher the number, the more diffuse the effect.
-  const shadowBlur = props.shadowBlur ?? DEFAULT_SHADOW_BLUR;
-  const reflectedLightBlur =
-    props.reflectedLightBlur ?? DEFAULT_REFLECTED_LIGHT_BLUR;
+  const shadowBlur = Math.max(props.shadowBlur ?? DEFAULT_SHADOW_BLUR, 0);
+  const reflectedLightBlur = Math.max(
+    props.reflectedLightBlur ?? DEFAULT_REFLECTED_LIGHT_BLUR,
+    0,
+  );
 
   // Fallback to the provided defaults if the user doesn't specify a color.
   const shadowColor = props.shadowColor ?? DEFAULT_SHADOW_COLOR;

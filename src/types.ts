@@ -67,6 +67,9 @@ export type InnerShadowProps = {
 
   /**
    * The blur radius for the main shadow. Higher values create softer, larger shadows.
+   *
+   * when `inset` property is `false`(outer shadow), the shadow blur substitutes shadowOpacity (0 ~ 1)
+   * @argument min: 0, max: 20
    * @Defaults 3 for a visible spread.
    */
   shadowBlur?: number;
@@ -92,6 +95,7 @@ export type InnerShadowProps = {
 
   /**
    * The blur radius for the reflected light highlight.
+   * @argument min: 0, max: 20
    * @Default 3  for a noticeable, soft glow.
    */
   reflectedLightBlur?: number;

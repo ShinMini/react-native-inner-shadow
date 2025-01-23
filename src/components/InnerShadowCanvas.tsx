@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Canvas, RoundedRect, Shadow} from '@shopify/react-native-skia';
 import {InnerShadowProps} from '../types';
 
@@ -43,29 +43,33 @@ export default function ShadowCanvas({
    */
   const boxRadius = Number(style['borderRadius']) || 0;
 
+  // Prepare the shadow offset and blur for the main shadow layer.
+  // You can overwrite these values with `style` property.
+  const outerShadowOffset = useMemo(() => {
+    if (!inset) {
+      return {
+        shadowColor: inset ? 'transparent' : shadowColor,
+        shadowOffset,
+        // blur: 0 ~ 20, opacity: 0 ~ 1
+        shadowOpacity: shadowBlur / 20,
+      };
+    }
+    return null;
+  }, [inset, shadowColor, shadowBlur]);
+
   return (
     <Canvas
       style={[
+        outerShadowOffset,
         style,
         {
-          // Positioning the Canvas absolutely over its parent container
-          // ensures we can draw shadows and backgrounds without affecting
-          // the parent’s layout or size.
           position: 'absolute',
           left: 0,
           top: 0,
           backgroundColor: 'transparent',
-          // overflow: 'hidden',
           width,
           height,
         },
-        !inset
-          ? {
-              shadowColor: inset ? 'transparent' : shadowColor,
-              shadowOffset,
-              shadowOpacity: 0.5,
-            }
-          : null,
       ]}>
       <RoundedRect
         // Shift the drawn box inward by shadowSpace.dx, shadowSpace.dy
