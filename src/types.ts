@@ -21,8 +21,8 @@ const DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
  *   - DEFAULT_SHADOW_COLOR: a dark, semi-transparent color for shadows
  */
 const DEFAULT_BACKGROUND_COLOR = '#FFFFFF' as const;
-// const DEFAULT_REFLECTED_LIGHT_COLOR = '#EEE9E92D' as const;
-const DEFAULT_REFLECTED_LIGHT_COLOR = '#6666ff' as const;
+const DEFAULT_REFLECTED_LIGHT_COLOR = '#EEE9E92D' as const;
+// const DEFAULT_REFLECTED_LIGHT_COLOR = '#6666ff' as const;
 const DEFAULT_SHADOW_COLOR = '#2F2F2FBC' as const;
 
 /**

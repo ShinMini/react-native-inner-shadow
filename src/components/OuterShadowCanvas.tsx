@@ -47,20 +47,13 @@ export default function OuterShadowCanvas({
         },
       ]}>
       <RoundedRect
-        x={shadowSpace}
-        y={shadowSpace}
-        width={width - shadowSpace * 2}
-        height={height - shadowSpace * 2}
+        x={0}
+        y={0}
+        width={width}
+        height={height}
         r={boxRadius}
         color={backgroundColor} // The background fill of the rect
       >
-        <Shadow
-          dx={shadowOffset.width}
-          dy={shadowOffset.height}
-          blur={shadowBlur}
-          color={shadowColor}
-          inner={inset}
-        />
         {isReflectedLightEnabled && (
           <Shadow
             dx={reflectedLightOffset.width}

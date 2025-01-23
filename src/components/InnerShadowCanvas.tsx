@@ -55,18 +55,25 @@ export default function ShadowCanvas({
           left: 0,
           top: 0,
           backgroundColor: 'transparent',
-          overflow: 'hidden',
+          // overflow: 'hidden',
           width,
           height,
         },
+        !inset
+          ? {
+              shadowColor: inset ? 'transparent' : shadowColor,
+              shadowOffset,
+              shadowOpacity: 0.5,
+            }
+          : null,
       ]}>
       <RoundedRect
         // Shift the drawn box inward by shadowSpace.dx, shadowSpace.dy
         // to avoid clipping the shadow edges.
-        x={shadowSpace}
-        y={shadowSpace}
-        width={width - shadowSpace * 2}
-        height={height - shadowSpace * 2}
+        x={0}
+        y={0}
+        width={width}
+        height={height}
         r={boxRadius}
         color={backgroundColor} // The background fill of the rect
       >
@@ -79,13 +86,15 @@ export default function ShadowCanvas({
           - `inner` set to `true` makes the shadow appear inside the rectangle edges
             (inset shadow), rather than outside.
         */}
-        <Shadow
-          dx={shadowOffset.width}
-          dy={shadowOffset.height}
-          blur={shadowBlur}
-          color={shadowColor}
-          inner={inset}
-        />
+        {inset && (
+          <Shadow
+            dx={shadowOffset.width}
+            dy={shadowOffset.height}
+            blur={shadowBlur}
+            color={shadowColor}
+            inner
+          />
+        )}
 
         {/*
           Reflected Light (Highlight):

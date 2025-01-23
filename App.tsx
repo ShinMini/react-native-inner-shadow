@@ -6,12 +6,19 @@ import {InnerShadowView, LinearShadowView} from './src/index';
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <InnerShadowView inset style={styles.shadowView}>
+      <InnerShadowView
+        // inset
+        isReflectedLightEnabled
+        style={styles.shadowView}>
         <Text style={styles.context}>Inner Shadow</Text>
       </InnerShadowView>
 
       <LinearShadowView
+        // inset
         style={styles.shadowView}
+        shadowSpace={0}
+        isReflectedLightEnabled
+        // reflectedLightOffset={{width: 10, height: 10}}
         colors={['#d3d0c9', '#393939']}
         from="top"
         to="right">
@@ -23,14 +30,14 @@ function App(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fffeede7',
+    backgroundColor: '#f3f1dae7',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
   },
   shadowView: {
-    backgroundColor: '#fffeede7',
+    backgroundColor: '#fffeed',
     justifyContent: 'center',
     alignItems: 'center',
     width: 200,
