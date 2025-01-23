@@ -52,19 +52,18 @@ export function getShadowProperty(props: Omit<InnerShadowProps, 'children'>) {
 
   // By default, the reflected light offset is the inverse of the main shadow
   // so it appears on the opposite corner/side.
-  const REFLECTED_LIGHT_OFFSET_WIDTH =
-    props.reflectedLightOffset?.width ??
-    (-SHADOW_OFFSET_WIDTH * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE !== 0
-      ? (-SHADOW_OFFSET_WIDTH * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) /
-        SHADOW_OFFSET_WIDTH
-      : 0);
+  // when `inset` property is `true`, the reflected light offset is opposite to the shadow offset
+  const REFLECTED_LIGHT_OFFSET_WIDTH = setReflectedLightDirectionAndScale({
+    inset: props.inset,
+    reflectedOffset: props.reflectedLightOffset?.width,
+    shadowOffset: SHADOW_OFFSET_WIDTH,
+  });
 
-  const REFLECTED_LIGHT_OFFSET_HEIGHT =
-    props.reflectedLightOffset?.height ??
-    (-SHADOW_OFFSET_HEIGHT * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE !== 0
-      ? (-SHADOW_OFFSET_HEIGHT * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) /
-        SHADOW_OFFSET_HEIGHT
-      : 0);
+  const REFLECTED_LIGHT_OFFSET_HEIGHT = setReflectedLightDirectionAndScale({
+    inset: props.inset,
+    reflectedOffset: props.reflectedLightOffset?.height,
+    shadowOffset: SHADOW_OFFSET_HEIGHT,
+  });
 
   // "Blur" here maps to how soft or large the shadow/highlight is.
   // The higher the number, the more diffuse the effect.
@@ -95,4 +94,30 @@ export function getShadowProperty(props: Omit<InnerShadowProps, 'children'>) {
     shadowBlur,
     reflectedLightBlur,
   };
+}
+
+function setReflectedLightDirectionAndScale({
+  inset,
+  reflectedOffset,
+  shadowOffset,
+}: {
+  inset?: boolean;
+  reflectedOffset: number;
+  shadowOffset: number;
+}) {
+  // When user provides a reflected light offset, use that.
+  if (reflectedOffset) {
+    return reflectedOffset;
+  }
+
+  // When shadow is 0, reflected light should be 0.
+  if (shadowOffset === 0) {
+    return 0;
+  }
+
+  // When inset is true, the reflected light should be opposite the shadow.
+  if (inset) {
+    return -(shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE);
+  }
+  return shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE;
 }

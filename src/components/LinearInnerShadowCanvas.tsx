@@ -125,7 +125,7 @@ export default function LinearShadowCanvas({
             dy={reflectedLightOffset.height}
             blur={reflectedLightBlur}
             color={reflectedLightColor}
-            inner={inset}
+            inner
           />
         )}
       </RoundedRect>

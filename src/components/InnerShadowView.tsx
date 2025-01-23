@@ -13,12 +13,9 @@ import {DEFAULT_SHADOW_SPACE, InnerShadowProps} from '../types';
  * color can be customized via props.
  */
 const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
-  // Destructuring shadowSpace from props with a default value.
-  // The rest of the props are collected into `props`.
   shadowSpace = DEFAULT_SHADOW_SPACE,
   ...props
 }) => {
-  // Local state to store the measured width and height of the Pressable container.
   const [boxSize, setBoxSize] = React.useState({width: 0, height: 0});
 
   // Determine the final background color (pulling from `props.style` or a default).
@@ -45,7 +42,6 @@ const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
           // We set the parent’s background to transparent because
           // the Skia canvas will handle the actual background fill.
           backgroundColor: 'transparent',
-          overflow: 'hidden',
         },
       ]}>
       {/**
@@ -64,7 +60,6 @@ const ShadowView: React.FunctionComponent<InnerShadowProps> = ({
           height={boxSize.height}
         />
       )}
-
       {/**
        * Render any nested children above the Skia canvas.
        * Typically, the shadow is a background/overlay, so children
