@@ -57,9 +57,12 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "typecheck": "tsc",
     "start": "react-native start",
+    "clean": "del-cli lib",
     "prepare": "bob build",
-    "test": "npx jest src"
+    "test": "npx jest src",
+    "release": "release-it"
   },
   "engines": {
     "node": ">=18"
