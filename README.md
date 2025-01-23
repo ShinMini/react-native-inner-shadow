@@ -8,20 +8,17 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ## Preview
 
-<div style="display: flex; gap: 20px;">
-  <img src="./docs/thumbnail1.png" alt="thumbnail 1" width="40%"/>
-  <img src="./docs/thumbnail2.png" alt="thumbnail 2" width="40%"/>
-</div>
+  <img src="./docs/image.png" alt="thumbnail" height="300px"/>
 
 <br />
 <br />
 
 ## Features
 
-- **Inset Shadows**: Achieve the “inset” effect not supported by standard React Native shadows.  
-- **Reflected Light**: Optional highlight for a more 3D, “raised” or “depressed” effect.  
-- **Solid Background or Linear Gradient**: Choose between a simple solid fill or a multi-color gradient.  
-- **Customizable**: Control blur radius, color, offsets, and more.  
+- **Inset Shadows**: Achieve the “inset” effect not supported by standard React Native shadows.
+- **Reflected Light**: Optional highlight for a more 3D, “raised” or “depressed” effect.
+- **Solid Background or Linear Gradient**: Choose between a simple solid fill or a multi-color gradient.
+- **Customizable**: Control blur radius, color, offsets, and more.
 - **Skia-Powered**: Uses [React Native Skia](https://shopify.github.io/react-native-skia/), enabling cross-platform support (iOS & Android) and high-performance rendering.
 
 ---
@@ -148,7 +145,7 @@ export type InnerShadowProps = {
 
   /**
    * Blur radius for the main shadow. Higher values => softer/larger shadow.
-   * 
+   *
    * - If `inset` is false (outer shadow), `shadowBlur` conceptually substitutes standard
    *   React Native’s `shadowOpacity` (range 0–1).
    * - Suggested range: 0–20
@@ -259,14 +256,14 @@ The library also exports a few useful defaults:
 
 ## Notes & Tips
 
-1. **Reflected Light**  
+1. **Reflected Light**
    - When `inset` is `true`, the library automatically enables `isReflectedLightEnabled` unless you explicitly set it to `false`.
    - Adjust `reflectedLightColor` and `reflectedLightOffset` to get subtle or pronounced highlights.
 
-2. **Performance**  
+2. **Performance**
    - Each `InnerShadowView` or `LinearShadowView` uses a Skia `<Canvas>` under the hood. Consider memoizing components or reducing re-renders if you have many shadows in a list.
 
-3. **Borders and Rounding**  
+3. **Borders and Rounding**
    - If you use `borderRadius`, ensure it’s uniform (a single numeric value). Handling distinct corner radii (e.g. `borderTopLeftRadius`) currently requires additional logic in Skia.
 
 ---
