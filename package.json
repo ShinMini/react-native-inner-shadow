@@ -89,6 +89,7 @@
   "files": [
     "src",
     "lib",
+    "docs",
     "*.podspec",
     "react-native.config.js",
     "!ios/build",
