@@ -8,7 +8,7 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ## Preview
 
-  <img src="https://github.com/user-attachments/assets/6f027db0-eb9d-4f6f-a003-a650d0582752.png" alt="thumbnail"  height="300px"/>
+  <img src="https://github.com/user-attachments/assets/6f027db0-eb9d-4f6f-a003-a650d0582752" alt="thumbnail"  height="300px"/>
 
 
 <br />
@@ -16,7 +16,7 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ## Features
 
-- **Inset Shadows**: Achieve the “inset” effect not supported by standard React Native shadows.
+- **Inset Shadows**: Achieve the “inset” effect that is not supported by standard React Native shadows.
 - **Reflected Light**: Optional highlight for a more 3D, “raised” or “depressed” effect.
 - **Solid Background or Linear Gradient**: Choose between a simple solid fill or a multi-color gradient.
 - **Customizable**: Control blur radius, color, offsets, and more.
