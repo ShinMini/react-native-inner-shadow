@@ -119,7 +119,9 @@ function setReflectedLightDirectionAndScale({
 
   // When inset is true, the reflected light should be opposite the shadow.
   if (inset) {
-    return -(shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE);
+    return (
+      -(shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) / shadowOffset
+    );
   }
-  return shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE;
+  return (shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) / shadowOffset;
 }
