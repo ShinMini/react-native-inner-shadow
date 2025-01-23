@@ -1,12 +1,11 @@
 {
   "name": "react-native-inner-shadow",
-  "version": "0.1.2",
+  "version": "0.1.1",
   "bugs": {
     "url": "https://github.com/ShinMini/react-native-inner-shadow/issues"
   },
   "author": "ShinMini <gusals121234@gmail.com> (https://github.com/ShinMini)",
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
-  "license": "MIT",
   "description": "Inner Shadows with linear design UI in react-native",
   "publishConfig": {
     "access": "public"
@@ -27,6 +26,7 @@
     "react-native": "0.75.4"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@commitlint/config-conventional": "^17.0.2",
@@ -35,34 +35,24 @@
     "@react-native/eslint-config": "0.75.4",
     "@react-native/metro-config": "0.75.4",
     "@react-native/typescript-config": "0.75.4",
-    "@release-it/conventional-changelog": "^9.0.2",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
     "commitlint": "^17.0.2",
-    "del-cli": "^5.1.0",
     "eslint": "^8.19.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
-    "react": "18.3.1",
-    "react-native": "0.76.6",
     "react-native-builder-bob": "^0.35.2",
     "react-test-renderer": "18.3.1",
-    "release-it": "^17.10.0",
     "typescript": "5.0.4"
   },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "typecheck": "tsc",
     "start": "react-native start",
-    "clean": "del-cli lib",
     "prepare": "bob build",
-    "test": "npx jest src",
-    "release": "release-it"
+    "test": "npx jest src"
   },
   "engines": {
     "node": ">=18"
