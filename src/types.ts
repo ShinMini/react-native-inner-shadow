@@ -2,14 +2,6 @@ import {AnimatedProp, Color} from '@shopify/react-native-skia';
 import {ReactNode} from 'react';
 import type {PressableProps, ViewStyle} from 'react-native';
 
-/**
- * Default gap or "padding" on each side of the shadowed box.
- * This spacing ensures the shadow has enough room to be rendered
- * without getting clipped.
- */
-// export const DEFAULT_SHADOW_SPACE = {dx: 6, dy: 6} as const;
-const DEFAULT_SHADOW_SPACE = 6 as const;
-
 // These two scales are opposite each other to create a "reflected light" effect.
 const DEFAULT_SHADOW_OFFSET_SCALE = 2 as const;
 const DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
@@ -22,7 +14,6 @@ const DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
  */
 const DEFAULT_BACKGROUND_COLOR = '#FFFFFF' as const;
 const DEFAULT_REFLECTED_LIGHT_COLOR = '#EEE9E92D' as const;
-// const DEFAULT_REFLECTED_LIGHT_COLOR = '#6666ff' as const;
 const DEFAULT_SHADOW_COLOR = '#2F2F2FBC' as const;
 
 /**
@@ -101,13 +92,6 @@ export type InnerShadowProps = {
   reflectedLightBlur?: number;
 
   /**
-   * Padding around the inside of the box. This helps prevent shadows
-   * from being clipped by the container’s edges.
-   * @Default 6
-   */
-  shadowSpace?: number;
-
-  /**
    * Explicitly setting width and height can improve performance by
    * avoiding repeated layout passes. Also helps in cases where the
    * shadow must be calculated exactly.
@@ -144,7 +128,7 @@ export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
  * @param colors - An array of colors for the gradient. Using multiple colors
  *                 creates more visually interesting transitions.
  */
-export type LinearInnerShadowViewProps = {
+export type LinearInnerShadowProps = {
   from?: LINEAR_DIRECTION;
   to?: LINEAR_DIRECTION;
   colors: AnimatedProp<Color[]>;
@@ -152,7 +136,6 @@ export type LinearInnerShadowViewProps = {
   PressableProps;
 
 export {
-  DEFAULT_SHADOW_SPACE,
   DEFAULT_SHADOW_OFFSET_SCALE,
   DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE,
   DEFAULT_BACKGROUND_COLOR,

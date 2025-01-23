@@ -13,7 +13,6 @@ import {InnerShadowProps} from '../types';
 export default function ShadowCanvas({
   width,
   height,
-  shadowSpace,
   style,
   shadowColor,
   shadowOffset,
@@ -72,8 +71,6 @@ export default function ShadowCanvas({
         },
       ]}>
       <RoundedRect
-        // Shift the drawn box inward by shadowSpace.dx, shadowSpace.dy
-        // to avoid clipping the shadow edges.
         x={0}
         y={0}
         width={width}

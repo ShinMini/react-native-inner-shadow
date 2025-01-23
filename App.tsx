@@ -1,24 +1,22 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-import {InnerShadowView, LinearShadowView} from './src/index';
+import {ShadowView, LinearShadowView} from './src/index';
 
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <InnerShadowView
-        // inset
+      <ShadowView
+        inset
+        // shadowBlur={3}
         isReflectedLightEnabled
         style={styles.shadowView}>
         <Text style={styles.context}>Inner Shadow</Text>
-      </InnerShadowView>
+      </ShadowView>
 
       <LinearShadowView
         // inset
         style={styles.shadowView}
-        shadowSpace={0}
-        isReflectedLightEnabled
-        // reflectedLightOffset={{width: 10, height: 10}}
         colors={['#d3d0c9', '#393939']}
         from="top"
         to="right">
