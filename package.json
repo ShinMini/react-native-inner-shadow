@@ -19,9 +19,9 @@
   },
   "peerDependencies": {
     "@shopify/react-native-skia": "^1.10.2",
-    "react-native-reanimated": "~3.16.1",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-reanimated": "~3.16.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -30,6 +30,9 @@
   "workspaces": [
     "example"
   ],
+  "dependencies": {
+    "@shopify/react-native-skia": "^1.10.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
