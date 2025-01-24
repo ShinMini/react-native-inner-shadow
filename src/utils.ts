@@ -10,7 +10,7 @@ import {
   type InnerShadowProps,
 } from './types';
 import { vec } from '@shopify/react-native-skia';
-import type { LINEAR_DIRECTION } from '../lib/typescript/commonjs/src';
+import type { LINEAR_DIRECTION } from './types';
 
 /**
  *  createStyles generates the StyleSheet object for the canvas
