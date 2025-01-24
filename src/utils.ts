@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_SHADOW_OFFSET_SCALE,
@@ -8,6 +9,34 @@ import {
   DEFAULT_REFLECTED_LIGHT_COLOR,
   type InnerShadowProps,
 } from './types';
+import { vec } from '@shopify/react-native-skia';
+import type { LINEAR_DIRECTION } from '../lib/typescript/commonjs/src';
+
+/**
+ *  createStyles generates the StyleSheet object for the canvas
+ *
+ * @param width - The width of the canvas
+ * @param height - The height of the canvas
+ * @returns The StyleSheet object for the canvas
+ */
+export function createStyles({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
+  return StyleSheet.create({
+    canvas: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      backgroundColor: 'transparent',
+      width,
+      height,
+    },
+  });
+}
 
 /**
  * getBackgroundColor retrieves the final background color
@@ -124,4 +153,50 @@ function setReflectedLightDirectionAndScale({
     );
   }
   return (shadowOffset * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) / shadowOffset;
+}
+
+interface OuterShadowOffsetProps {
+  inset?: boolean;
+  shadowOffset: { width: number; height: number };
+  shadowColor: string;
+  shadowBlur: number;
+}
+export function createOuterShadowOffset({
+  inset,
+  shadowColor,
+  shadowOffset,
+  shadowBlur,
+}: OuterShadowOffsetProps) {
+  if (!inset) {
+    return {
+      shadowColor: inset ? 'transparent' : shadowColor,
+      shadowOffset,
+      // blur: 0 ~ 20, opacity: 0 ~ 1
+      shadowOpacity: shadowBlur ? shadowBlur / 20 : 0.4,
+    };
+  }
+  return null;
+}
+
+interface GetLinearDirectionProps {
+  width: number;
+  height: number;
+  from: LINEAR_DIRECTION;
+  to: LINEAR_DIRECTION;
+}
+
+export function getLinearDirection({
+  width,
+  height,
+  from,
+  to,
+}: GetLinearDirectionProps) {
+  const top = vec(width / 2, 0);
+  const bottom = vec(width / 2, height);
+
+  const left = vec(0, height / 2);
+  const right = vec(width, height / 2);
+
+  const direction = { top, bottom, left, right };
+  return { start: direction[from], end: direction[to] };
 }

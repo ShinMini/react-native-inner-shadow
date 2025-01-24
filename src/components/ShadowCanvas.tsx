@@ -1,20 +1,6 @@
-import { useMemo } from 'react';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import type { ShadowCanvasProps } from '../types';
-
-/*
-  width: number;
-  height: number;
-  shadowOffset: { width: number; height: number };
-  shadowBlur: number;
-  shadowColor: string;
-  backgroundColor: string;
-
-  reflectedLightColor: string;
-  reflectedLightOffset: { width: number; height: number };
-  reflectedLightBlur: number;
-  isReflectedLightEnabled?: boolean;
-  */
+import { createOuterShadowOffset, createStyles } from '../utils';
 
 /**
  * ShadowCanvas
@@ -55,36 +41,19 @@ export default function ShadowCanvas({
    * corner radii on each corner.
    */
   const boxRadius = Number(style ? style.borderRadius : 0) || 0;
+  const styles = createStyles({ width, height });
 
   // Prepare the shadow offset and blur for the main shadow layer.
   // You can overwrite these values with `style` property.
-  const outerShadowOffset = useMemo(() => {
-    if (!inset) {
-      return {
-        shadowColor: inset ? 'transparent' : shadowColor,
-        shadowOffset,
-        // blur: 0 ~ 20, opacity: 0 ~ 1
-        shadowOpacity: shadowBlur ? shadowBlur / 20 : 0.4,
-      };
-    }
-    return null;
-  }, [inset, shadowColor, shadowBlur, shadowOffset]);
+  const outerShadowOffset = createOuterShadowOffset({
+    inset,
+    shadowColor,
+    shadowBlur,
+    shadowOffset,
+  });
 
   return (
-    <Canvas
-      style={[
-        outerShadowOffset,
-        style,
-        {
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          backgroundColor: 'transparent',
-          width,
-          height,
-        },
-      ]}
-    >
+    <Canvas style={[outerShadowOffset, style, styles.canvas]}>
       <RoundedRect
         x={0}
         y={0}

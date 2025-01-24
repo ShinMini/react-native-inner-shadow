@@ -4,20 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ShadowView, LinearShadowView } from 'react-native-inner-shadow';
 
 function App(): React.JSX.Element {
-  // const [shadowBlur, setShadowBlur] = useState(3);
-  // const [shadowOffsetWidth, setShadowOffsetWidth] = useState(2);
-  // const [shadowOffsetHeight, setShadowOffsetHeight] = useState(2);
-
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: 20,
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-        }}
-      >
+      <View style={styles.shadowBox}>
         <ShadowView
           inset
           shadowBlur={3}
@@ -69,6 +58,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 20,
+  },
+  shadowBox: {
+    flexDirection: 'row',
+    gap: 20,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   shadowView: {
     backgroundColor: '#fffeed',
