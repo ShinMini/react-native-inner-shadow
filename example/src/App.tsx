@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { ShadowView, LinearShadowView } from './src/index';
+import { ShadowView, LinearShadowView } from 'react-native-inner-shadow';
 
 function App(): React.JSX.Element {
   // const [shadowBlur, setShadowBlur] = useState(3);
