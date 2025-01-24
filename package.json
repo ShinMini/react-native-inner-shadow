@@ -8,8 +8,7 @@
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
   "description": "Inner Shadows with linear design UI in react-native",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "example": "yarn workspace react-native-inner-shadow-example",
     "start": "react-native start",
     "test": "npx jest src",
     "typecheck": "tsc",
@@ -22,6 +21,9 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
+  "workspaces": [
+    "example"
+  ],
   "dependencies": {
     "@shopify/react-native-skia": "^1.10.2",
     "expo": "^52.0.27"
