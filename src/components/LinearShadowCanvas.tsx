@@ -10,6 +10,7 @@ import {
   createStyles,
   getLinearDirection,
 } from '../utils';
+import { useMemo } from 'react';
 
 /**
  * LinearShadowCanvas
@@ -50,12 +51,16 @@ export default function LinearShadowCanvas({
 
   const styles = createStyles({ width, height });
 
-  const outerShadowOffset = createOuterShadowOffset({
-    inset,
-    shadowColor,
-    shadowBlur,
-    shadowOffset,
-  });
+  const outerShadowOffset = useMemo(
+    () =>
+      createOuterShadowOffset({
+        inset,
+        shadowColor,
+        shadowBlur,
+        shadowOffset,
+      }),
+    [inset, shadowColor, shadowBlur, shadowOffset]
+  );
 
   return (
     <Canvas style={[outerShadowOffset, style, styles.canvas]}>

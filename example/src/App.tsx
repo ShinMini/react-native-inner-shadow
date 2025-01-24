@@ -9,8 +9,7 @@ function App(): React.JSX.Element {
       <View style={styles.shadowBox}>
         <ShadowView
           inset
-          shadowBlur={3}
-          isReflectedLightEnabled={false}
+          // isReflectedLightEnabled={false}
           style={styles.shadowView}
         >
           <Text style={styles.context}>Inner Shadow</Text>
@@ -28,8 +27,9 @@ function App(): React.JSX.Element {
 
         <ShadowView
           isReflectedLightEnabled
-          shadowOffset={{ width: 9, height: 9 }}
-          reflectedLightOffset={{ width: 4, height: 4 }}
+          // shadowBlur={10}
+          // shadowOffset={{ width: 9, height: 9 }}
+          // reflectedLightOffset={{ width: 4, height: 4 }}
           backgroundColor="#2A9D8F"
           style={styles.shadowView}
         >

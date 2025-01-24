@@ -169,10 +169,10 @@ export function createOuterShadowOffset({
 }: OuterShadowOffsetProps) {
   if (!inset) {
     return {
-      shadowColor: inset ? 'transparent' : shadowColor,
+      shadowColor,
       shadowOffset,
       // blur: 0 ~ 20, opacity: 0 ~ 1
-      shadowOpacity: shadowBlur ? shadowBlur / 20 : 0.4,
+      shadowOpacity: shadowBlur ? shadowBlur / 5 : 0.6,
     };
   }
   return null;

@@ -1,8 +1,5 @@
 import { ShadowView, LinearShadowView } from './components/ShadowView';
 
-import LinearShadowCanvas from './components/LinearShadowCanvas';
-import InnerShadowCanvas from './components/ShadowCanvas';
-
 import { getBackgroundColor, getShadowProperty } from './utils';
 
 import {
@@ -36,4 +33,4 @@ export {
 export { getBackgroundColor, getShadowProperty };
 
 // Export the main components and utility functions.
-export { ShadowView, LinearShadowView, InnerShadowCanvas, LinearShadowCanvas };
+export { ShadowView, LinearShadowView };

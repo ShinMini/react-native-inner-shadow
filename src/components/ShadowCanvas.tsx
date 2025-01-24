@@ -1,6 +1,7 @@
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import type { ShadowCanvasProps } from '../types';
 import { createOuterShadowOffset, createStyles } from '../utils';
+import { useMemo } from 'react';
 
 /**
  * ShadowCanvas
@@ -45,12 +46,16 @@ export default function ShadowCanvas({
 
   // Prepare the shadow offset and blur for the main shadow layer.
   // You can overwrite these values with `style` property.
-  const outerShadowOffset = createOuterShadowOffset({
-    inset,
-    shadowColor,
-    shadowBlur,
-    shadowOffset,
-  });
+  const outerShadowOffset = useMemo(
+    () =>
+      createOuterShadowOffset({
+        inset,
+        shadowColor,
+        shadowBlur,
+        shadowOffset,
+      }),
+    [inset, shadowColor, shadowBlur, shadowOffset]
+  );
 
   return (
     <Canvas style={[outerShadowOffset, style, styles.canvas]}>
