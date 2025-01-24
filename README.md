@@ -8,9 +8,12 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ## Preview
 
-  <img width="366" alt="image" src="https://github.com/user-attachments/assets/c588c061-d2c3-4d90-85ed-c71689b2a8cf"  alt="thumbnail 1" />
-  <img width="198" alt="image" src="https://github.com/user-attachments/assets/8ca036e2-6fd9-4551-9a61-12b96eba8130" alt="thumbnail 2" />
-  <img width="259" alt="image" src="https://github.com/user-attachments/assets/b01da8d7-eb45-4eee-a0a9-8ce57dbf37b9" alt="thumbnail 3" />
+  <img width="366" src="https://github.com/user-attachments/assets/c588c061-d2c3-4d90-85ed-c71689b2a8cf"  alt="thumbnail 1" />
+  <img width="259" src="https://github.com/user-attachments/assets/b01da8d7-eb45-4eee-a0a9-8ce57dbf37b9" alt="thumbnail 3" />
+  
+
+ <img height="500" alt="shadow button usages" src="https://github.com/user-attachments/assets/5a95789d-9cf6-4de0-8e5b-5953a736edca" />
+
 
 <br />
 <br />
