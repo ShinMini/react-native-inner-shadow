@@ -17,6 +17,7 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.6",
     "react-native-inner-shadow": "^0.2.3",
+    "react-native-reanimated": "~3.16.1",
     "react-native-web": "~0.19.13"
   },
   "devDependencies": {

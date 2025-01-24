@@ -10,7 +10,6 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
   <img src="https://github.com/user-attachments/assets/6f027db0-eb9d-4f6f-a003-a650d0582752" alt="thumbnail"  height="300px"/>
 
-
 <br />
 <br />
 
@@ -28,13 +27,16 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 
 ```bash
 # Using npm
-npm install react-native-inner-shadow
+npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 
 # Using Yarn
-yarn add react-native-inner-shadow
+yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+
 ```
 
-> Note: You must have React Native Skia properly installed and configured in your React Native project.
+> Note: You must have React Native **Skia** & **reanimated** properly installed and configured in your React Native project.
+> For more information, refer to the [official documentation](https://shopify.github.io/react-native-skia/).
+> > 반드시 React Native **Skia**, **reanimated**가 올바르게 설치되어 있고 프로젝트에 구성되어 있어야 합니다!
 
 ## Usage Examples
 
