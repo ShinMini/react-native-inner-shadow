@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 90,
   },
   context: {
-    fontSize: 24,
+    fontSize: 20,
+    color: 'lightgray',
   },
 });
 
