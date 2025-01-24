@@ -1,4 +1,5 @@
 import { ShadowView, LinearShadowView } from './components/ShadowView';
+import { ShadowPressable } from './components/ShadowPressable';
 
 import { getBackgroundColor, getShadowProperty } from './utils';
 
@@ -33,4 +34,4 @@ export {
 export { getBackgroundColor, getShadowProperty };
 
 // Export the main components and utility functions.
-export { ShadowView, LinearShadowView };
+export { ShadowView, LinearShadowView, ShadowPressable };

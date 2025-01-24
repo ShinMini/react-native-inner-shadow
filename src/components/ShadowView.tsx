@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
-import { Pressable } from 'react-native';
 
 import ShadowCanvas from './ShadowCanvas';
 import { getBackgroundColor, getShadowProperty } from '../utils';
 import LinearShadowCanvas from './LinearShadowCanvas';
 import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
+import Animated from 'react-native-reanimated';
 
 const _ShadowView: React.FunctionComponent<
   InnerShadowProps & LinearInnerShadowProps
@@ -23,7 +23,7 @@ const _ShadowView: React.FunctionComponent<
   }, [props.colors]);
 
   return (
-    <Pressable
+    <Animated.View
       /**
        * onLayout captures the size of this component once it’s rendered.
        * We store these dimensions in state so we can pass them to the <Canvas>.
@@ -68,7 +68,7 @@ const _ShadowView: React.FunctionComponent<
        * appear in front of the shadow effect.
        */}
       {props.children}
-    </Pressable>
+    </Animated.View>
   );
 };
 

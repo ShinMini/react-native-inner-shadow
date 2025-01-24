@@ -1,6 +1,6 @@
 import type { AnimatedProp, Color } from '@shopify/react-native-skia';
 import type { ReactNode } from 'react';
-import type { PressableProps, ViewStyle } from 'react-native';
+import type { PressableProps, ViewProps, ViewStyle } from 'react-native';
 
 // These two scales are opposite each other to create a "reflected light" effect.
 const DEFAULT_SHADOW_OFFSET_SCALE = 2 as const;
@@ -15,6 +15,7 @@ const DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
 const DEFAULT_BACKGROUND_COLOR = '#FFFFFF' as const;
 const DEFAULT_REFLECTED_LIGHT_COLOR = '#EEE9E92D' as const;
 const DEFAULT_SHADOW_COLOR = '#2F2F2FBC' as const;
+// const TEST_BACKGROUND_COLOR = '#FFFEED' as const;
 
 /**
  * Default shadow blur radius for the main shadow and reflected light.
@@ -110,7 +111,7 @@ export type InnerShadowProps = {
    * for rounded corners, etc.
    */
   style?: ViewStyle;
-} & PressableProps;
+} & ViewProps;
 
 export type ShadowCanvasProps = InnerShadowProps & {
   width: number;
@@ -150,6 +151,33 @@ export type LinearInnerShadowProps = {
 
 export type LinearShadowCanvasProps = LinearInnerShadowProps &
   ShadowCanvasProps;
+
+export type ShadowPressableProps = Omit<InnerShadowProps, 'inset'> & {
+  /**
+   * The space between the shadow and the box.
+   * @Default 3
+   *
+   * If your shadow is too close to the edge of the box, it may be clipped.
+   * I'd recommend a minimum of 3-5 pixels of space for most shadows.
+   */
+  shadowSpace?: number; // 3
+  /**
+   * The initial depth of the shadow effect.
+   * @Default 5
+   * @argument min: 0, max: 20
+   */
+  initialDepth?: number; // 5;
+  /**
+   * The duration of the shadow animation when pressed.
+   * @Default 500
+   */
+  duration?: number; // 500;
+  /**
+   * The damping ratio for the shadow animation.
+   * @Default 0.8
+   */
+  dumping?: number; //0.8;
+} & PressableProps;
 
 export {
   DEFAULT_SHADOW_OFFSET_SCALE,

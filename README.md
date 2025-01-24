@@ -243,6 +243,87 @@ Use `from` and `to` to define the gradient direction (e.g., `top` → `bottom` o
 
 ---
 
+## `ShadowPressable`
+
+`ShadowPressable` is a specialized component that provides a **“press in, press out”** shadow animation, creating a realistic push-button feel. When the user presses (touches down), the shadow inverts (becomes an inset shadow), and on release, it returns to its original “raised” state. This leverages [React Native Skia](https://shopify.github.io/react-native-skia/) for drawing shadows and [Reanimated](https://docs.swmansion.com/react-native-reanimated/) for smooth transitions.
+
+### Example Usage
+
+```tsx
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
+import { ShadowPressable } from 'react-native-inner-shadow';
+
+export default function App() {
+  return (
+    <ShadowPressable
+      style={styles.pressable}
+      initialDepth={3}
+      shadowBlur={20}
+      duration={200}
+      dumping={0.8}
+    >
+      <Text style={styles.label}>Press Me</Text>
+    </ShadowPressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  pressable: {
+    width: 150,
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 18,
+    color: '#333',
+  },
+});
+```
+
+### Props
+
+`ShadowPressableProps` extends typical `PressableProps` plus the following:
+
+| Prop                      | Type       | Default                      | Description                                                                            |
+| ------------------------- | ---------- | ---------------------------- | -------------------------------------------------------------------------------------- |
+| **`width`**              | `number`   | `0`                          | Width of the component (optional if style provides width).                             |
+| **`height`**             | `number`   | `0`                          | Height of the component (optional if style provides height).                           |
+| **`initialDepth`**       | `number`   | `3`                          | Controls how “high” or “deep” the button appears in normal (unpressed) state.          |
+| **`shadowSpace`**        | `number`   | `9`                          | Padding around the box inside the Skia `<Canvas>` to avoid clipping larger shadows.    |
+| **`shadowBlur`**         | `number`   | `20`                         | Base blur radius for the shadow. Adjust for softer/harder edges.                       |
+| **`shadowColor`**        | `string`   | `'#2F2F2FBC'` (dark gray)    | The color of the main shadow.                                                          |
+| **`reflectedLightColor`**| `string`   | `'#EEE9E92D'`                | The color of the optional reflected-light highlight on the opposite side.             |
+| **`duration`**           | `number`   | `200`                        | Animation duration (milliseconds) for the press in/out transitions.                    |
+| **`dumping`**            | `number`   | `0.8`                        | Scales how far the shadow travels when pressed in.                                     |
+| **`isReflectedLightEnabled`** | `boolean` | `true`                   | Whether to render a secondary “reflected light” highlight.                             |
+
+### How it Works
+
+- The component listens for `onPressIn` and `onPressOut` events:
+  - **`onPressIn`**: Animates the shadow to an inset state (negative depth) using Reanimated’s `withTiming`.
+  - **`onPressOut`**: Returns the shadow to its original “raised” state.
+- Shadows and highlights are drawn on a Skia `<Canvas>`, allowing smooth, hardware-accelerated effects on both iOS and Android.
+
+### Tips & Notes
+
+1. **Clipping**
+   - If you use a large `initialDepth`, ensure `shadowSpace` is big enough to prevent the shadow from getting cropped by the canvas boundaries.
+
+2. **Customization**
+   - You can adjust `shadowBlur` or color to change the shadow’s softness and tone.
+   - `dumping` (sometimes referred to as “damping”) determines how far the shadow insets when pressed.
+
+3. **Performance**
+   - Like other Skia-based shadows, each `ShadowPressable` uses a `<Canvas>`. This is typically performant enough for a few buttons, but test carefully if you use many such components in a list or dynamic layout.
+
+By combining Skia and Reanimated, `ShadowPressable` makes it simple to create a visually engaging, tactile button effect that simulates pressing into or popping out of the surface. Enjoy customizing it for your design needs!
+
+---
+
 ## Constants
 
 The library also exports a few useful defaults:

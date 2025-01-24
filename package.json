@@ -1,6 +1,6 @@
 {
   "name": "react-native-inner-shadow",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "bugs": {
     "url": "https://github.com/ShinMini/react-native-inner-shadow/issues"
   },
@@ -31,7 +31,8 @@
     "example"
   ],
   "dependencies": {
-    "@shopify/react-native-skia": "^1.10.2"
+    "@shopify/react-native-skia": "^1.10.2",
+    "react-native-reanimated": "~3.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

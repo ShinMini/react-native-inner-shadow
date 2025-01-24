@@ -12569,6 +12569,7 @@ __metadata:
     react: 18.3.1
     react-native: 0.75.4
     react-native-builder-bob: ^0.35.2
+    react-native-reanimated: ~3.16.1
     react-test-renderer: 18.3.1
     release-it: ^17.10.0
     typescript: 5.0.4
