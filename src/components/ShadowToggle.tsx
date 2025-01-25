@@ -1,20 +1,24 @@
+import { useState } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import {
   interpolate,
+  interpolateColor,
+  useAnimatedReaction,
   useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
 import {
   DEFAULT_REFLECTED_LIGHT_COLOR,
   DEFAULT_SHADOW_COLOR,
-  type ShadowPressableProps,
+  type ShadowToggleProps,
 } from '../types';
-import { useState } from 'react';
-import { getBackgroundColor } from '../utils';
-import { Pressable, StyleSheet } from 'react-native';
 
-export const ShadowPressable = ({
+import { getBackgroundColor } from '../utils';
+
+export const ShadowToggle = ({
   width: _width = 0,
   height: _height = 0,
   initialDepth = 3,
@@ -25,8 +29,10 @@ export const ShadowPressable = ({
   duration = 200,
   damping = 0.8,
   isReflectedLightEnabled = true,
+  isActive = false,
+  activeColor,
   ...props
-}: ShadowPressableProps) => {
+}: ShadowToggleProps) => {
   const [boxSize, setBoxSize] = useState({ width: _width, height: _height });
 
   // Determine the final background color (pulling from `props.style` or a default).
@@ -39,6 +45,14 @@ export const ShadowPressable = ({
     interpolate(depth.value, [-initialDepth, initialDepth * damping], [-3, 3])
   );
 
+  const _backgroundColor = useDerivedValue(() =>
+    interpolateColor(
+      depth.value,
+      [initialDepth, -initialDepth * damping],
+      [backgroundColor, activeColor || backgroundColor]
+    )
+  );
+
   const inset = useDerivedValue(() => depth.value <= 0);
   const blur = useDerivedValue(() =>
     interpolate(
@@ -48,12 +62,15 @@ export const ShadowPressable = ({
     )
   );
 
-  const onPressIn = () => {
-    depth.value = withTiming(-initialDepth * damping, { duration });
-  };
-  const onPressOut = () => {
-    depth.value = withTiming(initialDepth, { duration });
-  };
+  useAnimatedReaction(
+    () => isActive,
+    (next) => {
+      depth.value = withTiming(next ? -initialDepth * damping : initialDepth, {
+        duration,
+      });
+    },
+    [isActive]
+  );
 
   return (
     <Pressable
@@ -69,8 +86,6 @@ export const ShadowPressable = ({
           backgroundColor: 'transparent',
         },
       ]}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
     >
       {boxSize.width === 0 && boxSize.height === 0 ? null : (
         <Canvas
@@ -86,7 +101,7 @@ export const ShadowPressable = ({
             width={boxSize.width - shadowSpace * 2}
             height={boxSize.height - shadowSpace * 2}
             r={boxRadius}
-            color={backgroundColor} // The background fill of the rect
+            color={_backgroundColor} // The background fill of the rect
           >
             <Shadow
               dx={offset}
@@ -119,5 +134,5 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     backgroundColor: 'transparent',
-  },
+  } as const,
 });

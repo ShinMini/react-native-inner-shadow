@@ -22,6 +22,12 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
   - [ShadowPressable](#shadowpressable)
     - [Example](#example)
     - [ShadowPressable Props](#shadowpressable-props)
+  - [ShadowToggle](#shadowtoggle)
+    - [When to Use](#when-to-use)
+    - [Simple Example](#simple-example)
+    - [Key Props](#key-props)
+    - [Behavior](#behavior)
+    - [Notes](#notes)
   - [API Specification](#api-specification)
     - [Components](#components)
     - [`InnerShadowProps` Type](#innershadowprops-type)
@@ -36,6 +42,8 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
 <img width="366" alt="thumbnail 1" src="https://github.com/user-attachments/assets/c588c061-d2c3-4d90-85ed-c71689b2a8cf" />
 
 ![shadow button use case](https://github.com/user-attachments/assets/37de0c80-517e-4cb5-96d0-e7346bd2c15c)
+
+![toggle button use case](https://github.com/user-attachments/assets/c88e7169-3746-4438-b36a-5e2ebd4dcced)
 
 ---
 
@@ -186,6 +194,90 @@ const styles = StyleSheet.create({
   1. **Clipping**: If you use a large `initialDepth`, ensure `shadowSpace` is big enough to prevent the shadow from getting cropped.
   2. **Customization**: Adjust `shadowBlur` or color to change the shadow’s softness.
   3. **Performance**: Typically fine for a few buttons, but test carefully if using many such components in a list.
+
+---
+
+## ShadowToggle
+
+`ShadowToggle` is a controlled component that visually toggles between a “raised” state and an “inset” state, driven by an external `isActive` boolean. It can also interpolate between different background colors if you supply an `activeColor`.
+
+### When to Use
+
+- You want a button-like or toggle-like component that **visually presses in** when active, and **pops out** when inactive.
+- You prefer controlling the toggled state from outside (similar to a controlled component).
+
+### Simple Example
+
+```tsx
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { ShadowToggle } from 'react-native-inner-shadow';
+
+export default function ToggleExample() {
+  const [isActive, setIsActive] = useState(false);
+
+  return (
+    <View style={styles.container}>
+      <ShadowToggle
+        style={styles.toggle}
+        isActive={isActive}
+        activeColor="#FFD700" // e.g., highlight with gold color
+        onPress={() => setIsActive(!isActive)} // optional if you want internal press handling
+      >
+        <Text style={styles.label}>
+          {isActive ? 'Active' : 'Inactive'}
+        </Text>
+      </ShadowToggle>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  toggle: {
+    width: 120,
+    height: 120,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  label: {
+    fontWeight: 'bold',
+  },
+});
+```
+
+### Key Props
+
+| Prop                      | Type      | Default                   | Description                                                                                       |
+| ------------------------- | --------- | ------------------------- | ------------------------------------------------------------------------------------------------- |
+| **`isActive`**            | `boolean` | `false`                   | Controls whether the shadow is inset (active) or raised (inactive).                               |
+| **`activeColor`**         | `string`  | *(none)*                  | Optional color to transition to when `isActive` is `true`. If not provided, uses the normal color.|
+| **`initialDepth`**        | `number`  | `3`                       | How “deep” or “raised” the toggle appears by default.                                             |
+| **`damping`**             | `number`  | `0.8`                     | Scales how far the shadow travels inward when `isActive` is true (shallow vs. fully inset).        |
+| **`shadowBlur`**          | `number`  | `10`                      | Blur radius for the shadow edges.                                                                  |
+| **`shadowSpace`**         | `number`  | `6`                       | Padding inside the canvas to avoid clipping big shadows.                                          |
+| **`duration`**            | `number`  | `200`                     | Animation duration in milliseconds for toggling in/out.                                           |
+| **`isReflectedLightEnabled`** | `boolean` | `true`                 | Whether to include a highlight “reflected light” shadow.                                          |
+
+### Behavior
+
+- **Toggled Inset**: If `isActive` is `true`, the shadow is driven inward (negative depth).
+- **Toggled Outset**: If `isActive` is `false`, the shadow returns to its raised, outer state.
+- **Color Transition**: Optionally interpolate between a normal background color and `activeColor`.
+- **Layout**: The component measures its parent `Pressable` size with `onLayout` and draws a Skia `<Canvas>` accordingly.
+
+### Notes
+
+- **Controlled vs. Uncontrolled**: By default, you pass an external `isActive` state. If you want it to manage its own toggling internally, you can add your own `onPress` handler that flips a local state.
+- **Big Offsets**: If you increase `initialDepth` or `shadowBlur` significantly, consider using a larger `shadowSpace`.
+- **Performance**: Each toggle triggers a Skia redraw. Typically smooth for a few toggles, but test if you have many on the same screen.
+-
 
 ---
 

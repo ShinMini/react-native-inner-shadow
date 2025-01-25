@@ -186,10 +186,10 @@ export type ShadowToggleProps = ShadowPressableProps & {
    */
   isActive?: boolean;
   /**
-   * The type of toggle to render.
-   * @Default 'check'
+   * The color of the active state.
+   * @Default same as backgroundColor
    */
-  type?: 'check' | 'switch';
+  activeColor?: string;
 };
 
 export {
