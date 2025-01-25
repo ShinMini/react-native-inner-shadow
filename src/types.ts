@@ -176,8 +176,21 @@ export type ShadowPressableProps = Omit<InnerShadowProps, 'inset'> & {
    * The damping ratio for the shadow animation.
    * @Default 0.8
    */
-  dumping?: number; //0.8;
+  damping?: number; //0.8;
 } & PressableProps;
+
+export type ShadowToggleProps = ShadowPressableProps & {
+  /**
+   * current state of the toggle
+   * @Default false
+   */
+  isActive?: boolean;
+  /**
+   * The type of toggle to render.
+   * @Default 'check'
+   */
+  type?: 'check' | 'switch';
+};
 
 export {
   DEFAULT_SHADOW_OFFSET_SCALE,

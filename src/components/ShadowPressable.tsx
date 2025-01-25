@@ -23,7 +23,7 @@ export const ShadowPressable = ({
   shadowColor = DEFAULT_SHADOW_COLOR,
   reflectedLightColor = DEFAULT_REFLECTED_LIGHT_COLOR,
   duration = 200,
-  dumping = 0.8,
+  damping = 0.8,
   isReflectedLightEnabled = true,
   ...props
 }: ShadowPressableProps) => {
@@ -36,7 +36,7 @@ export const ShadowPressable = ({
   const depth = useSharedValue(initialDepth);
   const offset = useDerivedValue(() => Math.abs(depth.value));
   const rfOffset = useDerivedValue(() =>
-    interpolate(depth.value, [-initialDepth, initialDepth * dumping], [-3, 3])
+    interpolate(depth.value, [-initialDepth, initialDepth * damping], [-3, 3])
   );
 
   const inset = useDerivedValue(() => depth.value <= 0);
@@ -44,12 +44,12 @@ export const ShadowPressable = ({
     interpolate(
       Math.abs(depth.value),
       [shadowBlur, 0],
-      [0, initialDepth * dumping]
+      [0, initialDepth * damping]
     )
   );
 
   const onPressIn = () => {
-    depth.value = withTiming(-initialDepth * dumping, { duration });
+    depth.value = withTiming(-initialDepth * damping, { duration });
   };
   const onPressOut = () => {
     depth.value = withTiming(initialDepth, { duration });

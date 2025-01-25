@@ -138,7 +138,7 @@ export default function App() {
       initialDepth={3}
       shadowBlur={20}
       duration={200}
-      dumping={0.8}
+      damping={0.8}
     >
       <Text style={styles.label}>Press Me</Text>
     </ShadowPressable>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
 | **`shadowColor`**              | `string`   | `'#2F2F2FBC'`       | The color of the main shadow.                                                              |
 | **`reflectedLightColor`**      | `string`   | `'#EEE9E92D'`       | The color of the optional reflected-light highlight on the opposite side.                 |
 | **`duration`**                 | `number`   | `200`               | Animation duration (milliseconds) for the press in/out transitions.                        |
-| **`dumping`**                  | `number`   | `0.8`               | Scales how far the shadow travels when pressed in (sometimes called "damping").            |
+| **`damping`**                  | `number`   | `0.8`               | Scales how far the shadow travels when pressed in.            |
 | **`isReflectedLightEnabled`**  | `boolean`  | `true`             | Whether to render a secondary “reflected light” highlight.                                 |
 
 - **How it Works**

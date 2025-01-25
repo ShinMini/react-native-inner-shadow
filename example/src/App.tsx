@@ -7,7 +7,7 @@ function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <ShadowPressable style={styles.shadowView}>
-        <Text style={styles.context}>Press Me</Text>
+        <Text style={styles.context}>Toggle Me!</Text>
       </ShadowPressable>
     </View>
   );
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 176,
     height: 76,
-    borderRadius: 90,
   },
   context: {
     fontSize: 20,
