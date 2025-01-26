@@ -1,3 +1,4 @@
+
 # react-native-inner-shadow
 
 A React Native library for creating **inset shadows** and **reflected light** effects with [React Native Skia](https://shopify.github.io/react-native-skia/).
@@ -7,15 +8,27 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
 ![license](https://img.shields.io/github/license/ShinMini/react-native-inner-shadow?style=flat-square)
 ![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
 
+## Installation
+
+```bash
+# Using npm
+npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+
+# Using Yarn
+yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+```
+
+> **Note**: You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project. For more information, refer to the [official documentation](https://shopify.github.io/react-native-skia/).
+
 ---
 
 ## Table of Contents
 
 - [react-native-inner-shadow](#react-native-inner-shadow)
+  - [Installation](#installation)
   - [Table of Contents](#table-of-contents)
   - [Preview](#preview)
   - [Features](#features)
-  - [Installation](#installation)
   - [Usage Examples](#usage-examples)
     - [1. Simple Inset Shadow](#1-simple-inset-shadow)
     - [2. Linear Gradient with Inset Shadow](#2-linear-gradient-with-inset-shadow)
@@ -39,11 +52,9 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
 
 ## Preview
 
-<img width="366" alt="thumbnail 1" src="https://github.com/user-attachments/assets/c588c061-d2c3-4d90-85ed-c71689b2a8cf" />
+<img width="45%" max-width="450px" alt="inner shadow & linear shadow sample" src="https://github.com/user-attachments/assets/c588c061-d2c3-4d90-85ed-c71689b2a8cf" />
 
-![shadow button use case](https://github.com/user-attachments/assets/37de0c80-517e-4cb5-96d0-e7346bd2c15c)
-
-![toggle button use case](https://github.com/user-attachments/assets/c88e7169-3746-4438-b36a-5e2ebd4dcced)
+<img width="45%" max-width="450px" alt="inner shadow pressable & toggle sample gif" src="https://github.com/user-attachments/assets/2a59b1a8-65df-487b-aabe-1f0a94d5aa10" />
 
 ---
 
@@ -54,20 +65,6 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
 - **Solid Background or Linear Gradient**: Choose between a simple solid fill or a multi-color gradient.
 - **Customizable**: Control blur radius, color, offsets, and more.
 - **Skia-Powered**: Uses [React Native Skia](https://shopify.github.io/react-native-skia/) for cross-platform, high-performance rendering.
-
----
-
-## Installation
-
-```bash
-# Using npm
-npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
-
-# Using Yarn
-yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
-```
-
-> **Note**: You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project. For more information, refer to the [official documentation](https://shopify.github.io/react-native-skia/).
 
 ---
 
