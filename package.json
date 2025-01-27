@@ -6,7 +6,15 @@
   },
   "author": "ShinMini <gusals121234@gmail.com> (https://github.com/ShinMini)",
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
+  "license": "ISC",
   "description": "Inner Shadows with linear design UI in react-native",
+  "keywords": [
+    "react-native",
+    "inner-shadow",
+    "inset",
+    "skia",
+    "reanimated"
+  ],
   "scripts": {
     "example": "yarn workspace react-native-inner-shadow-example",
     "start": "react-native start",
@@ -19,9 +27,9 @@
   },
   "peerDependencies": {
     "@shopify/react-native-skia": "^1.10.2",
-    "react": "*",
-    "react-native": "*",
-    "react-native-reanimated": "~3.16.1"
+    "react": ">=17.0.0",
+    "react-native": ">=0.64.0",
+    "react-native-reanimated": "^3.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -30,10 +38,6 @@
   "workspaces": [
     "example"
   ],
-  "dependencies": {
-    "@shopify/react-native-skia": "^1.10.2",
-    "react-native-reanimated": "~3.16.1"
-  },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
@@ -45,6 +49,7 @@
     "@react-native/metro-config": "0.75.4",
     "@react-native/typescript-config": "0.75.4",
     "@release-it/conventional-changelog": "^9.0.2",
+    "@shopify/react-native-skia": "1.10.2",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
@@ -59,6 +64,7 @@
     "react": "18.3.1",
     "react-native": "0.75.4",
     "react-native-builder-bob": "^0.35.2",
+    "react-native-reanimated": "3.0.0",
     "react-test-renderer": "18.3.1",
     "release-it": "^17.10.0",
     "typescript": "5.0.4"
@@ -186,14 +192,5 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/"
-  ],
-  "keywords": [
-    "react-native",
-    "react native",
-    "inner",
-    "inner shadow",
-    "linear",
-    "inset",
-    "neumorphism"
   ]
 }
