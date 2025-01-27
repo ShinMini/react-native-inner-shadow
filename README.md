@@ -1,12 +1,13 @@
-
 # react-native-inner-shadow
 
 A React Native library for creating **inset shadows** and **reflected light** effects with [React Native Skia](https://shopify.github.io/react-native-skia/).
-Supports both **solid** and **linear gradient** backgrounds for advanced UI designs.
+Supports both **solid** and **linear gradient** backgrounds for advanced UI designs, plus interactive pressable or toggle states using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
 
 ![npm](https://img.shields.io/npm/v/react-native-inner-shadow?style=flat-square)
 ![license](https://img.shields.io/github/license/ShinMini/react-native-inner-shadow?style=flat-square)
 ![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
+
+---
 
 ## Installation
 
@@ -14,18 +15,19 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
 # Using npm
 npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 
-# Using Yarn
+# Or using Yarn
 yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
-***Using Expo***
+If you’re using **Expo**, you can run:
 
 ```bash
-npm expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
-> **!!! Note !!!**
-> You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project. For more information, refer to the [official documentation](https://shopify.github.io/react-native-skia/).
+> **Important**
+> You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project.
+> See the [Skia documentation](https://shopify.github.io/react-native-skia/) and the [Reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/) for details.
 
 ---
 
@@ -67,11 +69,11 @@ npm expo install react-native-inner-shadow @shopify/react-native-skia react-nati
 
 ## Features
 
-- **Inset Shadows**: Achieve the “inset” effect that is not supported by standard React Native shadows.
-- **Reflected Light**: Optional highlight for a more 3D “raised” or “depressed” effect.
-- **Solid Background or Linear Gradient**: Choose between a simple solid fill or a multi-color gradient.
-- **Customizable**: Control blur radius, color, offsets, and more.
-- **Skia-Powered**: Uses [React Native Skia](https://shopify.github.io/react-native-skia/) for cross-platform, high-performance rendering.
+- **Inset Shadows**: Achieve the “inset” effect that isn’t natively supported by React Native.
+- **Reflected Light**: Optional highlight (on the opposite side of the main shadow) for a more 3D, “depressed” look.
+- **Solid or Linear Gradient**: Choose between a plain background color (`InnerShadowView`) or multi-color gradient (`LinearShadowView`).
+- **Pressable & Toggle Support**: Interactive variants (`ShadowPressable`, `ShadowToggle`) to animate shadows with [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
+- **High Performance**: Powered by [React Native Skia](https://shopify.github.io/react-native-skia/) for smooth cross-platform rendering.
 
 ---
 
@@ -86,17 +88,16 @@ import { InnerShadowView } from 'react-native-inner-shadow';
 
 export default function App() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <InnerShadowView
         style={{ width: 120, height: 120, borderRadius: 12 }}
         inset
-        isReflectedLightEnabled={false}
         shadowColor="#00000066"
         shadowOffset={{ width: 2, height: 2 }}
         shadowBlur={5}
-        backgroundColor="#ffffff"
+        isReflectedLightEnabled={false}
       >
-        {/* Child content goes here */}
+        {/* Your content */}
       </InnerShadowView>
     </View>
   );
@@ -112,7 +113,7 @@ import { LinearShadowView } from 'react-native-inner-shadow';
 
 export default function GradientExample() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <LinearShadowView
         style={{ width: 150, height: 150, borderRadius: 16 }}
         from="top"
@@ -123,7 +124,7 @@ export default function GradientExample() {
         shadowBlur={8}
         inset
       >
-        {/* Child content goes here */}
+        {/* Your content */}
       </LinearShadowView>
     </View>
   );
@@ -134,7 +135,7 @@ export default function GradientExample() {
 
 ## ShadowPressable
 
-`ShadowPressable` is a specialized component that provides a **“press in, press out”** shadow animation, creating a realistic push-button feel. When the user presses (touches down), the shadow inverts (becomes an inset shadow), and on release, it returns to its original “raised” state. This leverages [React Native Skia](https://shopify.github.io/react-native-skia/) for drawing shadows and [Reanimated](https://docs.swmansion.com/react-native-reanimated/) for smooth transitions.
+`ShadowPressable` is a specialized component that provides a **“press in, press out”** shadow animation for a physically realistic button effect. By default, pressing it inverts the shadow (making it look “depressed”), then returns to the original raised state on release. This is powered by **Skia** (for drawing) and **Reanimated** (for animations).
 
 ### Example
 
@@ -146,7 +147,7 @@ import { ShadowPressable } from 'react-native-inner-shadow';
 export default function App() {
   return (
     <ShadowPressable
-      style={styles.pressable}
+      style={styles.button}
       initialDepth={3}
       shadowBlur={20}
       duration={200}
@@ -157,45 +158,53 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({ pressable: { width: 150, height: 150, backgroundColor: '#fff', borderRadius: 12, justifyContent: 'center', alignItems: 'center', }, label: { fontSize: 18, color: '#333', }, });
+const styles = StyleSheet.create({
+  button: {
+    width: 150,
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 18,
+    color: '#333',
+  },
+});
 ```
 
 ### ShadowPressable Props
 
-| Prop                           | Type       | Default             | Description                                                                                |
-| ------------------------------ | ---------- | ------------------- | ------------------------------------------------------------------------------------------ |
-| **`width`**                    | `number`   | `0`                 | Width of the component (optional if style provides width).                                 |
-| **`height`**                   | `number`   | `0`                 | Height of the component (optional if style provides height).                               |
-| **`initialDepth`**             | `number`   | `3`                 | Controls how “high” or “deep” the button appears in normal (unpressed) state.              |
-| **`shadowSpace`**              | `number`   | `9`                 | Padding around the box inside the Skia `<Canvas>` to avoid clipping larger shadows.        |
-| **`shadowBlur`**               | `number`   | `20`                | Base blur radius for the shadow. Adjust for softer/harder edges.                           |
-| **`shadowColor`**              | `string`   | `'#2F2F2FBC'`       | The color of the main shadow.                                                              |
-| **`reflectedLightColor`**      | `string`   | `'#EEE9E92D'`       | The color of the optional reflected-light highlight on the opposite side.                 |
-| **`duration`**                 | `number`   | `200`               | Animation duration (milliseconds) for the press in/out transitions.                        |
-| **`damping`**                  | `number`   | `0.8`               | Scales how far the shadow travels when pressed in.            |
-| **`isReflectedLightEnabled`**  | `boolean`  | `true`             | Whether to render a secondary “reflected light” highlight.                                 |
+| Prop                          | Type      | Default       | Description                                                                                  |
+| ----------------------------- | --------- | ------------- | -------------------------------------------------------------------------------------------- |
+| **`width`**                   | `number`  | `0`           | Manual width (optional; if style has a width, that’s used).                                  |
+| **`height`**                  | `number`  | `0`           | Manual height (optional; if style has a height, that’s used).                                |
+| **`initialDepth`**            | `number`  | `3`           | Sets how “raised” the shadow is initially.                                                   |
+| **`shadowSpace`**             | `number`  | `9`           | Extra space inside the `<Canvas>` to prevent clipping if you have a big blur or offset.      |
+| **`shadowBlur`**              | `number`  | `20`          | Blur radius for the main shadow. Adjust to taste for softer/harder edges.                    |
+| **`shadowColor`**             | `string`  | `'#2F2F2FBC'` | Color of the main shadow (can be semi-transparent).                                          |
+| **`reflectedLightColor`**     | `string`  | `'#EEE9E92D'` | The color for a highlight on the opposite side of the main shadow.                           |
+| **`duration`**                | `number`  | `200`         | Animation duration (ms) for the press in/out transitions.                                    |
+| **`damping`**                 | `number`  | `0.8`         | Scales how far the shadow insets when pressed. (Sometimes spelled “damping.”)                |
+| **`isReflectedLightEnabled`** | `boolean` | `true`        | Whether to draw a second “reflected light” shadow.                                           |
 
-- **How it Works**
-  - The component listens for `onPressIn` and `onPressOut` events:
-    - **`onPressIn`**: Animates the shadow to an inset state (negative depth) using Reanimated’s `withTiming`.
-    - **`onPressOut`**: Returns the shadow to its original “raised” state.
-  - Shadows and highlights are drawn on a Skia `<Canvas>`, allowing smooth, hardware-accelerated effects on both iOS and Android.
+**Behavior**
 
-- **Tips & Notes**
-  1. **Clipping**: If you use a large `initialDepth`, ensure `shadowSpace` is big enough to prevent the shadow from getting cropped.
-  2. **Customization**: Adjust `shadowBlur` or color to change the shadow’s softness.
-  3. **Performance**: Typically fine for a few buttons, but test carefully if using many such components in a list.
+- **Press In**: Moves the shadow to an inset state (`depth < 0`).
+- **Release**: Returns shadow to the original “raised” position.
+- **Clipping**: If you do large offsets or big blurs, consider increasing `shadowSpace`.
 
 ---
 
 ## ShadowToggle
 
-`ShadowToggle` is a controlled component that visually toggles between a “raised” state and an “inset” state, driven by an external `isActive` boolean. It can also interpolate between different background colors if you supply an `activeColor`.
+`ShadowToggle` is a **controlled** variant of `ShadowPressable` (or a similar logic) that toggles based on an external `isActive` prop. If `isActive` is `true`, it insets the shadow; if `false`, it shows it raised. You can also interpolate background colors if you pass an `activeColor`.
 
 ### When to Use
 
-- You want a button-like or toggle-like component that **visually presses in** when active, and **pops out** when inactive.
-- You prefer controlling the toggled state from outside (similar to a controlled component).
+- You need a “toggle” or “switch” style button, where the pressed state is persistent, controlled by external logic.
+- You want to highlight the toggle is “on” or “off” visually with a shadow inset and possibly a different background color.
 
 ### Simple Example
 
@@ -212,62 +221,75 @@ export default function ToggleExample() {
       <ShadowToggle
         style={styles.toggle}
         isActive={isActive}
-        activeColor="#FFD700" // e.g., highlight with gold color
-        onPress={() => setIsActive(prev => !prev)} // optional if you want internal press handling
+        activeColor="#FFD700"
+        onPress={() => setIsActive(!isActive)}
       >
-        <Text style={styles.label}>
-          {isActive ? 'Active' : 'Inactive'}
-        </Text>
+        <Text style={styles.label}>{isActive ? 'Active' : 'Inactive'}</Text>
       </ShadowToggle>
     </View>
   );
 }
 
-const styles = StyleSheet.create({ container: { flex: 1, justifyContent: 'center', alignItems: 'center' }, toggle: { width: 120, height: 120, borderRadius: 12, backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', }, label: { fontWeight: 'bold', }, });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toggle: {
+    width: 120,
+    height: 120,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  label: {
+    fontWeight: 'bold',
+  },
+});
 ```
 
 ### Key Props
 
-| Prop                      | Type      | Default                   | Description                                                                                       |
-| ------------------------- | --------- | ------------------------- | ------------------------------------------------------------------------------------------------- |
-| **`isActive`**            | `boolean` | `false`                   | Controls whether the shadow is inset (active) or raised (inactive).                               |
-| **`activeColor`**         | `string`  | *(none)*                  | Optional color to transition to when `isActive` is `true`. If not provided, uses the normal color.|
-| **`initialDepth`**        | `number`  | `3`                       | How “deep” or “raised” the toggle appears by default.                                             |
-| **`damping`**             | `number`  | `0.8`                     | Scales how far the shadow travels inward when `isActive` is true (shallow vs. fully inset).        |
-| **`shadowBlur`**          | `number`  | `10`                      | Blur radius for the shadow edges.                                                                  |
-| **`shadowSpace`**         | `number`  | `6`                       | Padding inside the canvas to avoid clipping big shadows.                                          |
-| **`duration`**            | `number`  | `200`                     | Animation duration in milliseconds for toggling in/out.                                           |
-| **`isReflectedLightEnabled`** | `boolean` | `true`                 | Whether to include a highlight “reflected light” shadow.                                          |
+| Prop                      | Type      | Default | Description                                                                                 |
+| ------------------------- | --------- | ------- | ------------------------------------------------------------------------------------------- |
+| **`isActive`**            | `boolean` | `false` | Whether the shadow is inset (active) or raised (inactive).                                 |
+| **`activeColor`**         | `string`  | `null`  | If provided, transitions the background color when `isActive` is `true`.                   |
+| **`initialDepth`**        | `number`  | `3`     | How “deep” the raised state is. Inset goes negative, so `isActive` toggles shadow inward.   |
+| **`damping`**             | `number`  | `0.8`   | Controls how far the shadow insets if `isActive` is `true`.                                 |
+| **`shadowBlur`**          | `number`  | `10`    | Blur radius for the main shadow.                                                           |
+| **`shadowSpace`**         | `number`  | `6`     | Extra canvas space to avoid clipping.                                                      |
+| **`duration`**            | `number`  | `200`   | Animation duration (ms) for toggling from inactive→active or vice versa.                    |
+| **`isReflectedLightEnabled`** | `boolean` | `true` | Whether to draw the highlight reflection.                                                 |
 
 ### Behavior
 
-- **Toggled Inset**: If `isActive` is `true`, the shadow is driven inward (negative depth).
-- **Toggled Outset**: If `isActive` is `false`, the shadow returns to its raised, outer state.
-- **Color Transition**: Optionally interpolate between a normal background color and `activeColor`.
-- **Layout**: The component measures its parent `Pressable` size with `onLayout` and draws a Skia `<Canvas>` accordingly.
+- **`isActive` → Inset**: The shadow shifts inward (negative depth).
+- **`!isActive` → Raised**: The shadow returns to a normal outer/neutral depth.
+- **Optional Color**: Switch to `activeColor` if `isActive` is `true`; fallback to normal `backgroundColor` otherwise.
 
 ### Notes
 
-- **Controlled vs. Uncontrolled**: By default, you pass an external `isActive` state. If you want it to manage its own toggling internally, you can add your own `onPress` handler that flips a local state.
-- **Big Offsets**: If you increase `initialDepth` or `shadowBlur` significantly, consider using a larger `shadowSpace`.
-- **Performance**: Each toggle triggers a Skia redraw. Typically smooth for a few toggles, but test if you have many on the same screen.
--
+- **Controlled vs. Uncontrolled**: Typically, you store `isActive` in your state (like `useState`), then pass it down. You can also define an internal state if you want a fully self-contained toggle.
+- **Performance**: If you have many toggles, test carefully on lower-end devices, though Skia + Reanimated is usually quite efficient.
 
 ---
 
 ## API Specification
 
-This library provides two main components for inset shadows: **`InnerShadowView`** (solid background) and **`LinearShadowView`** (gradient background). Both rely on [React Native Skia](https://shopify.github.io/react-native-skia/) for rendering.
+This library offers multiple ways to create inset or togglable shadows:
 
 ### Components
 
 1. **`InnerShadowView`**
-   Inherits from [`InnerShadowProps`](#innershadowprops-type) and [`PressableProps`](https://reactnative.dev/docs/pressable).
-   Use it for a **solid** background with an inset or outer shadow, optionally including a reflected light (highlight) effect.
-
+   - A simpler, “solid background” approach. Inherits from `InnerShadowProps`.
 2. **`LinearShadowView`**
-   Inherits from [`LinearInnerShadowProps`](#linearinnershadowprops-type).
-   Use it for a **linear gradient** background, along with an inset or outer shadow and optional reflected light.
+   - Extends `InnerShadowProps` with gradient logic (`from`, `to`, `colors`).
+3. **`ShadowPressable`**
+   - Pressable version with an animated “press in” effect.
+4. **`ShadowToggle`**
+   - Controlled version toggling an inset shadow based on `isActive`.
 
 ---
 
@@ -277,75 +299,27 @@ This library provides two main components for inset shadows: **`InnerShadowView`
   <summary>Click to expand</summary>
 
 ```ts
-export type InnerShadowProps = {
-  children?: ReactNode;
-  /**
-   * Whether to render the shadow as inset (inside the component).
-   * @default false
-   */
+export interface InnerShadowProps extends ViewProps {
+  children?: React.ReactNode;
   inset?: boolean;
-
-  /**
-   * Primary shadow color.
-   * @default '#2F2F2FBC'
-   */
   shadowColor?: string;
-
-  /**
-   * Horizontal/vertical offset for the main shadow.
-   * @default { width: 2, height: 2 }
-   */
   shadowOffset?: { width: number; height: number };
-
-  /**
-   * Blur radius for the main shadow.
-   * Suggested range: 0–20
-   * @default 3
-   */
   shadowBlur?: number;
-
-  /**
-   * Enables a highlight on the opposite side of the shadow.
-   * Defaults to `true` if `inset` is `true`.
-   */
   isReflectedLightEnabled?: boolean;
-
-  /**
-   * Color of the reflected light highlight.
-   * @default '#EEE9E92D'
-   */
   reflectedLightColor?: string;
-
-  /**
-   * Offset for the reflected light highlight.
-   * @default { width: -2, height: -2 }
-   */
   reflectedLightOffset?: { width: number; height: number };
-
-  /**
-   * Blur radius for the reflected light highlight.
-   * @default 3
-   */
   reflectedLightBlur?: number;
-
-  /**
-   * Manually set width and height if needed.
-   */
   width?: number;
   height?: number;
-
-  /**
-   * Background color of the shadowed element.
-   * @default '#FFFFFF'
-   */
   backgroundColor?: string;
-
-  /**
-   * React Native style object.
-   */
   style?: ViewStyle;
-} & PressableProps;
+}
 ```
+
+- Defines basic shadow properties, optional reflected light, and optional sizing.
+- `inset`: Whether the shadow is drawn inside (`true`) or outside (`false`).
+- `shadowBlur`: Typically 0–20 for a soft spread.
+- `style`: Accepts a typical RN `ViewStyle`; you can specify `borderRadius` for rounded corners.
 
 </details>
 
@@ -359,59 +333,54 @@ export type InnerShadowProps = {
 ```ts
 export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
 
-export type LinearInnerShadowProps = {
-  /**
-   * Start direction of the linear gradient.
-   * @default 'top'
-   */
+export interface LinearInnerShadowProps extends InnerShadowProps {
   from?: LINEAR_DIRECTION;
-
-  /**
-   * End direction of the linear gradient.
-   * @default 'bottom'
-   */
   to?: LINEAR_DIRECTION;
-
-  /**
-   * Array of colors for the gradient.
-   */
   colors: AnimatedProp<Color[]>;
-} & InnerShadowProps & PressableProps;
+}
 ```
 
-</details>
+- Inherits all from `InnerShadowProps` plus gradient fields.
+- `from` and `to` define the gradient’s start/end direction (like `top`→`bottom`).
+- `colors` can be an array of color strings or an animated array (`AnimatedProp<Color[]>`).
 
-Use `from` and `to` to define the gradient direction (e.g., `top → bottom`). The `colors` prop is an [AnimatedProp](https://shopify.github.io/react-native-skia/docs/api/animated-props) of color arrays supported by Skia.
+</details>
 
 ---
 
 ## Constants
 
-This library also exports some default constants:
+This library exports default constants for fallback colors, blur values, etc.:
 
-| Constant                                    | Description                                                               |
-| ------------------------------------------- | ------------------------------------------------------------------------- |
-| **`DEFAULT_SHADOW_OFFSET_SCALE`**           | Scale factor for default shadow offsets. Default is `2`.                  |
-| **`DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE`**  | Scale factor for reflected light offsets. Default is `2`.                 |
-| **`DEFAULT_BACKGROUND_COLOR`**              | Fallback background color (`#FFFFFF`).                                    |
-| **`DEFAULT_REFLECTED_LIGHT_COLOR`**         | Fallback highlight color (`#EEE9E92D`).                                   |
-| **`DEFAULT_SHADOW_COLOR`**                  | Fallback main shadow color (`#2F2F2FBC`).                                 |
-| **`DEFAULT_SHADOW_BLUR`**                   | Fallback blur radius for the main shadow. Default is `3`.                 |
-| **`DEFAULT_REFLECTED_LIGHT_BLUR`**          | Fallback blur radius for the reflected light. Default is `3`.             |
+| Constant                                    | Description                                                           |
+| ------------------------------------------- | --------------------------------------------------------------------- |
+| **`DEFAULT_SHADOW_OFFSET_SCALE`**           | Scale factor for default shadow offsets (e.g., `2`).                  |
+| **`DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE`**  | Scale factor for reflected light offsets (e.g., `2`).                 |
+| **`DEFAULT_BACKGROUND_COLOR`**              | Default background color (`#FFFFFF`).                                 |
+| **`DEFAULT_REFLECTED_LIGHT_COLOR`**         | Default highlight color (`#EEE9E92D`).                                |
+| **`DEFAULT_SHADOW_COLOR`**                  | Default main shadow color (`#2F2F2FBC`).                              |
+| **`DEFAULT_SHADOW_BLUR`**                   | Default blur radius for the main shadow (`3`).                        |
+| **`DEFAULT_REFLECTED_LIGHT_BLUR`**          | Default blur radius for the reflected light (`3`).                    |
 
 ---
 
 ## Notes & Tips
 
 1. **Reflected Light**
-   - When `inset` is `true`, `isReflectedLightEnabled` defaults to `true`. Tweak `reflectedLightColor` and `reflectedLightOffset` for different highlight intensities.
+   - When `inset` is `true`, `isReflectedLightEnabled` often defaults to `true`. Adjust `reflectedLightColor` and `reflectedLightOffset` for subtle or more dramatic highlights.
 
 2. **Performance**
-   - Each component uses a `<Canvas>` from Skia. If you have many of these in a list, consider memoization or limiting re-renders.
+   - Each shadow component uses a Skia `<Canvas>`. For best results, **avoid** re-measuring every layout pass. You can specify a fixed `width` and `height` if the layout is static.
 
 3. **Border Radii**
-   - Currently, a single numeric `borderRadius` is fully supported. Handling multiple corner radii would require a more advanced path setup in Skia.
+   - Only a single numeric `borderRadius` is fully supported. For advanced shapes or different corner radii, you’d need to draw custom paths with Skia.
+
+4. **Testing**
+   - If you have many shadows or toggles in a list, test on lower-end devices to ensure smooth performance. Skia + Reanimated is generally fast, but heavy usage might require memoization or other optimizations.
+
+5. **Version Conflicts**
+   - Because we rely on Skia and Reanimated, ensure your versions match the React Native environment. If you run into errors like “react-native-reanimated is not installed!”, move them to your project’s `peerDependencies` and install them at the root.
 
 ---
 
-Enjoy creating beautifully styled inset shadows and interactive pressable shadows with **react-native-inner-shadow**! If you have questions or feature requests, feel free to open an issue or submit a pull request.
+**We hope you enjoy building immersive, 3D-like UI components with `react-native-inner-shadow`.** If you have suggestions, bug reports, or want to contribute, please [open an issue](https://github.com/ShinMini/react-native-inner-shadow/issues) or create a pull request!

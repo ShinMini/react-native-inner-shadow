@@ -10,11 +10,19 @@ export {
 
 export type {
   LINEAR_DIRECTION,
+  ShadowViewProps,
   InnerShadowProps,
   LinearInnerShadowProps,
+  ShadowPressableProps,
+  ShadowToggleProps,
 } from './types';
 
-export { getBackgroundColor, getShadowProperty } from './utils';
+export {
+  getBackgroundColor,
+  getShadowProperty,
+  getLinearDirection,
+  isLinearProps,
+} from './utils';
 
 export { ShadowView, LinearShadowView } from './components/ShadowView';
 export { ShadowPressable } from './components/ShadowPressable';

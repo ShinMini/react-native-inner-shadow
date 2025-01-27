@@ -1,14 +1,26 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { ExampleShadowToggle } from './components/ExampleShadowToggle';
 import { ExampleShadowPressable } from './components/ExampleShadowPressable';
+import { LinearShadowView, ShadowView } from 'react-native-inner-shadow';
 
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <ExampleShadowPressable />
       <ExampleShadowToggle />
+      <ShadowView style={styles.shadowView} backgroundColor="#dc9ee66d">
+        <Text>ShadowView</Text>
+      </ShadowView>
+      <LinearShadowView
+        inset
+        // from="right"
+        style={styles.shadowView}
+        colors={['#f1c40f', '#e74c3c']}
+      >
+        <Text>LinearShadowView</Text>
+      </LinearShadowView>
     </View>
   );
 }
@@ -19,6 +31,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  shadowView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 30,
+    marginTop: 10,
+    padding: 10,
+    width: 140,
+    height: 140,
   },
 });
 

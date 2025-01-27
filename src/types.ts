@@ -2,6 +2,8 @@ import type { AnimatedProp, Color } from '@shopify/react-native-skia';
 import type { ReactNode } from 'react';
 import type { PressableProps, ViewProps, ViewStyle } from 'react-native';
 
+export type ShadowViewProps = InnerShadowProps | LinearInnerShadowProps;
+
 /**
  * InnerShadowProps defines the basic requirements for
  * an inset-shadow component. These props control:
@@ -10,7 +12,7 @@ import type { PressableProps, ViewProps, ViewStyle } from 'react-native';
  *   - Optional reflected light styling (color, blur, offset)
  *   - PressableProps allows the shadowed element to be interactable.
  */
-export type InnerShadowProps = {
+export interface InnerShadowProps extends ViewProps {
   /**
    * Content that will be nested within the shadowed box.
    */
@@ -88,21 +90,7 @@ export type InnerShadowProps = {
    * for rounded corners, etc.
    */
   style?: ViewStyle;
-} & ViewProps;
-
-export type ShadowCanvasProps = InnerShadowProps & {
-  width: number;
-  height: number;
-  shadowOffset: { width: number; height: number };
-  shadowBlur: number;
-  shadowColor: string;
-  backgroundColor: string;
-
-  reflectedLightColor: string;
-  reflectedLightOffset: { width: number; height: number };
-  reflectedLightBlur: number;
-  isReflectedLightEnabled?: boolean;
-};
+}
 
 /**
  * LINEAR_DIRECTION defines the four basic directions for
@@ -120,41 +108,39 @@ export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
  * @param colors - An array of colors for the gradient. Using multiple colors
  *                 creates more visually interesting transitions.
  */
-export type LinearInnerShadowProps = {
+export interface LinearInnerShadowProps extends InnerShadowProps {
   from?: LINEAR_DIRECTION;
   to?: LINEAR_DIRECTION;
   colors: AnimatedProp<Color[]>;
-} & InnerShadowProps;
+}
 
-export type LinearShadowCanvasProps = LinearInnerShadowProps &
-  ShadowCanvasProps;
-
-export type ShadowPressableProps = Omit<InnerShadowProps, 'inset'> & {
-  /**
-   * The space between the shadow and the box.
-   * @Default 3
-   *
-   * If your shadow is too close to the edge of the box, it may be clipped.
-   * I'd recommend a minimum of 3-5 pixels of space for most shadows.
-   */
-  shadowSpace?: number; // 3
-  /**
-   * The initial depth of the shadow effect.
-   * @Default 5
-   * @argument min: 0, max: 20
-   */
-  initialDepth?: number; // 5;
-  /**
-   * The duration of the shadow animation when pressed.
-   * @Default 500
-   */
-  duration?: number; // 500;
-  /**
-   * The damping ratio for the shadow animation.
-   * @Default 0.8
-   */
-  damping?: number; //0.8;
-} & PressableProps;
+export type ShadowPressableProps = PressableProps &
+  Omit<InnerShadowProps, 'inset'> & {
+    /**
+     * The space between the shadow and the box.
+     * @Default 3
+     *
+     * If your shadow is too close to the edge of the box, it may be clipped.
+     * I'd recommend a minimum of 3-5 pixels of space for most shadows.
+     */
+    shadowSpace?: number; // 3
+    /**
+     * The initial depth of the shadow effect.
+     * @Default 5
+     * @argument min: 0, max: 20
+     */
+    initialDepth?: number; // 5;
+    /**
+     * The duration of the shadow animation when pressed.
+     * @Default 500
+     */
+    duration?: number; // 500;
+    /**
+     * The damping ratio for the shadow animation.
+     * @Default 0.8
+     */
+    damping?: number; //0.8;
+  };
 
 export type ShadowToggleProps = ShadowPressableProps & {
   /**

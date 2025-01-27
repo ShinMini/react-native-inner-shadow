@@ -30,6 +30,7 @@ const COMMON_STYLES = StyleSheet.create({
   canvas: {
     position: 'absolute',
     left: 0,
+
     top: 0,
     backgroundColor: 'transparent',
   },

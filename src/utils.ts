@@ -2,7 +2,11 @@ import { StyleSheet } from 'react-native';
 
 import { vec } from '@shopify/react-native-skia';
 
-import type { InnerShadowProps, LINEAR_DIRECTION } from './types';
+import type {
+  InnerShadowProps,
+  LINEAR_DIRECTION,
+  LinearInnerShadowProps,
+} from './types';
 import {
   DEFAULT_BACKGROUND_COLOR,
   DEFAULT_REFLECTED_LIGHT_BLUR,
@@ -174,9 +178,11 @@ export function createOuterShadowOffset({
       shadowOffset,
       // blur: 0 ~ 20, opacity: 0 ~ 1
       shadowOpacity: shadowBlur ? shadowBlur / 5 : 0.6,
+      shadowRadius: shadowBlur * 0.6,
+      elevation: shadowBlur,
     };
   }
-  return null;
+  return {};
 }
 
 interface GetLinearDirectionProps {
@@ -186,6 +192,12 @@ interface GetLinearDirectionProps {
   to: LINEAR_DIRECTION;
 }
 
+/**
+ * `getLinearDirection` calculates the start and end points for a linear gradient
+ * based on the provided direction (from, to).
+ * The direction is specified as a string, e.g., 'top', 'bottom', 'left', 'right'.
+ * The width and height are used to calculate the midpoints for each direction.
+ */
 export function getLinearDirection({
   width,
   height,
@@ -200,4 +212,14 @@ export function getLinearDirection({
 
   const direction = { top, bottom, left, right };
   return { start: direction[from], end: direction[to] };
+}
+
+/**
+ * `isLinearProps` checks if the provided props are for a linear gradient.
+ * If the `colors` property is an array, we assume it's a linear gradient.
+ */
+export function isLinearProps(
+  props: InnerShadowProps | LinearInnerShadowProps
+): props is LinearInnerShadowProps {
+  return 'colors' in props && Array.isArray(props.colors);
 }
