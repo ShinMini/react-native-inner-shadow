@@ -18,13 +18,14 @@ npm install react-native-inner-shadow @shopify/react-native-skia react-native-re
 yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
-# Using Expo
+***Using Expo***
 
 ```bash
 npm expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
-> **Note**: You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project. For more information, refer to the [official documentation](https://shopify.github.io/react-native-skia/).
+> **!!! Note !!!**
+> You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project. For more information, refer to the [official documentation](https://shopify.github.io/react-native-skia/).
 
 ---
 
@@ -32,7 +33,6 @@ npm expo install react-native-inner-shadow @shopify/react-native-skia react-nati
 
 - [react-native-inner-shadow](#react-native-inner-shadow)
   - [Installation](#installation)
-- [Using Expo](#using-expo)
   - [Table of Contents](#table-of-contents)
   - [Preview](#preview)
   - [Features](#features)
