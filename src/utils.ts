@@ -1,16 +1,17 @@
 import { StyleSheet } from 'react-native';
+
+import { vec } from '@shopify/react-native-skia';
+
+import type { InnerShadowProps, LINEAR_DIRECTION } from './types';
 import {
   DEFAULT_BACKGROUND_COLOR,
-  DEFAULT_SHADOW_OFFSET_SCALE,
+  DEFAULT_REFLECTED_LIGHT_BLUR,
+  DEFAULT_REFLECTED_LIGHT_COLOR,
   DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE,
   DEFAULT_SHADOW_BLUR,
-  DEFAULT_REFLECTED_LIGHT_BLUR,
   DEFAULT_SHADOW_COLOR,
-  DEFAULT_REFLECTED_LIGHT_COLOR,
-  type InnerShadowProps,
-} from './types';
-import { vec } from '@shopify/react-native-skia';
-import type { LINEAR_DIRECTION } from './types';
+  DEFAULT_SHADOW_OFFSET_SCALE,
+} from './constants';
 
 /**
  *  createStyles generates the StyleSheet object for the canvas
