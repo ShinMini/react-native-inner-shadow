@@ -16,16 +16,7 @@ export const ExampleShadowToggle = (): React.JSX.Element => {
       activeColor="#E9C46A"
       onPress={onPressToggle}
     >
-      <Text
-        style={[
-          styles.context,
-          {
-            color: isActive ? 'gray' : '#333333',
-          },
-        ]}
-      >
-        {isActive ? 'ON' : 'OFF'}
-      </Text>
+      <Text style={styles.context}>{isActive ? 'ON' : 'OFF'}</Text>
     </ShadowToggle>
   );
 };

@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
+import Animated from 'react-native-reanimated';
+
+import { COMMON_STYLES } from '../constants';
+import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
+import { getBackgroundColor, getShadowProperty } from '../utils';
 
 import ShadowCanvas from './ShadowCanvas';
-import { getBackgroundColor, getShadowProperty } from '../utils';
 import LinearShadowCanvas from './LinearShadowCanvas';
-import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
-import Animated from 'react-native-reanimated';
 
 const _ShadowView: React.FunctionComponent<
   InnerShadowProps & LinearInnerShadowProps
@@ -34,12 +36,7 @@ const _ShadowView: React.FunctionComponent<
         },
       }) => setBoxSize({ width, height })}
       {...props}
-      style={[
-        props.style,
-        {
-          backgroundColor: 'transparent',
-        },
-      ]}
+      style={[props.style, COMMON_STYLES.canvasWrapper]}
     >
       {/**
        * We only render the <Canvas> if the measured width and height are non-zero.

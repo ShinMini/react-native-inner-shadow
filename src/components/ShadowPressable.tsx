@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { Pressable } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import {
   interpolate,
@@ -5,15 +7,28 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
+import type { ShadowPressableProps } from '../types';
 import {
+  COMMON_STYLES,
   DEFAULT_REFLECTED_LIGHT_COLOR,
   DEFAULT_SHADOW_COLOR,
-  type ShadowPressableProps,
-} from '../types';
-import { useState } from 'react';
-import { getBackgroundColor } from '../utils';
-import { Pressable, StyleSheet } from 'react-native';
+} from '../constants';
 
+import { getBackgroundColor } from '../utils';
+
+/**
+ * ShadowPressable
+ * ----------------
+ * A pressable component that casts a shadow when pressed.
+ * The shadow effect is created using the `@shopify/react-native-skia` library.
+ *
+ * @param initialDepth - The initial depth of the shadow
+ * @param shadowSpace - The space between the shadow and the component
+ * @param duration - The duration of the shadow animation
+ * @param damping - The damping factor of the shadow animation
+ * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
+ */
 export const ShadowPressable = ({
   width: _width = 0,
   height: _height = 0,
@@ -63,12 +78,7 @@ export const ShadowPressable = ({
         },
       }) => setBoxSize({ width, height })}
       {...props}
-      style={[
-        props.style,
-        {
-          backgroundColor: 'transparent',
-        },
-      ]}
+      style={[props.style, COMMON_STYLES.canvasWrapper]}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
     >
@@ -76,7 +86,7 @@ export const ShadowPressable = ({
         <Canvas
           style={[
             props.style,
-            styles.canvas,
+            COMMON_STYLES.canvas,
             { width: boxSize.width, height: boxSize.height },
           ]}
         >
@@ -112,12 +122,3 @@ export const ShadowPressable = ({
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  canvas: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    backgroundColor: 'transparent',
-  },
-});

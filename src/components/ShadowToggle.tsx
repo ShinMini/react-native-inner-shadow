@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import {
   interpolate,
@@ -10,14 +10,26 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import type { ShadowToggleProps } from '../types';
 import {
+  COMMON_STYLES,
   DEFAULT_REFLECTED_LIGHT_COLOR,
   DEFAULT_SHADOW_COLOR,
-  type ShadowToggleProps,
-} from '../types';
+} from '../constants';
 
 import { getBackgroundColor } from '../utils';
 
+/**
+ * ShadowToggle
+ * ----------------
+ * A toggle component that casts a shadow when active.
+ * The shadow effect is created using the `@shopify/react-native-skia` library.
+ *
+ * @param initialDepth - The initial depth of the shadow
+ * @param shadowSpace - The space between the shadow and the component
+ * @param isActive - Whether the shadow is active
+ * @param activeColor - The color of the shadow when active
+ */
 export const ShadowToggle = ({
   width: _width = 0,
   height: _height = 0,
@@ -80,18 +92,13 @@ export const ShadowToggle = ({
         },
       }) => setBoxSize({ width, height })}
       {...props}
-      style={[
-        props.style,
-        {
-          backgroundColor: 'transparent',
-        },
-      ]}
+      style={[props.style, COMMON_STYLES.canvasWrapper]}
     >
       {boxSize.width === 0 && boxSize.height === 0 ? null : (
         <Canvas
           style={[
             props.style,
-            styles.canvas,
+            COMMON_STYLES.canvas,
             { width: boxSize.width, height: boxSize.height },
           ]}
         >
@@ -127,12 +134,3 @@ export const ShadowToggle = ({
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  canvas: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    backgroundColor: 'transparent',
-  } as const,
-});
