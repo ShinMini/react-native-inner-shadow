@@ -157,20 +157,7 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  pressable: {
-    width: 150,
-    height: 150,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  label: {
-    fontSize: 18,
-    color: '#333',
-  },
-});
+const styles = StyleSheet.create({ pressable: { width: 150, height: 150, backgroundColor: '#fff', borderRadius: 12, justifyContent: 'center', alignItems: 'center', }, label: { fontSize: 18, color: '#333', }, });
 ```
 
 ### ShadowPressable Props
@@ -226,7 +213,7 @@ export default function ToggleExample() {
         style={styles.toggle}
         isActive={isActive}
         activeColor="#FFD700" // e.g., highlight with gold color
-        onPress={() => setIsActive(!isActive)} // optional if you want internal press handling
+        onPress={() => setIsActive(prev => !prev)} // optional if you want internal press handling
       >
         <Text style={styles.label}>
           {isActive ? 'Active' : 'Inactive'}
@@ -236,24 +223,7 @@ export default function ToggleExample() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  toggle: {
-    width: 120,
-    height: 120,
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  label: {
-    fontWeight: 'bold',
-  },
-});
+const styles = StyleSheet.create({ container: { flex: 1, justifyContent: 'center', alignItems: 'center' }, toggle: { width: 120, height: 120, borderRadius: 12, backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', }, label: { fontWeight: 'bold', }, });
 ```
 
 ### Key Props
