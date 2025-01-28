@@ -10,7 +10,7 @@ function App(): React.JSX.Element {
     <View style={styles.container}>
       <ExampleShadowPressable />
       <ExampleShadowToggle />
-      <ShadowView style={styles.shadowView} backgroundColor="#dc9ee66d">
+      <ShadowView style={styles.shadowView} backgroundColor="#dc9ee6">
         <Text>ShadowView</Text>
       </ShadowView>
       <LinearShadowView
@@ -36,10 +36,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
+    borderTopLeftRadius: 10,
     marginTop: 10,
     padding: 10,
-    width: 140,
-    height: 140,
+    width: '30%',
+    aspectRatio: 1,
   },
 });
 

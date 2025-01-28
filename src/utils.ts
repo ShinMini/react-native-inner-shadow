@@ -161,7 +161,7 @@ function setReflectedLightDirectionAndScale({
 }
 
 interface OuterShadowOffsetProps {
-  inset?: boolean;
+  inset: boolean;
   shadowOffset: { width: number; height: number };
   shadowColor: string;
   shadowBlur: number;

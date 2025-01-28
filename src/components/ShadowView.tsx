@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import type { LayoutChangeEvent, ViewStyle } from 'react-native';
+import type { LayoutChangeEvent } from 'react-native';
 
 import {
   createOuterShadowOffset,
@@ -12,8 +12,9 @@ import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
 import { COMMON_STYLES } from '../constants';
 
 import Animated from 'react-native-reanimated';
-import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
+import { Canvas, Rect, Shadow } from '@shopify/react-native-skia';
 import LinearGradientFill from './ShadowLinearGradientFill';
+import { CornerRadii } from './CornerRadii';
 
 /**
  * A unified interface for both "solid" (InnerShadow) and "linear" (LinearShadow).
@@ -23,7 +24,7 @@ import LinearGradientFill from './ShadowLinearGradientFill';
 function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
   /** 1) Extract essential props & compute defaults */
   const backgroundColor = getBackgroundColor(props);
-  const shadowProps = getShadowProperty(props);
+  const shadowProps = useMemo(() => getShadowProperty(props), [props]);
   const isLinear = isLinearProps(props);
 
   /**
@@ -34,15 +35,12 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
 
   /** 2) Extract width/height from style if provided */
   const styleWidth =
-    props.style && ((props.style as ViewStyle).width as number | undefined);
+    props.style &&
+    (Number.isNaN(Number(props.style.width)) ? 0 : Number(props.style.width));
   const styleHeight =
-    props.style && ((props.style as ViewStyle).height as number | undefined);
-
-  /** 3) Border radius logic (uniform only) */
-  const borderRadius =
-    Number((props.style as ViewStyle)?.borderRadius ?? 0) || 0;
-
-  /** 4) Local state for measuring if needed */
+    props.style &&
+    (Number.isNaN(Number(props.style.height)) ? 0 : Number(props.style.height));
+  /** 3) Local state for measuring if needed */
   const [layoutSize, setLayoutSize] = useState({ width: 0, height: 0 });
 
   /**
@@ -61,9 +59,9 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
     [styleWidth, styleHeight, layoutSize]
   );
 
-  /** 5) Final dimensions we use for the Canvas */
-  const finalWidth = styleWidth ?? layoutSize.width;
-  const finalHeight = styleHeight ?? layoutSize.height;
+  /** 4) Final dimensions we use for the Canvas */
+  const finalWidth = styleWidth ? styleWidth : layoutSize.width;
+  const finalHeight = styleHeight ? styleHeight : layoutSize.height;
 
   /**
    * We only render the Canvas if we have a valid size
@@ -71,7 +69,7 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
    */
   const canRenderCanvas = finalWidth > 0 && finalHeight > 0;
 
-  /** 6) Memoize style objects if needed */
+  /** 5) Memoize style objects if needed */
   const canvasStyle = useMemo(
     () =>
       createStyles({
@@ -82,11 +80,15 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
   );
 
   const outerShadowOffset = useMemo(
-    () => createOuterShadowOffset(shadowProps),
-    [shadowProps]
+    () =>
+      createOuterShadowOffset({
+        inset: !!props.inset,
+        ...shadowProps,
+      }),
+    [shadowProps, props.inset]
   );
 
-  /** 7) Render Flow */
+  /** 6) Render Flow */
   return (
     <Animated.View
       {...props}
@@ -98,46 +100,51 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
       onLayout={onLayout}
     >
       {canRenderCanvas && (
-        <Canvas style={[canvasStyle.canvas]}>
-          <RoundedRect
-            x={0}
-            y={0}
+        <Canvas style={canvasStyle.canvas}>
+          <CornerRadii
             width={finalWidth}
             height={finalHeight}
-            r={borderRadius}
-            color={backgroundColor}
+            style={props.style}
           >
-            {/** If we are in "linear" mode, draw the linear gradient fill */}
-            {isLinear && (
-              <LinearGradientFill
-                width={finalWidth}
-                height={finalHeight}
-                {...props} // from, to, colors, etc.
-              />
-            )}
+            <Rect
+              x={0}
+              y={0}
+              width={finalWidth}
+              height={finalHeight}
+              color={backgroundColor}
+            >
+              {/** If we are in "linear" mode, draw the linear gradient fill */}
+              {isLinear && (
+                <LinearGradientFill
+                  width={finalWidth}
+                  height={finalHeight}
+                  {...props} // from, to, colors, etc.
+                />
+              )}
 
-            {/** Inset main shadow if props.inset is true */}
-            {props.inset && (
-              <Shadow
-                dx={shadowProps.shadowOffset.width}
-                dy={shadowProps.shadowOffset.height}
-                blur={shadowProps.shadowBlur}
-                color={shadowProps.shadowColor}
-                inner
-              />
-            )}
+              {/** Inset main shadow if props.inset is true */}
+              {props.inset && (
+                <Shadow
+                  dx={shadowProps.shadowOffset.width}
+                  dy={shadowProps.shadowOffset.height}
+                  blur={shadowProps.shadowBlur}
+                  color={shadowProps.shadowColor}
+                  inner
+                />
+              )}
 
-            {/** Optional highlight reflection if isReflectedLightEnabled */}
-            {isReflectedLightEnabled && (
-              <Shadow
-                dx={shadowProps.reflectedLightOffset.width}
-                dy={shadowProps.reflectedLightOffset.height}
-                blur={shadowProps.reflectedLightBlur}
-                color={shadowProps.reflectedLightColor}
-                inner
-              />
-            )}
-          </RoundedRect>
+              {/** Optional highlight reflection if isReflectedLightEnabled */}
+              {isReflectedLightEnabled && (
+                <Shadow
+                  dx={shadowProps.reflectedLightOffset.width}
+                  dy={shadowProps.reflectedLightOffset.height}
+                  blur={shadowProps.reflectedLightBlur}
+                  color={shadowProps.reflectedLightColor}
+                  inner
+                />
+              )}
+            </Rect>
+          </CornerRadii>
         </Canvas>
       )}
 
@@ -162,11 +169,3 @@ export function ShadowView(props: InnerShadowProps) {
 export function LinearShadowView(props: LinearInnerShadowProps) {
   return <UnifiedShadowView {...props} />;
 }
-
-/**
- * Publicly exported components:
- * - ShadowView: for standard solid shadows.
- * - LinearShadowView: for gradient-based shadows.
- *
- * Under the hood, both use the same "UnifiedShadowView".
- */
