@@ -27,7 +27,7 @@ expo install react-native-inner-shadow @shopify/react-native-skia react-native-r
 
 > **Important**
 > You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project.
-> See the [Skia documentation](https://shopify.github.io/react-native-skia/) and the [Reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/) for details.
+> See the [Skia documentation](https://shopify.github.io/react-native-skia/docs/getting-started/installation) and the [Reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/) for details.
 
 ---
 
