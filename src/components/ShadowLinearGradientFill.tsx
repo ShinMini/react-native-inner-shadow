@@ -1,7 +1,7 @@
 import { LinearGradient } from '@shopify/react-native-skia';
 import type { LinearInnerShadowProps } from '../types';
 import { getLinearDirection } from '../utils';
-import { useMemo } from 'react';
+import React from 'react';
 
 /**
  * Internal helper component that draws the linear gradient.
@@ -14,7 +14,7 @@ export default function LinearGradientFill({
   to = 'bottom',
   colors,
 }: LinearInnerShadowProps) {
-  const { start, end } = useMemo(
+  const { start, end } = React.useMemo(
     () => getLinearDirection({ width, height, from, to }),
     [width, height, from, to]
   );
