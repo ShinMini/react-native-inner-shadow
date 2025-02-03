@@ -1,11 +1,13 @@
-import { Group } from '@shopify/react-native-skia';
 import React from 'react';
+import { Group, Rect } from '@shopify/react-native-skia';
+
 import type { ViewStyle } from 'react-native';
 
 type CornerRadiiProps = {
   width: number;
   height: number;
   style?: ViewStyle;
+  backgroundColor: string;
   children?: React.ReactNode;
 };
 export function CornerRadii({
@@ -13,6 +15,7 @@ export function CornerRadii({
   height,
   style,
   children,
+  backgroundColor,
 }: CornerRadiiProps) {
   const borderRadius = Number((style as ViewStyle)?.borderRadius ?? 0) || 0;
 
@@ -25,7 +28,8 @@ export function CornerRadii({
     style?.borderBottomLeftRadius ?? borderRadius
   );
 
-  const roundedClip = React.useMemo(() => {
+  const roundedClip = React.
+  (() => {
     return makeRoundedRectPath(
       width,
       height,
@@ -43,7 +47,13 @@ export function CornerRadii({
     bottomLeftRadius,
   ]);
 
-  return <Group clip={roundedClip}>{children}</Group>;
+  return (
+    <Group clip={roundedClip}>
+      <Rect x={0} y={0} width={width} height={height} color={backgroundColor}>
+        {children}
+      </Rect>
+    </Group>
+  );
 }
 
 /**

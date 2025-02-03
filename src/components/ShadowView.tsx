@@ -12,7 +12,7 @@ import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
 import { COMMON_STYLES } from '../constants';
 
 import Animated from 'react-native-reanimated';
-import { Canvas, Rect, Shadow } from '@shopify/react-native-skia';
+import { Canvas, Shadow } from '@shopify/react-native-skia';
 import LinearGradientFill from './ShadowLinearGradientFill';
 import { CornerRadii } from './CornerRadii';
 
@@ -105,45 +105,38 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
             width={finalWidth}
             height={finalHeight}
             style={props.style}
+            backgroundColor={backgroundColor}
           >
-            <Rect
-              x={0}
-              y={0}
-              width={finalWidth}
-              height={finalHeight}
-              color={backgroundColor}
-            >
-              {/** If we are in "linear" mode, draw the linear gradient fill */}
-              {isLinear && (
-                <LinearGradientFill
-                  width={finalWidth}
-                  height={finalHeight}
-                  {...props} // from, to, colors, etc.
-                />
-              )}
+            {/** If we are in "linear" mode, draw the linear gradient fill */}
+            {isLinear && (
+              <LinearGradientFill
+                width={finalWidth}
+                height={finalHeight}
+                {...props} // from, to, colors, etc.
+              />
+            )}
 
-              {/** Inset main shadow if props.inset is true */}
-              {props.inset && (
-                <Shadow
-                  dx={shadowProps.shadowOffset.width}
-                  dy={shadowProps.shadowOffset.height}
-                  blur={shadowProps.shadowBlur}
-                  color={shadowProps.shadowColor}
-                  inner
-                />
-              )}
+            {/** Inset main shadow if props.inset is true */}
+            {props.inset && (
+              <Shadow
+                dx={shadowProps.shadowOffset.width}
+                dy={shadowProps.shadowOffset.height}
+                blur={shadowProps.shadowBlur}
+                color={shadowProps.shadowColor}
+                inner
+              />
+            )}
 
-              {/** Optional highlight reflection if isReflectedLightEnabled */}
-              {isReflectedLightEnabled && (
-                <Shadow
-                  dx={shadowProps.reflectedLightOffset.width}
-                  dy={shadowProps.reflectedLightOffset.height}
-                  blur={shadowProps.reflectedLightBlur}
-                  color={shadowProps.reflectedLightColor}
-                  inner
-                />
-              )}
-            </Rect>
+            {/** Optional highlight reflection if isReflectedLightEnabled */}
+            {isReflectedLightEnabled && (
+              <Shadow
+                dx={shadowProps.reflectedLightOffset.width}
+                dy={shadowProps.reflectedLightOffset.height}
+                blur={shadowProps.reflectedLightBlur}
+                color={shadowProps.reflectedLightColor}
+                inner
+              />
+            )}
           </CornerRadii>
         </Canvas>
       )}
