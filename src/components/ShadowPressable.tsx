@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React from 'react';
 import { Pressable } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
-import {
+import Animated, {
   interpolate,
   useDerivedValue,
   useSharedValue,
@@ -16,6 +16,8 @@ import {
 } from '../constants';
 
 import { getBackgroundColor } from '../utils';
+
+const PressButton = Animated.createAnimatedComponent(Pressable);
 
 /**
  * ShadowPressable
@@ -42,7 +44,10 @@ export const ShadowPressable = ({
   isReflectedLightEnabled = true,
   ...props
 }: ShadowPressableProps) => {
-  const [boxSize, setBoxSize] = useState({ width: _width, height: _height });
+  const [boxSize, setBoxSize] = React.useState({
+    width: _width,
+    height: _height,
+  });
 
   // Determine the final background color (pulling from `props.style` or a default).
   const backgroundColor = getBackgroundColor(props);
@@ -71,7 +76,7 @@ export const ShadowPressable = ({
   };
 
   return (
-    <Pressable
+    <PressButton
       onLayout={({
         nativeEvent: {
           layout: { width, height },
@@ -119,6 +124,6 @@ export const ShadowPressable = ({
         </Canvas>
       )}
       {props.children}
-    </Pressable>
+    </PressButton>
   );
 };
