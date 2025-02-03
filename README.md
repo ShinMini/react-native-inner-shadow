@@ -22,7 +22,7 @@ yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reani
 If you’re using **Expo**, you can run:
 
 ```bash
-expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+npx expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
 > **Important**
