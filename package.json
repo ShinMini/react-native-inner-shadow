@@ -12,8 +12,8 @@
     "react-native",
     "inner-shadow",
     "inset",
-    "skia",
-    "reanimated"
+    "react-native-inner-shadow",
+    "shadow"
   ],
   "scripts": {
     "example": "yarn workspace react-native-inner-shadow-example",
@@ -93,7 +93,8 @@
     "src",
     "lib",
     "*.podspec",
-    "!**/__tests__"
+    "!**/__tests__",
+    "babel.config.js"
   ],
   "react-native-builder-bob": {
     "source": "src",
