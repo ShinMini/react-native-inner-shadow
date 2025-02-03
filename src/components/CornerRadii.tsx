@@ -28,8 +28,7 @@ export function CornerRadii({
     style?.borderBottomLeftRadius ?? borderRadius
   );
 
-  const roundedClip = React.
-  (() => {
+  const roundedClip = React.useMemo(() => {
     return makeRoundedRectPath(
       width,
       height,
