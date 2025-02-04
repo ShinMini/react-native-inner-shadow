@@ -102,7 +102,7 @@ export function getShadowProperty({
   });
 
   const REFLECTED_LIGHT_OFFSET_HEIGHT = setReflectedLightDirectionAndScale({
-    inset: inset,
+    inset,
     reflectedOffset: reflectedLightOffset?.height,
     shadowOffset: SHADOW_OFFSET_HEIGHT,
   });
