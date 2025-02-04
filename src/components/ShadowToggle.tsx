@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Pressable } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import Animated, {
@@ -32,7 +32,7 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
  * @param isActive - Whether the shadow is active
  * @param activeColor - The color of the shadow when active
  */
-export const ShadowToggle = ({
+export const ShadowToggle = memo(function ShadowToggle({
   width: _width = 0,
   height: _height = 0,
   initialDepth = 3,
@@ -45,16 +45,21 @@ export const ShadowToggle = ({
   isReflectedLightEnabled = true,
   isActive = false,
   activeColor,
+  backgroundColor,
+  style,
   ...props
-}: ShadowToggleProps) => {
+}: ShadowToggleProps) {
   const [boxSize, setBoxSize] = React.useState({
     width: _width,
     height: _height,
   });
 
   // Determine the final background color (pulling from `props.style` or a default).
-  const backgroundColor = getBackgroundColor(props);
-  const boxRadius = Number(props?.style ? props.style.borderRadius : 0) || 10;
+  const _backgroundColor = getBackgroundColor({
+    style,
+    backgroundColor,
+  });
+  const boxRadius = Number(style ? style.borderRadius : 0) || 10;
 
   const depth = useSharedValue(initialDepth);
   const offset = useDerivedValue(() => Math.abs(depth.value));
@@ -62,11 +67,11 @@ export const ShadowToggle = ({
     interpolate(depth.value, [-initialDepth, initialDepth * damping], [-3, 3])
   );
 
-  const _backgroundColor = useDerivedValue(() =>
+  const animatedBackgroundColor = useDerivedValue(() =>
     interpolateColor(
       depth.value,
       [initialDepth, -initialDepth * damping],
-      [backgroundColor, activeColor || backgroundColor]
+      [_backgroundColor, activeColor || _backgroundColor]
     )
   );
 
@@ -97,12 +102,12 @@ export const ShadowToggle = ({
         },
       }) => setBoxSize({ width, height })}
       {...props}
-      style={[props.style, COMMON_STYLES.canvasWrapper]}
+      style={[style, COMMON_STYLES.canvasWrapper]}
     >
       {boxSize.width === 0 && boxSize.height === 0 ? null : (
         <Canvas
           style={[
-            props.style,
+            style,
             COMMON_STYLES.canvas,
             { width: boxSize.width, height: boxSize.height },
           ]}
@@ -113,7 +118,7 @@ export const ShadowToggle = ({
             width={boxSize.width - shadowSpace * 2}
             height={boxSize.height - shadowSpace * 2}
             r={boxRadius}
-            color={_backgroundColor} // The background fill of the rect
+            color={animatedBackgroundColor} // The background fill of the rect
           >
             <Shadow
               dx={offset}
@@ -138,4 +143,4 @@ export const ShadowToggle = ({
       {props.children}
     </PressButton>
   );
-};
+});

@@ -154,3 +154,30 @@ export type ShadowToggleProps = ShadowPressableProps & {
    */
   activeColor?: string;
 };
+
+export type GetBackgroundColorProps = Pick<
+  InnerShadowProps,
+  'backgroundColor' | 'style'
+>;
+
+export type GetShadowPropertyProps = Pick<
+  InnerShadowProps,
+  | 'inset'
+  | 'shadowOffset'
+  | 'shadowBlur'
+  | 'shadowColor'
+  | 'reflectedLightOffset'
+  | 'reflectedLightBlur'
+  | 'reflectedLightColor'
+>;
+
+export type SetReflectedLightDirectionAndScaleProps = {
+  inset?: boolean;
+  reflectedLightScale?: number;
+  shadowEffectScale: number;
+};
+
+export type GetOuterShadowOffsetProps = Pick<
+  InnerShadowProps,
+  'inset' | 'shadowOffset' | 'shadowColor' | 'shadowBlur'
+>;

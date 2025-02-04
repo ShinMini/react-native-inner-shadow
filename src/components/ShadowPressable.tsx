@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Pressable } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import Animated, {
@@ -31,7 +31,7 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
  * @param damping - The damping factor of the shadow animation
  * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
  */
-export const ShadowPressable = ({
+export const ShadowPressable = memo(function ShadowPressable({
   width: _width = 0,
   height: _height = 0,
   initialDepth = 3,
@@ -42,16 +42,22 @@ export const ShadowPressable = ({
   duration = 200,
   damping = 0.8,
   isReflectedLightEnabled = true,
+  style,
+  backgroundColor,
+  children,
   ...props
-}: ShadowPressableProps) => {
+}: ShadowPressableProps) {
   const [boxSize, setBoxSize] = React.useState({
     width: _width,
     height: _height,
   });
 
   // Determine the final background color (pulling from `props.style` or a default).
-  const backgroundColor = getBackgroundColor(props);
-  const boxRadius = Number(props?.style ? props.style.borderRadius : 0) || 10;
+  const _backgroundColor = getBackgroundColor({
+    backgroundColor,
+    style,
+  });
+  const boxRadius = Number(style ? style.borderRadius : 0) || 10;
 
   const depth = useSharedValue(initialDepth);
   const offset = useDerivedValue(() => Math.abs(depth.value));
@@ -83,14 +89,14 @@ export const ShadowPressable = ({
         },
       }) => setBoxSize({ width, height })}
       {...props}
-      style={[props.style, COMMON_STYLES.canvasWrapper]}
+      style={[style, COMMON_STYLES.canvasWrapper]}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
     >
       {boxSize.width === 0 && boxSize.height === 0 ? null : (
         <Canvas
           style={[
-            props.style,
+            style,
             COMMON_STYLES.canvas,
             { width: boxSize.width, height: boxSize.height },
           ]}
@@ -101,7 +107,7 @@ export const ShadowPressable = ({
             width={boxSize.width - shadowSpace * 2}
             height={boxSize.height - shadowSpace * 2}
             r={boxRadius}
-            color={backgroundColor} // The background fill of the rect
+            color={_backgroundColor} // The background fill of the rect
           >
             <Shadow
               dx={offset}
@@ -123,7 +129,7 @@ export const ShadowPressable = ({
           </RoundedRect>
         </Canvas>
       )}
-      {props.children}
+      {children}
     </PressButton>
   );
-};
+});

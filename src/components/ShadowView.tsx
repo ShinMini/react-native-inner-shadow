@@ -1,8 +1,8 @@
-import React from 'react';
-import type { LayoutChangeEvent } from 'react-native';
+import React, { memo } from 'react';
+import { View, type LayoutChangeEvent } from 'react-native';
 
 import {
-  createOuterShadowOffset,
+  getOuterShadowOffset,
   createStyles,
   getBackgroundColor,
   getShadowProperty,
@@ -11,7 +11,6 @@ import {
 import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
 import { COMMON_STYLES } from '../constants';
 
-import Animated from 'react-native-reanimated';
 import { Canvas, Shadow } from '@shopify/react-native-skia';
 import LinearGradientFill from './ShadowLinearGradientFill';
 import { CornerRadii } from './CornerRadii';
@@ -21,53 +20,71 @@ import { CornerRadii } from './CornerRadii';
  * We automatically detect "linear mode" by checking if the user provides
  * gradient props (colors, from, to, etc.).
  */
-function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
-  /** 1) Extract essential props & compute defaults */
-  const backgroundColor = getBackgroundColor(props);
-  const shadowProps = React.useMemo(() => getShadowProperty(props), [props]);
+const UnifiedShadowView = memo(function UnifiedShadowView({
+  inset,
+  isReflectedLightEnabled,
+  width,
+  height,
+  style,
+  backgroundColor,
+  shadowOffset,
+  shadowColor,
+  shadowBlur,
+  reflectedLightOffset,
+  reflectedLightColor,
+  reflectedLightBlur,
+  children,
+  ...props
+}: InnerShadowProps | LinearInnerShadowProps) {
+  // Extract base fields
+  const _backgroundColor = getBackgroundColor({
+    backgroundColor,
+    style,
+  });
+  const shadowProps = getShadowProperty({
+    shadowOffset,
+    shadowColor,
+    shadowBlur,
+    reflectedLightOffset,
+    reflectedLightColor,
+    reflectedLightBlur,
+  });
+
   const isLinear = isLinearProps(props);
 
-  /**
-   * If isReflectedLightEnabled is undefined, default to props.inset
-   * for the typical "inset = highlight" usage.
-   */
-  const isReflectedLightEnabled = props.isReflectedLightEnabled ?? props.inset;
+  // If isReflectedLightEnabled is undefined, default to `props.inset` (typical).
+  const _isReflectedLightEnabled = isReflectedLightEnabled ?? inset;
 
-  /** 2) Extract width/height from style if provided */
+  // Extract style-based width/height if present
   const styleWidth =
-    props.style &&
-    (Number.isNaN(Number(props.style.width)) ? 0 : Number(props.style.width));
+    width ??
+    (style && (Number.isNaN(Number(style.width)) ? 0 : Number(style.width)));
   const styleHeight =
-    props.style &&
-    (Number.isNaN(Number(props.style.height)) ? 0 : Number(props.style.height));
-  /** 3) Local state for measuring if needed */
+    height ??
+    (style && (Number.isNaN(Number(style.height)) ? 0 : Number(style.height)));
+
+  // Local state if we need to measure
   const [layoutSize, setLayoutSize] = React.useState({ width: 0, height: 0 });
 
-  /**
-   * Only measure if user hasn't explicitly set width/height in style,
-   * to avoid repeated re-renders.
-   */
+  // Decide if we even need to attach onLayout
+  const needMeasure = !styleWidth || !styleHeight;
+
+  // onLayout only does something if we truly need measure
   const onLayout = React.useCallback(
     (e: LayoutChangeEvent) => {
-      if (!styleWidth || !styleHeight) {
-        const { width, height } = e.nativeEvent.layout;
-        if (width !== layoutSize.width || height !== layoutSize.height) {
-          setLayoutSize({ width, height });
-        }
+      if (!needMeasure) return;
+
+      const { width: w, height: h } = e.nativeEvent.layout;
+      if (w !== layoutSize.width || h !== layoutSize.height) {
+        setLayoutSize({ width: w, height: h });
       }
     },
-    [styleWidth, styleHeight, layoutSize]
+    [needMeasure, layoutSize]
   );
 
-  /** 4) Final dimensions we use for the Canvas */
+  // Final width/height
   const finalWidth = styleWidth ? styleWidth : layoutSize.width;
   const finalHeight = styleHeight ? styleHeight : layoutSize.height;
-
-  /**
-   * We only render the Canvas if we have a valid size
-   * (prevents flicker or wasted draws when size = 0).
-   */
-  const canRenderCanvas = finalWidth > 0 && finalHeight > 0;
 
   /** 5) Memoize style objects if needed */
   const canvasStyle = React.useMemo(
@@ -79,21 +96,24 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
     [finalWidth, finalHeight]
   );
 
+  // Create offset style for outer shadow if needed
   const outerShadowOffset = React.useMemo(
     () =>
-      createOuterShadowOffset({
-        inset: !!props.inset,
+      getOuterShadowOffset({
+        inset: !!inset,
         ...shadowProps,
       }),
-    [shadowProps, props.inset]
+    [shadowProps, inset]
   );
 
-  /** 6) Render Flow */
+  // Only show the canvas if we have a valid size
+  const canRenderCanvas = finalWidth > 0 && finalHeight > 0;
+
   return (
-    <Animated.View
+    <View
       {...props}
       style={[
-        props.style,
+        style,
         COMMON_STYLES.canvasWrapper,
         outerShadowOffset, // Possibly sets outer drop-shadow if needed
       ]}
@@ -104,20 +124,20 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
           <CornerRadii
             width={finalWidth}
             height={finalHeight}
-            style={props.style}
-            backgroundColor={backgroundColor}
+            style={style}
+            backgroundColor={_backgroundColor}
           >
             {/** If we are in "linear" mode, draw the linear gradient fill */}
             {isLinear && (
               <LinearGradientFill
+                {...props} // from, to, colors, etc.
                 width={finalWidth}
                 height={finalHeight}
-                {...props} // from, to, colors, etc.
               />
             )}
 
             {/** Inset main shadow if props.inset is true */}
-            {props.inset && (
+            {inset && (
               <Shadow
                 dx={shadowProps.shadowOffset.width}
                 dy={shadowProps.shadowOffset.height}
@@ -128,7 +148,7 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
             )}
 
             {/** Optional highlight reflection if isReflectedLightEnabled */}
-            {isReflectedLightEnabled && (
+            {_isReflectedLightEnabled && (
               <Shadow
                 dx={shadowProps.reflectedLightOffset.width}
                 dy={shadowProps.reflectedLightOffset.height}
@@ -142,10 +162,10 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
       )}
 
       {/** Any children appear on top of the canvas */}
-      {props.children}
-    </Animated.View>
+      {children}
+    </View>
   );
-}
+});
 
 /**
  * ShadowView: for a basic “solid” background shadow
