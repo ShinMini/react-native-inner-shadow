@@ -1,5 +1,6 @@
+import React from 'react';
 import { Group, Rect } from '@shopify/react-native-skia';
-import { useMemo } from 'react';
+
 import type { ViewStyle } from 'react-native';
 
 type CornerRadiiProps = {
@@ -27,7 +28,7 @@ export function CornerRadii({
     style?.borderBottomLeftRadius ?? borderRadius
   );
 
-  const roundedClip = useMemo(() => {
+  const roundedClip = React.useMemo(() => {
     return makeRoundedRectPath(
       width,
       height,

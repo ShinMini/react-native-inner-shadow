@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import React from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 
 import {
@@ -24,7 +24,7 @@ import { CornerRadii } from './CornerRadii';
 function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
   /** 1) Extract essential props & compute defaults */
   const backgroundColor = getBackgroundColor(props);
-  const shadowProps = useMemo(() => getShadowProperty(props), [props]);
+  const shadowProps = React.useMemo(() => getShadowProperty(props), [props]);
   const isLinear = isLinearProps(props);
 
   /**
@@ -41,13 +41,13 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
     props.style &&
     (Number.isNaN(Number(props.style.height)) ? 0 : Number(props.style.height));
   /** 3) Local state for measuring if needed */
-  const [layoutSize, setLayoutSize] = useState({ width: 0, height: 0 });
+  const [layoutSize, setLayoutSize] = React.useState({ width: 0, height: 0 });
 
   /**
    * Only measure if user hasn't explicitly set width/height in style,
    * to avoid repeated re-renders.
    */
-  const onLayout = useCallback(
+  const onLayout = React.useCallback(
     (e: LayoutChangeEvent) => {
       if (!styleWidth || !styleHeight) {
         const { width, height } = e.nativeEvent.layout;
@@ -70,7 +70,7 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
   const canRenderCanvas = finalWidth > 0 && finalHeight > 0;
 
   /** 5) Memoize style objects if needed */
-  const canvasStyle = useMemo(
+  const canvasStyle = React.useMemo(
     () =>
       createStyles({
         width: finalWidth,
@@ -79,7 +79,7 @@ function UnifiedShadowView(props: InnerShadowProps | LinearInnerShadowProps) {
     [finalWidth, finalHeight]
   );
 
-  const outerShadowOffset = useMemo(
+  const outerShadowOffset = React.useMemo(
     () =>
       createOuterShadowOffset({
         inset: !!props.inset,

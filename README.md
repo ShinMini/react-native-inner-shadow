@@ -22,7 +22,7 @@ yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reani
 If you’re using **Expo**, you can run:
 
 ```bash
-expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+npx expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
 > **Important**
@@ -141,35 +141,44 @@ export default function GradientExample() {
 
 ```tsx
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { ShadowPressable } from 'react-native-inner-shadow';
 
 export default function App() {
   return (
-    <ShadowPressable
-      style={styles.button}
-      initialDepth={3}
-      shadowBlur={20}
-      duration={200}
-      damping={0.8}
-    >
-      <Text style={styles.label}>Press Me</Text>
-    </ShadowPressable>
+    <View style={styles.container}>
+
+      <ShadowPressable
+        style={styles.button}
+        initialDepth={2}
+        shadowBlur={7}
+        duration={200}
+        damping={0.8}
+      >
+        <Text style={styles.label}>Press Me</Text>
+      </ShadowPressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   button: {
-    width: 150,
-    height: 150,
-    backgroundColor: '#fff',
+    width: 120,
+    height: 63,
+    backgroundColor: '#E5A9A9',
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
   label: {
-    fontSize: 18,
-    color: '#333',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#F4E4BA',
   },
 });
 ```
@@ -237,10 +246,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggle: {
-    width: 120,
-    height: 120,
+    width: '30%',
+    aspectRatio: 1.7,
     borderRadius: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F4E4BA',
     justifyContent: 'center',
     alignItems: 'center',
   },
