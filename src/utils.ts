@@ -39,7 +39,7 @@ export function createStyles({
       backgroundColor: 'transparent',
       width,
       height,
-    },
+    } as const,
   });
 }
 
@@ -53,7 +53,7 @@ export function createStyles({
  * This ensures there is always a valid color for the component’s background.
  */
 export function getBackgroundColor(
-  props: Pick<InnerShadowProps, 'backgroundColor' | 'style' | 'children'>
+  props: Pick<InnerShadowProps, 'backgroundColor' | 'style'>
 ) {
   const backgroundColor =
     props.backgroundColor ??
@@ -78,57 +78,65 @@ export function getBackgroundColor(
  * @returns {
  * shadowOffset, reflectedLightOffset, shadowColor, reflectedLightColor, shadowBlur, reflectedLightBlur}
  */
-export function getShadowProperty(props: Omit<InnerShadowProps, 'children'>) {
+export function getShadowProperty({
+  inset,
+  shadowOffset,
+  shadowBlur,
+  shadowColor,
+  reflectedLightOffset,
+  reflectedLightBlur,
+  reflectedLightColor,
+}: Omit<InnerShadowProps, 'children'>) {
   const SHADOW_OFFSET_WIDTH =
-    props.shadowOffset?.width ?? DEFAULT_SHADOW_OFFSET_SCALE;
+    shadowOffset?.width ?? DEFAULT_SHADOW_OFFSET_SCALE;
   const SHADOW_OFFSET_HEIGHT =
-    props.shadowOffset?.height ?? DEFAULT_SHADOW_OFFSET_SCALE;
+    shadowOffset?.height ?? DEFAULT_SHADOW_OFFSET_SCALE;
 
   // By default, the reflected light offset is the inverse of the main shadow
   // so it appears on the opposite corner/side.
   // when `inset` property is `true`, the reflected light offset is opposite to the shadow offset
   const REFLECTED_LIGHT_OFFSET_WIDTH = setReflectedLightDirectionAndScale({
-    inset: props.inset,
-    reflectedOffset: props.reflectedLightOffset?.width,
+    inset,
+    reflectedOffset: reflectedLightOffset?.width,
     shadowOffset: SHADOW_OFFSET_WIDTH,
   });
 
   const REFLECTED_LIGHT_OFFSET_HEIGHT = setReflectedLightDirectionAndScale({
-    inset: props.inset,
-    reflectedOffset: props.reflectedLightOffset?.height,
+    inset: inset,
+    reflectedOffset: reflectedLightOffset?.height,
     shadowOffset: SHADOW_OFFSET_HEIGHT,
   });
 
   // "Blur" here maps to how soft or large the shadow/highlight is.
   // The higher the number, the more diffuse the effect.
-  const shadowBlur = Math.max(props.shadowBlur ?? DEFAULT_SHADOW_BLUR, 0);
-  const reflectedLightBlur = Math.max(
-    props.reflectedLightBlur ?? DEFAULT_REFLECTED_LIGHT_BLUR,
+  const _shadowBlur = Math.max(shadowBlur ?? DEFAULT_SHADOW_BLUR, 0);
+  const _reflectedLightBlur = Math.max(
+    reflectedLightBlur ?? DEFAULT_REFLECTED_LIGHT_BLUR,
     0
   );
 
   // Fallback to the provided defaults if the user doesn't specify a color.
-  const shadowColor = props.shadowColor ?? DEFAULT_SHADOW_COLOR;
-  const reflectedLightColor =
-    props.reflectedLightColor ?? DEFAULT_REFLECTED_LIGHT_COLOR;
+  const _shadowColor = shadowColor ?? DEFAULT_SHADOW_COLOR;
+  const _reflectedLightColor =
+    reflectedLightColor ?? DEFAULT_REFLECTED_LIGHT_COLOR;
 
   // Construct the final offsets as objects for clarity.
-  const shadowOffset = {
+  const _shadowOffset = {
     width: SHADOW_OFFSET_WIDTH,
     height: SHADOW_OFFSET_HEIGHT,
   };
-  const reflectedLightOffset = {
+  const _reflectedLightOffset = {
     width: REFLECTED_LIGHT_OFFSET_WIDTH,
     height: REFLECTED_LIGHT_OFFSET_HEIGHT,
   };
 
   return {
-    shadowOffset,
-    reflectedLightOffset,
-    shadowColor,
-    reflectedLightColor,
-    shadowBlur,
-    reflectedLightBlur,
+    shadowOffset: _shadowOffset,
+    reflectedLightOffset: _reflectedLightOffset,
+    shadowColor: _shadowColor,
+    reflectedLightColor: _reflectedLightColor,
+    shadowBlur: _shadowBlur,
+    reflectedLightBlur: _reflectedLightBlur,
   };
 }
 
