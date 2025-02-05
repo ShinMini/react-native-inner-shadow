@@ -62,7 +62,7 @@ export const ShadowToggle = memo(function ShadowToggle({
   const boxRadius = Number(style ? style.borderRadius : 0) || 10;
 
   const depth = useSharedValue(initialDepth);
-  const offset = useDerivedValue(() => Math.abs(depth.value));
+  const offset = useDerivedValue(() => depth.value);
   const rfOffset = useDerivedValue(() =>
     interpolate(depth.value, [-initialDepth, initialDepth * damping], [-3, 3])
   );
@@ -77,11 +77,7 @@ export const ShadowToggle = memo(function ShadowToggle({
 
   const inset = useDerivedValue(() => depth.value <= 0);
   const blur = useDerivedValue(() =>
-    interpolate(
-      Math.abs(depth.value),
-      [shadowBlur, 0],
-      [0, initialDepth * damping]
-    )
+    interpolate(depth.value, [shadowBlur, 0], [0, initialDepth * damping])
   );
 
   useAnimatedReaction(

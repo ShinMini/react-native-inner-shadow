@@ -29,6 +29,28 @@ npx expo install react-native-inner-shadow @shopify/react-native-skia react-nati
 > You must have React Native **Skia** and **Reanimated** properly installed and configured in your React Native project.
 > See the [Skia documentation](https://shopify.github.io/react-native-skia/docs/getting-started/installation) and the [Reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/) for details.
 
+Add react-native-reanimated/plugin plugin to your babel.config.js.
+
+```babel.config.js
+  module.exports = {
+    presets: [
+      ... // don't add it here :)
+    ],
+    plugins: [
+      ...
+      'react-native-reanimated/plugin',
+    ],
+  };
+```
+
+Don't forget to run after installing the dependencies:
+
+```bash
+
+cd ios && bundle exec pod install && cd ..
+
+```
+
 ---
 
 ## Table of Contents
@@ -83,25 +105,36 @@ npx expo install react-native-inner-shadow @shopify/react-native-skia react-nati
 
 ```tsx
 import React from 'react';
-import { View } from 'react-native';
-import { InnerShadowView } from 'react-native-inner-shadow';
+import {Text, View} from 'react-native';
+
+import {ShadowView} from 'react-native-inner-shadow';
 
 export default function App() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <InnerShadowView
-        style={{ width: 120, height: 120, borderRadius: 12 }}
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <ShadowView
+        style={{
+          width: 120,
+          height: 120,
+          borderRadius: 12,
+          backgroundColor: '#f0f0f0',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
         inset
         shadowColor="#00000066"
-        shadowOffset={{ width: 2, height: 2 }}
+        shadowOffset={{width: 2, height: 2}}
         shadowBlur={5}
-        isReflectedLightEnabled={false}
-      >
-        {/* Your content */}
-      </InnerShadowView>
+        isReflectedLightEnabled={false}>
+        <Text style={{textAlign: 'center', color: '#2f2f2f', fontSize: 14}}>
+          inner-shadow
+        </Text>
+      </ShadowView>
     </View>
   );
 }
+
+
 ```
 
 ### 2. Linear Gradient with Inset Shadow
@@ -141,20 +174,18 @@ export default function GradientExample() {
 
 ```tsx
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ShadowPressable } from 'react-native-inner-shadow';
+import {StyleSheet, Text, View} from 'react-native';
+import {ShadowPressable} from 'react-native-inner-shadow';
 
 export default function App() {
   return (
     <View style={styles.container}>
-
       <ShadowPressable
         style={styles.button}
         initialDepth={2}
         shadowBlur={7}
         duration={200}
-        damping={0.8}
-      >
+        damping={1.2}>
         <Text style={styles.label}>Press Me</Text>
       </ShadowPressable>
     </View>
@@ -165,7 +196,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
     width: 120,
@@ -218,9 +249,9 @@ const styles = StyleSheet.create({
 ### Simple Example
 
 ```tsx
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { ShadowToggle } from 'react-native-inner-shadow';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {ShadowToggle} from 'react-native-inner-shadow';
 
 export default function ToggleExample() {
   const [isActive, setIsActive] = useState(false);
@@ -228,12 +259,20 @@ export default function ToggleExample() {
   return (
     <View style={styles.container}>
       <ShadowToggle
+        initialDepth={3}
         style={styles.toggle}
         isActive={isActive}
         activeColor="#FFD700"
-        onPress={() => setIsActive(!isActive)}
-      >
-        <Text style={styles.label}>{isActive ? 'Active' : 'Inactive'}</Text>
+        onPress={() => setIsActive(prev => !prev)}>
+        <Text
+          style={[
+            styles.label,
+            {
+              color: isActive ? '#515050' : '#eeebeb',
+            },
+          ]}>
+          {isActive ? 'ON' : 'OFF'}
+        </Text>
       </ShadowToggle>
     </View>
   );
@@ -249,7 +288,7 @@ const styles = StyleSheet.create({
     width: '30%',
     aspectRatio: 1.7,
     borderRadius: 12,
-    backgroundColor: '#F4E4BA',
+    backgroundColor: '#06d6a0',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -291,8 +330,8 @@ This library offers multiple ways to create inset or togglable shadows:
 
 ### Components
 
-1. **`InnerShadowView`**
-   - A simpler, “solid background” approach. Inherits from `InnerShadowProps`.
+1. **`ShadowView`**
+   - A simpler, “solid background” approach. Inherits from `ShadowViewProps`.
 2. **`LinearShadowView`**
    - Extends `InnerShadowProps` with gradient logic (`from`, `to`, `colors`).
 3. **`ShadowPressable`**
