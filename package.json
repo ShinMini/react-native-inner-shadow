@@ -1,10 +1,15 @@
 {
   "name": "react-native-inner-shadow",
-  "version": "1.2.0",
+  "source": "./src/index.ts",
+  "version": "1.2.3",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
   "bugs": {
     "url": "https://github.com/ShinMini/react-native-inner-shadow/issues"
   },
   "author": "ShinMini <gusals121234@gmail.com> (https://github.com/ShinMini)",
+  "repository": "https://github.com/ShinMini/react-native-inner-shadow",
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
   "license": "ISC",
   "description": "Inner Shadows with linear design UI in react-native",
@@ -26,14 +31,13 @@
     "release": "release-it"
   },
   "peerDependencies": {
-    "@shopify/react-native-skia": "^1.0.0",
+    "@shopify/react-native-skia": ">=1.0.0",
     "react": "*",
-    "react-native": "*",
-    "react-native-reanimated": ">=2.0.0"
+    "react-native": ">=0.6.0",
+    "react-native-reanimated": ">=3.0.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
+    "registry": "https://registry.npmjs.org/"
   },
   "workspaces": [
     "example"
@@ -73,10 +77,6 @@
     "node": ">=18"
   },
   "packageManager": "yarn@3.6.4",
-  "source": "./src/index.ts",
-  "main": "./lib/commonjs/index.js",
-  "module": "./lib/module/index.js",
-  "types": "./lib/typescript/commonjs/src/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -139,7 +139,21 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "preset": "angular"
+        "preset": {
+          "name": "angular",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {}
+          ]
+        },
+        "infile": "CHANGELOG.md"
       }
     }
   },
@@ -172,23 +186,6 @@
         }
       ]
     }
-  },
-  "codegenConfig": {
-    "name": "RNInnerShadowSpec",
-    "type": "modules",
-    "jsSrcsDir": "src",
-    "outputDir": {
-      "ios": "ios/generated",
-      "android": "android/generated"
-    },
-    "android": {
-      "javaPackageName": "com.innershadow"
-    }
-  },
-  "create-react-native-library": {
-    "languages": "js",
-    "type": "library",
-    "version": "0.45.5"
   },
   "eslintIgnore": [
     "node_modules/",
