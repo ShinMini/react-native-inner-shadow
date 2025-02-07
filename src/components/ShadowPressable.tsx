@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, type GestureResponderEvent } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import Animated, {
   interpolate,
@@ -70,21 +70,22 @@ export const ShadowPressable = memo(function ShadowPressable({
     interpolate(depth.value, [shadowBlur, 0], [0, initialDepth * damping])
   );
 
-  const onPressIn = () => {
+  const onPressIn = (event: GestureResponderEvent) => {
     depth.value = withTiming(-initialDepth * damping, { duration });
+    props?.onPressIn?.(event);
   };
-  const onPressOut = () => {
+
+  const onPressOut = (event: GestureResponderEvent) => {
     depth.value = withTiming(initialDepth, { duration });
+    props?.onPressOut?.(event);
   };
 
   return (
     <PressButton
-      onLayout={({
-        nativeEvent: {
-          layout: { width, height },
-        },
-      }) => setBoxSize({ width, height })}
       {...props}
+      onLayout={({ nativeEvent: { layout } }) =>
+        setBoxSize({ width: layout.width, height: layout.height })
+      }
       style={[style, COMMON_STYLES.canvasWrapper]}
       onPressIn={onPressIn}
       onPressOut={onPressOut}

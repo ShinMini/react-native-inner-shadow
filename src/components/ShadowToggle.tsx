@@ -92,12 +92,10 @@ export const ShadowToggle = memo(function ShadowToggle({
 
   return (
     <PressButton
-      onLayout={({
-        nativeEvent: {
-          layout: { width, height },
-        },
-      }) => setBoxSize({ width, height })}
       {...props}
+      onLayout={({ nativeEvent: { layout } }) =>
+        setBoxSize({ width: layout.width, height: layout.height })
+      }
       style={[style, COMMON_STYLES.canvasWrapper]}
     >
       {boxSize.width === 0 && boxSize.height === 0 ? null : (
