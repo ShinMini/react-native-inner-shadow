@@ -90,9 +90,10 @@ cd ios && bundle exec pod install && cd ..
 
 ## Preview
 
-<img width="45%" max-width="450px" alt="inner shadow & linear shadow sample" src="https://github.com/ShinMini/react-native-inner-shadow/tree/main/docs/imgs/rn-inner-shadow-thumbnail.jpg" />
-
-<img width="45%" max-width="450px" alt="inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/tree/main/docs/imgs/rn-inner-shadow-pressable-thumbnail.gif" />
+<div>
+  <img width="45%" max-width="450px" alt="inner shadow & linear shadow sample" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-thubnail.jpg" />
+  <img width="45%" max-width="450px" alt="inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-pressable-thumbnail.gif" />
+</div>
 
 ---
 
