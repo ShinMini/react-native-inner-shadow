@@ -10,10 +10,9 @@ Supports both **solid** and **linear gradient** backgrounds for advanced UI desi
 <a href="https://github.com/ShinMini/react-native-inner-shadow">
     <img src="https://img.shields.io/npm/types/typescript" />
 </a>
-  
+
 ![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
 ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square)
-
 
 ---
 
@@ -91,9 +90,9 @@ cd ios && bundle exec pod install && cd ..
 
 ## Preview
 
-<img width="45%" max-width="450px" alt="inner shadow & linear shadow sample" src="https://github.com/user-attachments/assets/c588c061-d2c3-4d90-85ed-c71689b2a8cf" />
+<img width="45%" max-width="450px" alt="inner shadow & linear shadow sample" src="https://github.com/ShinMini/react-native-inner-shadow/tree/main/docs/imgs/rn-inner-shadow-thumbnail.jpg" />
 
-<img width="45%" max-width="450px" alt="inner shadow pressable & toggle sample gif" src="https://github.com/user-attachments/assets/2a59b1a8-65df-487b-aabe-1f0a94d5aa10" />
+<img width="45%" max-width="450px" alt="inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/tree/main/docs/imgs/rn-inner-shadow-pressable-thumbnail.gif" />
 
 ---
 

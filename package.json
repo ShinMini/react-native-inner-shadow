@@ -17,6 +17,7 @@
     "react-native",
     "inner-shadow",
     "inset",
+    "react-native-shadow",
     "react-native-inner-shadow",
     "shadow"
   ],
