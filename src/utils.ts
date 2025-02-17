@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, type ViewStyle } from 'react-native';
 
 import { vec } from '@shopify/react-native-skia';
 
@@ -21,6 +21,51 @@ import {
   DEFAULT_SHADOW_COLOR,
   DEFAULT_SHADOW_OFFSET_SCALE,
 } from './constants';
+
+// At this time(17.Feb.2025), we do not support the way to convert the string (percentage) to a number.
+function numerify<T extends null | number>(value: unknown, defaultValue: T) {
+  const num = Number(value);
+  return Number.isNaN(num) ? defaultValue : num;
+}
+
+export function getBorderRadius(style?: Partial<ViewStyle>) {
+  const borderRadius = numerify(style?.borderRadius, null);
+
+  const topStartRadius = numerify(style?.borderTopStartRadius, borderRadius);
+  const topLeftRadius = numerify(
+    style?.borderTopLeftRadius,
+    topStartRadius ?? 0
+  );
+
+  const topEndRadius = numerify(style?.borderTopEndRadius, borderRadius);
+  const topRightRadius = numerify(
+    style?.borderTopRightRadius,
+    topEndRadius ?? 0
+  );
+
+  const bottomEndRadius = numerify(style?.borderBottomEndRadius, borderRadius);
+  const bottomRightRadius = numerify(
+    style?.borderBottomRightRadius,
+    bottomEndRadius ?? 0
+  );
+
+  const bottomStartRadius = numerify(
+    style?.borderBottomStartRadius,
+    borderRadius
+  );
+  const bottomLeftRadius = numerify(
+    style?.borderBottomLeftRadius,
+    bottomStartRadius ?? 0
+  );
+
+  return {
+    borderRadius,
+    topLeftRadius,
+    topRightRadius,
+    bottomRightRadius,
+    bottomLeftRadius,
+  };
+}
 
 /**
  *  createStyles generates the StyleSheet object for the canvas

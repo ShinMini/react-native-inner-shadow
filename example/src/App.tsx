@@ -10,7 +10,7 @@ function App(): React.JSX.Element {
     <View style={styles.container}>
       <ExampleShadowPressable />
       <ExampleShadowToggle />
-      <ShadowView style={styles.shadowView} backgroundColor="#dc9ee6">
+      <ShadowView style={styles.shadowView} backgroundColor="#6ae0ce">
         <Text>ShadowView</Text>
       </ShadowView>
       <LinearShadowView
@@ -21,6 +21,9 @@ function App(): React.JSX.Element {
       >
         <Text>LinearShadowView</Text>
       </LinearShadowView>
+      <View style={styles.shadowView}>
+        <Text>Normal View</Text>
+      </View>
     </View>
   );
 }
@@ -35,12 +38,19 @@ const styles = StyleSheet.create({
   shadowView: {
     justifyContent: 'center',
     alignItems: 'center',
+    // borderRadius: '30%',
     borderRadius: 30,
-    borderTopLeftRadius: 10,
+    borderTopStartRadius: 10,
+    borderTopLeftRadius: 20,
+    borderTopEndRadius: 20,
+
+    borderBottomLeftRadius: 1,
+    borderBottomEndRadius: 50,
     marginTop: 10,
     padding: 10,
     width: '30%',
     aspectRatio: 1,
+    backgroundColor: '#29d557',
   },
 });
 
