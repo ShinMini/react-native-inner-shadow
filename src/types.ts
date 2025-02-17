@@ -10,7 +10,7 @@ export type ShadowViewProps = InnerShadowProps | LinearInnerShadowProps;
  *   - Basic layout (width, height, backgroundColor)
  *   - Shadow styling (color, blur, offset)
  *   - Optional reflected light styling (color, blur, offset)
- *   - PressableProps allows the shadowed element to be interactable.
+ *   - PressableProps allows the shadowed element to be intractable.
  */
 export interface InnerShadowProps extends ViewProps {
   /**

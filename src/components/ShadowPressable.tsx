@@ -32,8 +32,8 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
  * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
  */
 export const ShadowPressable = memo(function ShadowPressable({
-  width: _width = 0,
-  height: _height = 0,
+  width = 0,
+  height = 0,
   initialDepth = 3,
   shadowSpace = 6,
   shadowBlur = 10,
@@ -48,8 +48,8 @@ export const ShadowPressable = memo(function ShadowPressable({
   ...props
 }: ShadowPressableProps) {
   const [boxSize, setBoxSize] = React.useState({
-    width: _width,
-    height: _height,
+    width,
+    height,
   });
 
   // Determine the final background color (pulling from `props.style` or a default).
