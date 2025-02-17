@@ -264,9 +264,9 @@ export function getOuterShadowOffset({
     return {
       shadowColor,
       shadowOffset,
-      // blur: 0 ~ 20, opacity: 0 ~ 1
-      shadowOpacity: shadowBlur ? shadowBlur / 5 : 0.6,
-      shadowRadius: (shadowBlur ?? 5) * 0.6,
+      // Map blur to opacity (0 ~ 1) and radius (more subtle scaling)
+      shadowOpacity: shadowBlur ? Math.min(shadowBlur / 20, 1) : 0.3,
+      shadowRadius: (shadowBlur ?? 5) * 0.8,
       elevation: shadowBlur,
     };
   }
