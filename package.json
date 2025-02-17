@@ -1,7 +1,7 @@
 {
   "name": "react-native-inner-shadow",
   "source": "./src/index.ts",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
@@ -16,9 +16,10 @@
   "keywords": [
     "react-native",
     "inner-shadow",
-    "inset",
+    "inset-shadow",
     "react-native-shadow",
     "react-native-inner-shadow",
+    "react native inner shadow",
     "shadow"
   ],
   "scripts": {
