@@ -6,7 +6,7 @@ A React Native library for creating **inset shadows** and **reflected light** ef
 Supports both **solid** and **linear gradient** backgrounds for advanced UI designs, plus interactive pressable or toggle states using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
 
 [![npm](https://img.shields.io/npm/v/react-native-inner-shadow.svg)](https://www.npmjs.com/package/react-native-inner-shadow)
-![license](https://img.shields.io/github/license/ShinMini/react-native-inner-shadow)
+![ISC License](https://img.shields.io/npm/l/react-native-inner-shadow.svg)
 <a href="https://github.com/ShinMini/react-native-inner-shadow">
     <img src="https://img.shields.io/npm/types/typescript" />
 </a>
