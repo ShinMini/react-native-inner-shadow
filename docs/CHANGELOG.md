@@ -9,7 +9,8 @@
 ### Removed
 
 - exclude constants exports from `index.ts` file
-- rm not necessary fn; `createStyle` in `utils.ts`
+- remove not used `createStyle` function in `utils.ts`
+- deprecated `initialDepth` prop in `ShadowPressable` and `ShadowToggle` components which is now replaced by `shadowOffset` prop
 
 ---
 
