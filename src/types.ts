@@ -126,6 +126,7 @@ export type ShadowPressableProps = PressableProps &
     shadowSpace?: number; // 3
     /**
      * The initial depth of the shadow effect.
+     * @deprecated Use shadowOffset instead
      * @Default 5
      * @argument min: 0, max: 20
      */

@@ -32,7 +32,7 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
  * A toggle component that casts a shadow when active.
  * The shadow effect is created using the `@shopify/react-native-skia` library.
  *
- * @param initialDepth - The initial depth of the shadow
+ * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
  * @param shadowSpace - The space between the shadow and the component
  * @param isActive - Whether the shadow is active
  * @param activeColor - The color of the shadow when active

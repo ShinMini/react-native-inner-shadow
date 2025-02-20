@@ -5,7 +5,7 @@ const BACKGROUND_COLOR = '#FFFFFF' as const;
 const INITIAL_DEPTH = 3 as const;
 const SHADOW_SPACE = 6 as const;
 
-const SHADOW_BLUR = 6 as const;
+const SHADOW_BLUR = 2 as const;
 const REFLECTED_LIGHT_BLUR = 3 as const;
 
 const SHADOW_COLOR = '#2F2F2FBC' as const;

@@ -23,7 +23,10 @@ import {
 } from './constants';
 
 // At this time(17.Feb.2025), we do not support the way to convert the string (percentage) to a number.
-function numerify<T extends null | number>(value: unknown, defaultValue: T) {
+export function numerify<T extends null | number>(
+  value: unknown,
+  defaultValue: T
+) {
   const num = Number(value);
   return Number.isNaN(num) ? defaultValue : num;
 }
