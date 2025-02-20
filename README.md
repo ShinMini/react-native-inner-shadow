@@ -190,7 +190,6 @@ export default function App() {
     <View style={styles.container}>
       <ShadowPressable
         style={styles.button}
-        initialDepth={2}
         shadowBlur={7}
         duration={200}
         damping={1.2}>
@@ -228,9 +227,9 @@ const styles = StyleSheet.create({
 | ----------------------------- | --------- | --------------  | --------------------------------------------------------------------------------------------- |
 | **`width`**                   | `number`  | `0`             | Manual width (optional; if a width is defined in the style, that value is used).              |
 | **`height`**                  | `number`  | `0`             | Manual height (optional; if a height is defined in the style, that value is used).              |
-| **`initialDepth`**            | `number`  | `3`             | Sets the initial shadow depth (the raised state).                                             |
+| **`initialDepth`**            | `number`  | `3`             | @deprecated - Sets the initial shadow depth (the raised state). from v1.3.0 it replaced with `shadowOffset`                                             |
 | **`shadowSpace`**             | `number`  | `6`             | Extra space within the canvas to prevent clipping when using large blurs or offsets.           |
-| **`shadowBlur`**              | `number`  | `6`            | The blur radius for the main shadow. Adjust this value for softer or sharper shadows.          |
+| **`shadowBlur`**              | `number`  | `2`            | The blur radius for the main shadow. Adjust this value for softer or sharper shadows.          |
 | **`reflectedLightBlur`**      | `number`  | `3`             | The blur radius for the reflected light (highlight).                                          |
 | **`shadowColor`**             | `string`  | `'#2F2F2FBC'`   | The color of the main shadow (can be semi-transparent).                                       |
 | **`reflectedLightColor`**     | `string`  | `'#EEE9E92D'`   | The highlight color applied on the opposite side of the main shadow.                           |
@@ -315,8 +314,8 @@ const styles = StyleSheet.create({
 | ----------------------------- | --------- | -------  | --------------------------------------------------------------------------------------------------- |
 | **`isActive`**                | `boolean` | `false`  | Determines the active state of the toggle. `true` shows an inset shadow, `false` shows a raised shadow. |
 | **`activeColor`**             | `string`  | `null`   | Sets the background color when `isActive` is `true`.                                                |
-| **`initialDepth`**            | `number`  | `3`      | Sets the initial shadow depth. When active, the depth value becomes negative to create an inset effect.  |
-| **`shadowBlur`**              | `number`  | `6`     | Sets the blur radius for the main shadow.                                                          |
+| **`initialDepth`**            | `number`  | `3`             | @deprecated - Sets the initial shadow depth (the raised state). from v1.3.0 it replaced with `shadowOffset`  |
+| **`shadowBlur`**              | `number`  | `2`     | Sets the blur radius for the main shadow.                                                          |
 | **`shadowSpace`**             | `number`  | `6`      | Extra space allocated in the canvas to prevent clipping.                                           |
 | **`shadowColor`**             | `string`  | `'#2F2F2FBC'` | The color of the main shadow (can be semi-transparent).                                        |
 | **`reflectedLightColor`**     | `string`  | `'#EEE9E92D'` | The highlight color on the opposite side of the main shadow.                                    |
@@ -420,7 +419,7 @@ This library includes a set of default constants (fallback colors, blur values, 
 | **BACKGROUND_COLOR**               | Default background color (`#FFFFFF`).                                                                                                                         |
 | **INITIAL_DEPTH**                  | The initial depth value for controlling the shadow effect (`3`).                                                                                              |
 | **SHADOW_SPACE**                   | Extra space between the element and its shadow (`6`).                                                                                                         |
-| **SHADOW_BLUR**                    | The blur radius for the main shadow; set to `6` to achieve a softer effect.                                                                                   |
+| **SHADOW_BLUR**                    | The blur radius for the main shadow; set to `2` to achieve a softer effect.                                                                                   |
 | **REFLECTED_LIGHT_BLUR**           | The blur radius for the reflected light (highlight) effect (`3`).                                                                                             |
 | **SHADOW_COLOR**                   | The main shadow color (`#2F2F2FBC`).                                                                                                                            |
 | **REFLECTED_LIGHT_COLOR**          | The color used for the reflected light or highlight (`#EEE9E92D`).                                                                                             |

@@ -5,16 +5,7 @@ import { ShadowPressable } from 'react-native-inner-shadow';
 
 export const ExampleShadowPressable = (): React.JSX.Element => {
   return (
-    <ShadowPressable
-      style={styles.shadowView}
-      shadowBlur={2}
-      // initialDepth={4}
-      initialDepth={1}
-      shadowOffset={{
-        width: 3,
-        height: 4,
-      }}
-    >
+    <ShadowPressable style={styles.shadowView}>
       <Text style={[styles.context]}>Press Me!</Text>
     </ShadowPressable>
   );

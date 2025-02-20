@@ -22,7 +22,7 @@ import {
   SHADOW_SPACE,
 } from '../constants';
 
-import { getBackgroundColor } from '../utils';
+import { getBackgroundColor, getShadowProperty, numerify } from '../utils';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
 
@@ -42,7 +42,6 @@ export const ShadowToggle = memo(function ShadowToggle({
   height = 0,
   isActive = false,
   activeColor,
-  initialDepth = INITIAL_DEPTH,
   shadowSpace = SHADOW_SPACE,
   shadowBlur = SHADOW_BLUR,
   shadowColor = SHADOW_COLOR,
@@ -50,8 +49,12 @@ export const ShadowToggle = memo(function ShadowToggle({
   duration = DAMPING_DURATION,
   damping = DAMPING_RATIO,
   isReflectedLightEnabled = true,
-  backgroundColor,
+  shadowOffset,
+  reflectedLightOffset,
+  reflectedLightBlur,
   style,
+  backgroundColor,
+  children,
   ...props
 }: ShadowToggleProps) {
   const [boxSize, setBoxSize] = React.useState({
@@ -64,33 +67,88 @@ export const ShadowToggle = memo(function ShadowToggle({
     style,
     backgroundColor,
   });
-  const boxRadius = Number(style ? style.borderRadius : 0) || 10;
+  const shadowProps = getShadowProperty({
+    shadowOffset,
+    shadowColor,
+    shadowBlur,
+    reflectedLightOffset,
+    reflectedLightColor,
+    reflectedLightBlur,
+  });
 
-  const depth = useSharedValue(initialDepth);
-  const offset = useDerivedValue(() => depth.value);
-  const rfOffset = useDerivedValue(() =>
-    interpolate(depth.value, [-initialDepth, initialDepth * damping], [-3, 3])
+  const boxRadius = numerify(style?.borderRadius, 12);
+
+  const depth = useSharedValue<number>(INITIAL_DEPTH);
+  const offsetWidth = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.shadowOffset.width,
+        0,
+        shadowProps.shadowOffset.width * damping,
+      ]
+    )
+  );
+  const offsetHeight = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.shadowOffset.height,
+        0,
+        shadowProps.shadowOffset.height * damping,
+      ]
+    )
+  );
+  const rfOffsetWidth = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.reflectedLightOffset.width,
+        0,
+        shadowProps.reflectedLightOffset.width * damping,
+      ]
+    )
+  );
+  const rfOffsetHeight = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.reflectedLightOffset.height,
+        0,
+        shadowProps.reflectedLightOffset.height * damping,
+      ]
+    )
   );
 
   const animatedBackgroundColor = useDerivedValue(() =>
     interpolateColor(
       depth.value,
-      [initialDepth, -initialDepth * damping],
+      [INITIAL_DEPTH, -INITIAL_DEPTH],
       [_backgroundColor, activeColor || _backgroundColor]
     )
   );
 
   const inset = useDerivedValue(() => depth.value <= 0);
   const blur = useDerivedValue(() =>
-    interpolate(depth.value, [shadowBlur, 0], [0, initialDepth * damping])
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [shadowProps.shadowBlur, 0, shadowProps.shadowBlur * 1.2]
+    )
   );
-
   useAnimatedReaction(
     () => isActive,
     (next) => {
-      depth.value = withTiming(next ? -initialDepth * damping : initialDepth, {
-        duration,
-      });
+      depth.value = withTiming(
+        next ? -INITIAL_DEPTH * damping : INITIAL_DEPTH,
+        {
+          duration,
+        }
+      );
     },
     [isActive]
   );
@@ -120,8 +178,8 @@ export const ShadowToggle = memo(function ShadowToggle({
             color={animatedBackgroundColor} // The background fill of the rect
           >
             <Shadow
-              dx={offset}
-              dy={offset}
+              dx={offsetWidth}
+              dy={offsetHeight}
               blur={blur}
               color={shadowColor}
               inner={inset}
@@ -129,8 +187,8 @@ export const ShadowToggle = memo(function ShadowToggle({
 
             {isReflectedLightEnabled && (
               <Shadow
-                dx={rfOffset}
-                dy={rfOffset}
+                dx={rfOffsetWidth}
+                dy={rfOffsetHeight}
                 blur={blur}
                 color={reflectedLightColor}
                 inner
@@ -139,7 +197,7 @@ export const ShadowToggle = memo(function ShadowToggle({
           </RoundedRect>
         </Canvas>
       )}
-      {props.children}
+      {children}
     </PressButton>
   );
 });

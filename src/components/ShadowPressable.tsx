@@ -77,7 +77,7 @@ export const ShadowPressable = memo(function ShadowPressable({
 
   const boxRadius = numerify(style?.borderRadius, 12);
 
-  const depth = useSharedValue(10);
+  const depth = useSharedValue<number>(INITIAL_DEPTH);
 
   const offsetWidth = useDerivedValue(() =>
     interpolate(

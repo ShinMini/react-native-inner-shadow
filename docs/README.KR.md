@@ -221,9 +221,9 @@ const styles = StyleSheet.create({
 | ----------------------------- | --------- | -------------- | --------------------------------------------------------------------------------------------- |
 | **`width`**                   | `number`  | `0`            | 수동 너비 (선택 사항; 스타일에 너비가 지정되어 있다면 해당 값이 사용됩니다).                     |
 | **`height`**                  | `number`  | `0`            | 수동 높이 (선택 사항; 스타일에 높이가 지정되어 있다면 해당 값이 사용됩니다).                     |
-| **`initialDepth`**            | `number`  | `3`            | 그림자의 초기 "높이" (raised 상태)를 설정합니다.                                               |
+| **`initialDepth`**            | `number`  | `3`            | @deprecated - 이제 `shadowOffset` 값으로 대체됩니다. 그림자의 초기 "높이" (raised 상태)를 설정합니다.  from v1.3.0                                              |
 | **`shadowSpace`**             | `number`  | `6`            | 큰 블러나 오프셋 사용 시 캔버스 내부의 클리핑을 방지하기 위한 여분의 공간입니다.                |
-| **`shadowBlur`**              | `number`  | `6`           | 메인 그림자의 블러 반경입니다. 부드럽거나 뚜렷한 효과를 위해 값 조정이 가능합니다.               |
+| **`shadowBlur`**              | `number`  | `2`           | 메인 그림자의 블러 반경입니다. 부드럽거나 뚜렷한 효과를 위해 값 조정이 가능합니다.               |
 | **`reflectedLightBlur`**      | `number`  | `3`            | 반사광(하이라이트)의 블러 반경입니다.                                                           |
 | **`shadowColor`**             | `string`  | `'#2F2F2FBC'`  | 메인 그림자의 색상 (반투명 가능).                                                              |
 | **`reflectedLightColor`**     | `string`  | `'#EEE9E92D'`  | 메인 그림자 반대편에 적용할 하이라이트 색상입니다.                                             |
@@ -310,8 +310,8 @@ const styles = StyleSheet.create({
 | ----------------------------- | --------- | ------- | ---------------------------------------------------------------------------------------------- |
 | **`isActive`**                | `boolean` | `false` | 토글의 활성 여부를 결정합니다. `true`이면 내부 inset 상태, `false`이면 상승된 상태로 표시됩니다.  |
 | **`activeColor`**             | `string`  | `null`  | `isActive`가 `true`일 때 배경색을 지정할 수 있습니다. |
-| **`initialDepth`**            | `number`  | `3`     | 기본 상태에서 그림자의 깊이를 설정합니다. 내부 inset 시에는 음수 값으로 전환됩니다.               |
-| **`shadowBlur`**              | `number`  | `6`    | 메인 그림자의 블러 반경을 설정합니다.                                                          |
+| **`initialDepth`**            | `number`  | `3`            | @deprecated - 이제 `shadowOffset` 값으로 대체됩니다. 그림자의 초기 "높이" (raised 상태)를 설정합니다.  from v1.3.0   |
+| **`shadowBlur`**              | `number`  | `2`    | 메인 그림자의 블러 반경을 설정합니다.                                                          |
 | **`shadowSpace`**             | `number`  | `6`     | 캔버스 내에서 클리핑을 방지하기 위해 추가로 확보할 공간입니다.                                  |
 | **`shadowColor`**         | `string`  | `'#2F2F2FBC'` | 메인 그림자의 색상 (반투명 가능).                                                         |
 | **`reflectedLightColor`** | `string`  | `'#EEE9E92D'` | 메인 그림자 반대편에 적용할 하이라이트 색상입니다. |
