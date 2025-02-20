@@ -11,11 +11,17 @@ import Animated, {
 import type { ShadowPressableProps } from '../types';
 import {
   COMMON_STYLES,
-  DEFAULT_REFLECTED_LIGHT_COLOR,
-  DEFAULT_SHADOW_COLOR,
+  DAMPING_DURATION,
+  DAMPING_RATIO,
+  INITIAL_DEPTH,
+  IS_REFLECTED_LIGHT_ENABLED,
+  REFLECTED_LIGHT_COLOR,
+  SHADOW_BLUR,
+  SHADOW_COLOR,
+  SHADOW_SPACE,
 } from '../constants';
 
-import { getBackgroundColor } from '../utils';
+import { getBackgroundColor, getShadowProperty, numerify } from '../utils';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
 
@@ -25,7 +31,7 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
  * A pressable component that casts a shadow when pressed.
  * The shadow effect is created using the `@shopify/react-native-skia` library.
  *
- * @param initialDepth - The initial depth of the shadow
+ * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
  * @param shadowSpace - The space between the shadow and the component
  * @param duration - The duration of the shadow animation
  * @param damping - The damping factor of the shadow animation
@@ -34,14 +40,16 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
 export const ShadowPressable = memo(function ShadowPressable({
   width = 0,
   height = 0,
-  initialDepth = 3,
-  shadowSpace = 6,
-  shadowBlur = 10,
-  shadowColor = DEFAULT_SHADOW_COLOR,
-  reflectedLightColor = DEFAULT_REFLECTED_LIGHT_COLOR,
-  duration = 200,
-  damping = 0.8,
-  isReflectedLightEnabled = true,
+  shadowSpace = SHADOW_SPACE,
+  shadowBlur = SHADOW_BLUR,
+  shadowColor = SHADOW_COLOR,
+  reflectedLightColor = REFLECTED_LIGHT_COLOR,
+  duration = DAMPING_DURATION,
+  damping = DAMPING_RATIO,
+  isReflectedLightEnabled = IS_REFLECTED_LIGHT_ENABLED,
+  shadowOffset,
+  reflectedLightOffset,
+  reflectedLightBlur,
   style,
   backgroundColor,
   children,
@@ -57,26 +65,81 @@ export const ShadowPressable = memo(function ShadowPressable({
     backgroundColor,
     style,
   });
-  const boxRadius = Number(style ? style.borderRadius : 0) || 10;
 
-  const depth = useSharedValue(initialDepth);
-  const offset = useDerivedValue(() => depth.value);
-  const rfOffset = useDerivedValue(() =>
-    interpolate(depth.value, [-initialDepth, initialDepth * damping], [-3, 3])
+  const shadowProps = getShadowProperty({
+    shadowOffset,
+    shadowColor,
+    shadowBlur,
+    reflectedLightOffset,
+    reflectedLightColor,
+    reflectedLightBlur,
+  });
+
+  const boxRadius = numerify(style?.borderRadius, 12);
+
+  const depth = useSharedValue<number>(INITIAL_DEPTH);
+
+  const offsetWidth = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.shadowOffset.width,
+        0,
+        shadowProps.shadowOffset.width * damping,
+      ]
+    )
+  );
+  const offsetHeight = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.shadowOffset.height,
+        0,
+        shadowProps.shadowOffset.height * damping,
+      ]
+    )
+  );
+  const rfOffsetWidth = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.reflectedLightOffset.width,
+        0,
+        shadowProps.reflectedLightOffset.width * damping,
+      ]
+    )
+  );
+  const rfOffsetHeight = useDerivedValue(() =>
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [
+        shadowProps.reflectedLightOffset.height,
+        0,
+        shadowProps.reflectedLightOffset.height * damping,
+      ]
+    )
   );
 
   const inset = useDerivedValue(() => depth.value <= 0);
   const blur = useDerivedValue(() =>
-    interpolate(depth.value, [shadowBlur, 0], [0, initialDepth * damping])
+    interpolate(
+      depth.value,
+      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
+      [shadowProps.shadowBlur, 0, shadowProps.shadowBlur * 1.2]
+    )
   );
 
   const onPressIn = (event: GestureResponderEvent) => {
-    depth.value = withTiming(-initialDepth * damping, { duration });
+    depth.value = withTiming(-INITIAL_DEPTH, { duration });
     props?.onPressIn?.(event);
   };
 
   const onPressOut = (event: GestureResponderEvent) => {
-    depth.value = withTiming(initialDepth, { duration });
+    depth.value = withTiming(INITIAL_DEPTH, { duration });
     props?.onPressOut?.(event);
   };
 
@@ -107,8 +170,8 @@ export const ShadowPressable = memo(function ShadowPressable({
             color={_backgroundColor} // The background fill of the rect
           >
             <Shadow
-              dx={offset}
-              dy={offset}
+              dx={offsetWidth}
+              dy={offsetHeight}
               blur={blur}
               color={shadowColor}
               inner={inset}
@@ -116,8 +179,8 @@ export const ShadowPressable = memo(function ShadowPressable({
 
             {isReflectedLightEnabled && (
               <Shadow
-                dx={rfOffset}
-                dy={rfOffset}
+                dx={rfOffsetWidth}
+                dy={rfOffsetHeight}
                 blur={blur}
                 color={reflectedLightColor}
                 inner

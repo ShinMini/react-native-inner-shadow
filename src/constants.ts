@@ -1,27 +1,24 @@
 import { StyleSheet } from 'react-native';
 
+const BACKGROUND_COLOR = '#FFFFFF' as const;
+
+const INITIAL_DEPTH = 3 as const;
+const SHADOW_SPACE = 6 as const;
+
+const SHADOW_BLUR = 2 as const;
+const REFLECTED_LIGHT_BLUR = 3 as const;
+
+const SHADOW_COLOR = '#2F2F2FBC' as const;
+const REFLECTED_LIGHT_COLOR = '#EEE9E92D' as const;
+
+const DAMPING_DURATION = 200 as const;
+const DAMPING_RATIO = 0.8 as const;
+
+const IS_REFLECTED_LIGHT_ENABLED = true as const;
+
 // These two scales are opposite each other to create a "reflected light" effect.
-const DEFAULT_SHADOW_OFFSET_SCALE = 2 as const;
-const DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
-
-/**
- * Default values used when a particular prop isn't provided:
- *   - DEFAULT_BACKGROUND_COLOR: typical white background
- *   - DEFAULT_REFLECTED_LIGHT_COLOR: a semi-transparent white for "reflected light" effect
- *   - DEFAULT_SHADOW_COLOR: a dark, semi-transparent color for shadows
- */
-const DEFAULT_BACKGROUND_COLOR = '#FFFFFF' as const;
-const DEFAULT_REFLECTED_LIGHT_COLOR = '#EEE9E92D' as const;
-const DEFAULT_SHADOW_COLOR = '#2F2F2FBC' as const;
-// const TEST_BACKGROUND_COLOR = '#FFFEED' as const;
-
-/**
- * Default shadow blur radius for the main shadow and reflected light.
- * These values control how soft or diffuse the shadow/highlight appears.
- * Higher values create larger, softer shadows.
- * */
-const DEFAULT_SHADOW_BLUR = 3 as const;
-const DEFAULT_REFLECTED_LIGHT_BLUR = 3 as const;
+const SHADOW_OFFSET_SCALE = 2 as const;
+const REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
 
 const COMMON_STYLES = StyleSheet.create({
   canvasWrapper: {
@@ -37,12 +34,17 @@ const COMMON_STYLES = StyleSheet.create({
 } as const);
 
 export {
-  DEFAULT_BACKGROUND_COLOR,
-  DEFAULT_SHADOW_OFFSET_SCALE,
-  DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE,
-  DEFAULT_SHADOW_BLUR,
-  DEFAULT_REFLECTED_LIGHT_BLUR,
-  DEFAULT_SHADOW_COLOR,
-  DEFAULT_REFLECTED_LIGHT_COLOR,
+  BACKGROUND_COLOR,
+  INITIAL_DEPTH,
+  SHADOW_SPACE,
+  SHADOW_BLUR,
+  REFLECTED_LIGHT_BLUR,
+  SHADOW_COLOR,
+  REFLECTED_LIGHT_COLOR,
+  DAMPING_DURATION,
+  DAMPING_RATIO,
+  IS_REFLECTED_LIGHT_ENABLED,
+  SHADOW_OFFSET_SCALE,
+  REFLECTED_LIGHT_OFFSET_SCALE,
   COMMON_STYLES,
 };

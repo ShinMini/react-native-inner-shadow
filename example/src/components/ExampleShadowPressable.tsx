@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 176,
     height: 76,
-    borderRadius: 50,
+    // borderRadius: 50,
   },
   context: {
     fontSize: 20,
