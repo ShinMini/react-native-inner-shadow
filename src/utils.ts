@@ -13,13 +13,13 @@ import type {
 } from './types';
 
 import {
-  DEFAULT_BACKGROUND_COLOR,
-  DEFAULT_REFLECTED_LIGHT_BLUR,
-  DEFAULT_REFLECTED_LIGHT_COLOR,
-  DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE,
-  DEFAULT_SHADOW_BLUR,
-  DEFAULT_SHADOW_COLOR,
-  DEFAULT_SHADOW_OFFSET_SCALE,
+  BACKGROUND_COLOR,
+  REFLECTED_LIGHT_BLUR,
+  REFLECTED_LIGHT_COLOR,
+  REFLECTED_LIGHT_OFFSET_SCALE,
+  SHADOW_BLUR,
+  SHADOW_COLOR,
+  SHADOW_OFFSET_SCALE,
 } from './constants';
 
 // At this time(17.Feb.2025), we do not support the way to convert the string (percentage) to a number.
@@ -136,15 +136,13 @@ export function createStyles({
  * from either:
  *   1) props.backgroundColor
  *   2) style.backgroundColor
- *   3) DEFAULT_BACKGROUND_COLOR
+ *   3) BACKGROUND_COLOR
  *
  * This ensures there is always a valid color for the component’s background.
  */
 export function getBackgroundColor(props: GetBackgroundColorProps) {
   const backgroundColor =
-    props.backgroundColor ??
-    props.style?.backgroundColor ??
-    DEFAULT_BACKGROUND_COLOR;
+    props.backgroundColor ?? props.style?.backgroundColor ?? BACKGROUND_COLOR;
 
   return backgroundColor as string;
 }
@@ -173,10 +171,8 @@ export function getShadowProperty({
   reflectedLightBlur,
   reflectedLightColor,
 }: GetShadowPropertyProps) {
-  const SHADOW_OFFSET_WIDTH =
-    shadowOffset?.width ?? DEFAULT_SHADOW_OFFSET_SCALE;
-  const SHADOW_OFFSET_HEIGHT =
-    shadowOffset?.height ?? DEFAULT_SHADOW_OFFSET_SCALE;
+  const SHADOW_OFFSET_WIDTH = shadowOffset?.width ?? SHADOW_OFFSET_SCALE;
+  const SHADOW_OFFSET_HEIGHT = shadowOffset?.height ?? SHADOW_OFFSET_SCALE;
 
   // By default, the reflected light offset is the inverse of the main shadow
   // so it appears on the opposite corner/side.
@@ -195,16 +191,15 @@ export function getShadowProperty({
 
   // "Blur" here maps to how soft or large the shadow/highlight is.
   // The higher the number, the more diffuse the effect.
-  const _shadowBlur = Math.max(shadowBlur ?? DEFAULT_SHADOW_BLUR, 0);
+  const _shadowBlur = Math.max(shadowBlur ?? SHADOW_BLUR, 0);
   const _reflectedLightBlur = Math.max(
-    reflectedLightBlur ?? DEFAULT_REFLECTED_LIGHT_BLUR,
+    reflectedLightBlur ?? REFLECTED_LIGHT_BLUR,
     0
   );
 
   // Fallback to the provided defaults if the user doesn't specify a color.
-  const _shadowColor = shadowColor ?? DEFAULT_SHADOW_COLOR;
-  const _reflectedLightColor =
-    reflectedLightColor ?? DEFAULT_REFLECTED_LIGHT_COLOR;
+  const _shadowColor = shadowColor ?? SHADOW_COLOR;
+  const _reflectedLightColor = reflectedLightColor ?? REFLECTED_LIGHT_COLOR;
 
   // Construct the final offsets as objects for clarity.
   const _shadowOffset = {
@@ -244,14 +239,10 @@ function setReflectedLightDirectionAndScale({
   // When inset is true, the reflected light should be opposite the shadow.
   if (inset) {
     return (
-      -(shadowEffectScale * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) /
-      shadowEffectScale
+      -(shadowEffectScale * REFLECTED_LIGHT_OFFSET_SCALE) / shadowEffectScale
     );
   }
-  return (
-    (shadowEffectScale * DEFAULT_REFLECTED_LIGHT_OFFSET_SCALE) /
-    shadowEffectScale
-  );
+  return (shadowEffectScale * REFLECTED_LIGHT_OFFSET_SCALE) / shadowEffectScale;
 }
 
 export function getOuterShadowOffset({

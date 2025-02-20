@@ -11,8 +11,14 @@ import Animated, {
 import type { ShadowPressableProps } from '../types';
 import {
   COMMON_STYLES,
-  DEFAULT_REFLECTED_LIGHT_COLOR,
-  DEFAULT_SHADOW_COLOR,
+  DAMPING_DURATION,
+  DAMPING_RATIO,
+  INITIAL_DEPTH,
+  IS_REFLECTED_LIGHT_ENABLED,
+  REFLECTED_LIGHT_COLOR,
+  SHADOW_BLUR,
+  SHADOW_COLOR,
+  SHADOW_SPACE,
 } from '../constants';
 
 import { getBackgroundColor } from '../utils';
@@ -34,14 +40,14 @@ const PressButton = Animated.createAnimatedComponent(Pressable);
 export const ShadowPressable = memo(function ShadowPressable({
   width = 0,
   height = 0,
-  initialDepth = 3,
-  shadowSpace = 6,
-  shadowBlur = 10,
-  shadowColor = DEFAULT_SHADOW_COLOR,
-  reflectedLightColor = DEFAULT_REFLECTED_LIGHT_COLOR,
-  duration = 200,
-  damping = 0.8,
-  isReflectedLightEnabled = true,
+  initialDepth = INITIAL_DEPTH,
+  shadowSpace = SHADOW_SPACE,
+  shadowBlur = SHADOW_BLUR,
+  shadowColor = SHADOW_COLOR,
+  reflectedLightColor = REFLECTED_LIGHT_COLOR,
+  duration = DAMPING_DURATION,
+  damping = DAMPING_RATIO,
+  isReflectedLightEnabled = IS_REFLECTED_LIGHT_ENABLED,
   style,
   backgroundColor,
   children,
