@@ -1,6 +1,6 @@
 # react-native-inner-shadow
 
-[English](https://github.com/ShinMini/react-native-inner-shadow) | [한국어](.)
+[English](https://github.com/ShinMini/react-native-inner-shadow) | 한국어
 
 `react native inner shadow`는 [React Native Skia](https://shopify.github.io/react-native-skia/)를 사용하여 **inset shadows**(내부 그림자)와 **reflected light**(반사광, 하이라이터) 효과를 구현한 그림자 Component 입니다. 내부 그림자가 포함된 UI 개발을 위해 **solid** 및  **linear gradient** 배경 모두를 지원하며, [Reanimated](https://docs.swmansion.com/react-native-reanimated/)를 활용해 버튼의 누름 상태나 토글 상태와 같은 인터랙티브한 효과도 구현할 수 있습니다.
 

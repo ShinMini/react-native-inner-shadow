@@ -1,6 +1,6 @@
 # react-native-inner-shadow
 
-[English](.) | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/README.KR.md)
+English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/README.KR.md)
 
 **react-native-inner-shadow** is a shadow component library that uses [React Native Skia](https://shopify.github.io/react-native-skia/) to create **inset shadows** and **reflected light** (highlight) effects. It supports both solid backgrounds (using `ShadowView`) and linear gradient backgrounds (using `LinearShadowView`) for building UIs with inset shadows. Additionally, it provides interactive components that animate press or toggle states using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
 
@@ -15,9 +15,10 @@
 
 ---
 
-<h2 style="color: #555555; font-style: italic;"> What's New in <span style="color: #F36565; font-style: normal;">v1.3.0</span>?</h2>
+<h2 style="color: #555555; font-style: italic;"> What's New in <span style="color: #F36565; font-style: normal;">v1.3.1</span>?</h2>
 
 - ***Changed***: refactor constants prefix by removing `DEFAULT_` from the name
+- ***Changed***: adjust blur scale for pressable components
 - ***Removed***: exclude constants exports from `index.ts` file
 - ***Removed***: remove not used `createStyle` function in `utils.ts`
 - ***Removed***: deprecated `initialDepth` prop in `ShadowPressable` and `ShadowToggle` components which is now replaced by `shadowOffset` prop

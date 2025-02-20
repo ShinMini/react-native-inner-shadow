@@ -1,5 +1,15 @@
 # Changelog
 
+---
+
+## v1.3.1
+
+### Added or Changed
+
+- adjust blur scale for pressable components
+
+---
+
 ## v1.3.0
 
 ### Added or Changed

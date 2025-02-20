@@ -137,7 +137,7 @@ export const ShadowToggle = memo(function ShadowToggle({
     interpolate(
       depth.value,
       [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
-      [shadowProps.shadowBlur, 0, shadowProps.shadowBlur * 1.2]
+      [shadowProps.shadowBlur * 1.5, 0, shadowProps.shadowBlur]
     )
   );
   useAnimatedReaction(
