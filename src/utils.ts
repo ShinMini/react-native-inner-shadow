@@ -1,4 +1,4 @@
-import { StyleSheet, type ViewStyle } from 'react-native';
+import { type ViewStyle } from 'react-native';
 
 import { vec } from '@shopify/react-native-skia';
 
@@ -103,32 +103,6 @@ export function makeRoundedRectPath(
     A ${_rtl} ${_rtl} 0 0 1 ${_rtl} 0
     Z
   `.trim();
-}
-
-/**
- *  createStyles generates the StyleSheet object for the canvas
- *
- * @param width - The width of the canvas
- * @param height - The height of the canvas
- * @returns The StyleSheet object for the canvas
- */
-export function createStyles({
-  width,
-  height,
-}: {
-  width: number;
-  height: number;
-}) {
-  return StyleSheet.create({
-    canvas: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      backgroundColor: 'transparent',
-      width,
-      height,
-    } as const,
-  });
 }
 
 /**

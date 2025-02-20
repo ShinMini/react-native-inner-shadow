@@ -15,6 +15,14 @@
 
 ---
 
+<h2 style="color: #555555; font-style: italic;"> What's New in <span style="color: #F36565; font-style: normal;">v1.3.0</span>?</h2>
+
+- ***Added or Changed***: refactor constants prefix by removing `DEFAULT_` from the name
+- ***Removed***: exclude constants exports from `index.ts` file, rm not necessary fn; `createStyle` in `utils.ts`
+- **Note**: For the latest updates and changes, refer to the [CHANGELOG](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/CHANGELOG.md)
+
+---
+
 ## Installation
 
 ```bash

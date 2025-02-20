@@ -3,7 +3,6 @@ import { View, type LayoutChangeEvent } from 'react-native';
 
 import {
   getOuterShadowOffset,
-  createStyles,
   getBackgroundColor,
   getShadowProperty,
   isLinearProps,
@@ -86,16 +85,6 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
   const finalWidth = styleWidth ? styleWidth : layoutSize.width;
   const finalHeight = styleHeight ? styleHeight : layoutSize.height;
 
-  /** 5) Memoize style objects if needed */
-  const canvasStyle = React.useMemo(
-    () =>
-      createStyles({
-        width: finalWidth,
-        height: finalHeight,
-      }),
-    [finalWidth, finalHeight]
-  );
-
   // Create offset style for outer shadow if needed
   const outerShadowOffset = React.useMemo(
     () =>
@@ -120,7 +109,12 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
       onLayout={onLayout}
     >
       {canRenderCanvas && (
-        <Canvas style={canvasStyle.canvas}>
+        <Canvas
+          style={[
+            COMMON_STYLES.canvas,
+            { width: finalWidth, height: finalHeight },
+          ]}
+        >
           <CornerRadii
             width={finalWidth}
             height={finalHeight}
