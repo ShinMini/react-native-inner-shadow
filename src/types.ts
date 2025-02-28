@@ -5,90 +5,134 @@ import type { PressableProps, ViewProps, ViewStyle } from 'react-native';
 export type ShadowViewProps = InnerShadowProps | LinearInnerShadowProps;
 
 /**
- * InnerShadowProps defines the basic requirements for
- * an inset-shadow component. These props control:
- *   - Basic layout (width, height, backgroundColor)
- *   - Shadow styling (color, blur, offset)
- *   - Optional reflected light styling (color, blur, offset)
- *   - PressableProps allows the shadowed element to be intractable.
+ * ShadowProps defines the basic requirements for
+ * a shadow component.
  */
-export interface InnerShadowProps extends ViewProps {
-  /**
-   * Content that will be nested within the shadowed box.
-   */
-  children?: ReactNode;
-
+export type ShadowProps = {
   /**
    * Whether to render the shadow as inset (inside the component).
-   * @Defaults to false.
+   * @defaultValue `false`
    */
   inset?: boolean;
-
   /**
-   * Primary shadow color. @Defaults to a dark gray (#2F2F2FBC).
+   * The color of the shadow.
+   *
+   * @remarks
+   * Can use the shadowColor prop to set the color of the shadow.
+   * @defaultValue `#2F2F2FBC`
    */
   shadowColor?: string;
-
   /**
+   * The offset of the shadow.
+   *
+   * @remarks
    * How far the shadow is shifted horizontally (width) and vertically (height).
    * For an inset shadow, positive offsets often move the shadow "downward/rightward."
-   * @default { width: 2, height: 2 }
+   * @defaultValue `{ width: 2, height: 2 }`
    */
   shadowOffset?: { width: number; height: number };
-
   /**
    * The blur radius for the main shadow. Higher values create softer, larger shadows.
+   * When `inset` property is `false`(outer shadow), the shadow blur substitutes shadowOpacity (0 ~ 1)
    *
-   * when `inset` property is `false`(outer shadow), the shadow blur substitutes shadowOpacity (0 ~ 1)
-   * @argument min: 0, max: 20
-   * @Defaults 3 for a visible spread.
+   * @defaultValue `3` - range: `[0, 20]`
    */
   shadowBlur?: number;
 
   /**
-   * Whether to enable reflected light (like a “highlight” on the opposite side of the shadow).
-   * @Default to true if inset is true, but can be overridden.
+   * The radius of the shadow.
+   *
+   * @remarks
+   * This property is only used when `inset` is `false`.
+   * @defaultValue `3` - range: `[0, 20]`
    */
-  isReflectedLightEnabled?: boolean;
+  shadowRadius?: number;
+
+  /**
+   * The opacity of the shadow for the outline shadow of the component.
+   * This property is only used when `inset` is `false`.
+   *
+   * @defaultValue `0.3` - range: `[0, 1]`
+   */
+  shadowOpacity?: number;
+  /**
+   * The box shadow of the shadow.
+   *
+   * @remarks
+   * This is useful when you want to customize the `inset` shadow.
+   *
+   * @defaultValue `undefined`
+   *
+   * @example
+   * ```ts
+   * <ShadowView style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
+   *   <View style={{ width: 100, height: 100, backgroundColor: 'red' }} />
+   * </ShadowView>
+   * ```
+   */
+  boxShadow?: string;
 
   /**
    * Color of the reflected light highlight.
-   * @Defaults to a slightly transparent white (#FFFFFF94).
+   * @defaultValue `#FFFFFF8D`
    */
   reflectedLightColor?: string;
 
   /**
    * Offset for the reflected light highlight; typically the negative
    * of the main shadow offset to appear on the “opposite” side.
-   * @default { width: -2, height: -2 }
+   * @defaultValue `{ width: -2, height: -2 }`
    */
   reflectedLightOffset?: { width: number; height: number };
 
   /**
    * The blur radius for the reflected light highlight.
-   * @argument min: 0, max: 20
-   * @Default 3  for a noticeable, soft glow.
+   * @defaultValue `3` - range: `[0, 20]`
    */
   reflectedLightBlur?: number;
+};
+
+/**
+ * InnerShadowProps defines the basic requirements for
+ * an inset-shadow component.
+ *
+ * These props control:
+ * - Basic layout (width, height, backgroundColor)
+ * - Shadow styling (color, blur, offset)
+ * - Optional reflected light styling (color, blur, offset)
+ * - PressableProps allows the shadowed element to be intractable.
+ *
+ * @remarks
+ * For the optimized performance, it is recommended to set the `width`, `height` and `backgroundColor` of the shadowed component.
+ *
+ * See {@link ShadowProps} for more information on the shadow properties.
+ *
+ * @example
+ * ```ts
+ * <ShadowView width={100} height={100} backgroundColor="#FFFFFF" inset>
+ *   <Text>Hello, world!</Text>
+ * </ShadowView>
+ * ```
+ */
+export interface InnerShadowProps extends ViewProps, ShadowProps {
+  /**
+   * Content that will be nested within the shadowed box.
+   */
+  children?: ReactNode;
 
   /**
-   * Explicitly setting width and height can improve performance by
-   * avoiding repeated layout passes. Also helps in cases where the
-   * shadow must be calculated exactly.
+   * Whether to enable reflected light (like a “highlight” on the opposite side of the shadow).
+   * @defaultValue `true`
    */
+  isReflectedLightEnabled?: boolean;
+
   width?: number;
   height?: number;
-
   /**
    * The background color of the shadowed component.
-   * @Defaults to #FFFFFF unless overridden by style or this prop.
+   * @defaultValue `#FFFFFF`
    */
   backgroundColor?: string;
-
-  /**
-   * Standard React Native styling object. Can include borderRadius
-   * for rounded corners, etc.
-   */
   style?: ViewStyle;
 }
 
@@ -99,9 +143,22 @@ export interface InnerShadowProps extends ViewProps {
  */
 export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
 
-export type LinearShadowProps = {
+export type GradientLinearProps = {
+  /**
+   * The start direction of the linear gradient.
+   * @defaultValue `top`
+   */
   from?: LINEAR_DIRECTION;
+  /**
+   * The end direction of the linear gradient.
+   * @defaultValue `bottom`
+   */
   to?: LINEAR_DIRECTION;
+
+  /**
+   * The colors of the linear gradient.
+   * @defaultValue `['#FFFFFF', '#2F2F2FBC']`
+   */
   colors: AnimatedProp<Color[]>;
 };
 
@@ -113,72 +170,79 @@ export type LinearShadowProps = {
  * @param to - The end direction of the linear gradient (e.g., 'bottom')
  * @param colors - An array of colors for the gradient. Using multiple colors
  *                 creates more visually interesting transitions.
+ * @remarks
+ * The colors prop is an array of colors for the gradient. Using multiple colors
+ * creates more visually interesting transitions.
+ * See {@link LinearShadowProps} and {@link ShadowProps} for more information.
+ *
+ * @example
+ * ```ts
+ * <LinearShadowView from="top" to="bottom" colors={['#FFFFFF', '#2F2F2FBC']}>
+ *   <Text>Hello, world!</Text>
+ * </LinearShadowView>
+ * ```
  */
 export interface LinearInnerShadowProps
   extends InnerShadowProps,
-    LinearShadowProps {}
+    GradientLinearProps {}
 
 export type ShadowPressableProps = PressableProps &
   Omit<InnerShadowProps, 'inset'> & {
     /**
-     * The space between the shadow and the box.
-     * @Default 3
+     * Deprecated. Use shadowOffset instead.
+     *
+     * @deprecated Use shadowOffset instead
+     * @defaultValue `3` - range: `[0, 20]`
      *
      * If your shadow is too close to the edge of the box, it may be clipped.
      * I'd recommend a minimum of 3-5 pixels of space for most shadows.
      */
-    shadowSpace?: number; // 3
+    shadowSpace?: number;
     /**
-     * The initial depth of the shadow effect.
+     * Deprecated. Use shadowOffset instead.
+     *
      * @deprecated Use shadowOffset instead
-     * @Default 5
-     * @argument min: 0, max: 20
+     * @defaultValue `5` - range: `[0, 20]`
      */
-    initialDepth?: number; // 5;
+    initialDepth?: number;
     /**
      * The duration of the shadow animation when pressed.
-     * @Default 500
+     * @defaultValue `150`
      */
-    duration?: number; // 500;
+    duration?: number;
     /**
      * The damping ratio for the shadow animation.
-     * @Default 0.8
+     * @defaultValue `0.8`
      */
-    damping?: number; //0.8;
+    damping?: number;
   };
 
 export type LinearShadowPressableProps = ShadowPressableProps &
-  LinearShadowProps;
+  GradientLinearProps;
 
 export type ShadowToggleProps = ShadowPressableProps & {
   /**
    * current state of the toggle
-   * @Default false
+   * @defaultValue `false`
    */
   isActive?: boolean;
   /**
    * The color of the active state.
-   * @Default same as backgroundColor
+   * @defaultValue same as `backgroundColor`
    */
   activeColor?: string;
 };
 
-export type LinearShadowToggleProps = ShadowToggleProps & LinearShadowProps;
+export type LinearShadowToggleProps = ShadowToggleProps & GradientLinearProps;
 
 export type GetBackgroundColorProps = Pick<
   InnerShadowProps,
   'backgroundColor' | 'style'
 >;
 
-export type GetShadowPropertyProps = Pick<
-  InnerShadowProps,
-  | 'inset'
-  | 'shadowOffset'
-  | 'shadowBlur'
-  | 'shadowColor'
-  | 'reflectedLightOffset'
-  | 'reflectedLightBlur'
-  | 'reflectedLightColor'
+export type GetShadowPropertyProps = Omit<
+  ShadowProps,
+  'boxShadow' | 'shadowRadius' | 'shadowOpacity'
 >;
 
 export type SetReflectedLightDirectionAndScaleProps = {
@@ -188,12 +252,15 @@ export type SetReflectedLightDirectionAndScaleProps = {
 };
 
 export type GetOuterShadowOffsetProps = {
-  inset?: boolean;
-  shadowColor?: string;
-  shadowOffset?: { width: number; height: number };
-  shadowBlur?: number;
-  shadowOpacity?: number;
-  shadowRadius?: number;
   elevation?: number;
-  boxShadow?: string;
+} & Omit<
+  ShadowProps,
+  'reflectedLightColor' | 'reflectedLightOffset' | 'reflectedLightBlur'
+>;
+
+export type GetLinearDirectionProps = {
+  width: number;
+  height: number;
+  from: LINEAR_DIRECTION;
+  to: LINEAR_DIRECTION;
 };

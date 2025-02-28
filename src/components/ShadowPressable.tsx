@@ -168,11 +168,21 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
  * A pressable component that casts a shadow when pressed.
  * The shadow effect is created using the `@shopify/react-native-skia` library.
  *
- * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
- * @param shadowSpace - The space between the shadow and the component
+ * @remarks
+ * See {@link ShadowPressableProps} for a linear gradient shadow.
+ *
+ * @example
+ * ```ts
+ * <ShadowPressable style={styles.shadowView} reflectedLightColor="#ffffff8d">
+ *   <Text style={[styles.context]}>Press Me!</Text>
+ * </ShadowPressable>
+ * ```
+ *
  * @param duration - The duration of the shadow animation
  * @param damping - The damping factor of the shadow animation
  * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
+ * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
+ * @param shadowSpace - deprecated: set shadow depth using `shadowOffset` instead
  */
 export const ShadowPressable = memo(function ShadowPressable({
   ...props
@@ -186,12 +196,19 @@ export const ShadowPressable = memo(function ShadowPressable({
  * A pressable component that casts a linear gradient shadow when pressed.
  * The shadow effect is created using the `@shopify/react-native-skia` library.
  *
- * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
- * @param shadowSpace - The space between the shadow and the component
+ * @remarks
+ * See {@link LinearShadowPressableProps} for a linear gradient shadow.
+ *
+ * @example
+ * ```ts
+ * <LinearShadowPressable style={styles.shadowView} colors={['#f1c40f', '#e74c3c']} from="top" to="bottom">
+ *   <Text style={[styles.context]}>Press Me!</Text>
+ * </LinearShadowPressable>
+ * ```
+ *
  * @param duration - The duration of the shadow animation
  * @param damping - The damping factor of the shadow animation
  * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
- * @param colors - The colors of the linear gradient
  * @param from - The direction of the linear gradient
  * @param to - The direction of the linear gradient
  */

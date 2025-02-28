@@ -152,8 +152,17 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
 });
 
 /**
- * ShadowView: for a basic “solid” background shadow
- * (no gradient props).
+ * ShadowView: for a basic “solid” background shadow(no gradient props).
+ *
+ * @remarks
+ * See {@link InnerShadowProps} for a linear gradient background shadow.
+ *
+ * @example
+ * ```ts
+ * <ShadowView style={styles.shadowView} inset>
+ *   <Text>ShadowView</Text>
+ * </ShadowView>
+ * ```
  */
 export function ShadowView(props: InnerShadowProps) {
   return <UnifiedShadowView {...props} />;
@@ -162,6 +171,20 @@ export function ShadowView(props: InnerShadowProps) {
 /**
  * LinearShadowView: for a linear gradient background shadow
  * (requires e.g. colors, from, to).
+ *
+ * @remarks
+ * See {@link LinearInnerShadowProps} for a solid background shadow.
+ *
+ * @example
+ * ```ts
+ *  <LinearShadowView
+ *    style={styles.shadowView}
+ *    colors={['#f1c40f', '#e74c3c']}
+ *    from="top"
+ *  >
+ *    <Text>LinearShadowView</Text>
+ *  </LinearShadowView>
+ * ```
  */
 export function LinearShadowView(props: LinearInnerShadowProps) {
   return <UnifiedShadowView {...props} />;

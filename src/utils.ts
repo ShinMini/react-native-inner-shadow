@@ -4,10 +4,10 @@ import { vec } from '@shopify/react-native-skia';
 
 import type {
   GetBackgroundColorProps,
+  GetLinearDirectionProps,
   GetOuterShadowOffsetProps,
   GetShadowPropertyProps,
   InnerShadowProps,
-  LINEAR_DIRECTION,
   LinearInnerShadowProps,
   SetReflectedLightDirectionAndScaleProps,
 } from './types';
@@ -239,26 +239,17 @@ export function getOuterShadowOffset({
   elevation = SHADOW_ELEVATION,
   boxShadow,
 }: GetOuterShadowOffsetProps) {
-  if (!inset) {
-    return {
-      shadowColor,
-      shadowOffset,
-      // Map blur to opacity (0 ~ 1) and radius (more subtle scaling)
-      shadowBlur,
-      shadowOpacity,
-      shadowRadius,
-      elevation,
-      boxShadow,
-    };
-  }
-  return {};
-}
+  if (inset) return {};
 
-interface GetLinearDirectionProps {
-  width: number;
-  height: number;
-  from: LINEAR_DIRECTION;
-  to: LINEAR_DIRECTION;
+  return {
+    shadowColor,
+    shadowOffset,
+    shadowBlur,
+    shadowOpacity,
+    shadowRadius,
+    elevation,
+    boxShadow,
+  };
 }
 
 /**

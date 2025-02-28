@@ -87,6 +87,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
     },
     [needMeasure]
   );
+
   const {
     depth,
     offset,
@@ -184,8 +185,6 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
  * A toggle component that casts a shadow when active.
  * The shadow effect is created using the `@shopify/react-native-skia` library.
  *
- * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
- * @param shadowSpace - The space between the shadow and the component
  * @param isActive - Whether the shadow is active
  * @param activeColor - The color of the shadow when active
  */
@@ -201,8 +200,6 @@ export const ShadowToggle = memo(function ShadowToggle({
  * A toggle component that casts a linear gradient shadow when active.
  * The shadow effect is created using the `@shopify/react-native-skia` library.
  *
- * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
- * @param shadowSpace - The space between the shadow and the component
  * @param isActive - Whether the shadow is active
  * @param activeColor - The color of the shadow when active
  * @param colors - The colors of the linear gradient
