@@ -5,12 +5,7 @@ import { ShadowPressable } from 'react-native-inner-shadow';
 
 export const ExampleShadowPressable = (): React.JSX.Element => {
   return (
-    <ShadowPressable
-      style={styles.shadowView}
-      shadowOffset={{ width: 4, height: 4.5 }}
-      duration={140}
-      shadowBlur={1.5}
-    >
+    <ShadowPressable style={styles.shadowView} reflectedLightColor="#ffffff8d">
       <Text style={[styles.context]}>Press Me!</Text>
     </ShadowPressable>
   );
@@ -21,8 +16,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#0081a7',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 176,
-    height: 76,
+    width: 126,
+    height: 66,
+    marginBottom: 10,
+    borderRadius: 30,
+    borderTopStartRadius: 10,
+    borderTopLeftRadius: 20,
+    borderTopEndRadius: 20,
     // borderRadius: 50,
   },
   context: {

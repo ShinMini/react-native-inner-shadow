@@ -10,18 +10,17 @@ function App(): React.JSX.Element {
     <View style={styles.container}>
       <ExampleShadowPressable />
       <ExampleShadowToggle />
-      <ShadowView style={styles.shadowView} backgroundColor="#6ae0ce">
+      <ShadowView style={styles.shadowView} inset>
         <Text>ShadowView</Text>
       </ShadowView>
       <LinearShadowView
-        inset
         // from="right"
         style={styles.shadowView}
         colors={['#f1c40f', '#e74c3c']}
       >
         <Text>LinearShadowView</Text>
       </LinearShadowView>
-      <View style={styles.shadowView}>
+      <View style={styles.normalShadowView}>
         <Text>Normal View</Text>
       </View>
     </View>
@@ -50,7 +49,25 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '30%',
     aspectRatio: 1,
-    backgroundColor: '#29d557',
+  },
+  normalShadowView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // borderRadius: '30%',
+    borderRadius: 30,
+    borderTopStartRadius: 10,
+    borderTopLeftRadius: 20,
+    borderTopEndRadius: 20,
+
+    borderBottomLeftRadius: 1,
+    borderBottomEndRadius: 50,
+    marginTop: 10,
+    padding: 10,
+    width: '30%',
+    aspectRatio: 1,
+    boxShadow: `inset 0 0 10px 0 rgba(0, 0, 0, 0.5)`,
+
+    backgroundColor: '#FFF',
   },
 });
 
