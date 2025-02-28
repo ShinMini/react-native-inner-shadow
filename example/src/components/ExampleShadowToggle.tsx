@@ -28,7 +28,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 126,
     height: 66,
-    borderRadius: 10,
+    borderRadius: 12,
+
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   context: {
     fontSize: 20,

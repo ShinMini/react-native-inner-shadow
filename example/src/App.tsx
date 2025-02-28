@@ -8,31 +8,41 @@ import { LinearShadowView, ShadowView } from 'react-native-inner-shadow';
 function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <ExampleShadowPressable />
-      <ExampleShadowToggle />
-      <ShadowView style={styles.shadowView} inset>
+      <ShadowView style={styles.toggleContainer} inset>
+        <ExampleShadowPressable />
+      </ShadowView>
+
+      <ShadowView style={styles.toggleContainer}>
+        <ExampleShadowToggle />
+      </ShadowView>
+      <ShadowView style={styles.shadowView} inset backgroundColor="#82b3dc">
         <Text>ShadowView</Text>
       </ShadowView>
       <LinearShadowView
-        // from="right"
+        from="top"
+        to="right"
         style={styles.shadowView}
         colors={['#f1c40f', '#e74c3c']}
       >
         <Text>LinearShadowView</Text>
       </LinearShadowView>
-      <View style={styles.normalShadowView}>
-        <Text>Normal View</Text>
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffe6a7',
+    backgroundColor: '#f0f0f0',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  toggleContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 15,
+    backgroundColor: '#ffe6a7',
+    marginBottom: 10,
   },
   shadowView: {
     justifyContent: 'center',
@@ -43,31 +53,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopEndRadius: 20,
 
-    borderBottomLeftRadius: 1,
+    borderBottomLeftRadius: 4,
     borderBottomEndRadius: 50,
     marginTop: 10,
     padding: 10,
     width: '30%',
     aspectRatio: 1,
-  },
-  normalShadowView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    // borderRadius: '30%',
-    borderRadius: 30,
-    borderTopStartRadius: 10,
-    borderTopLeftRadius: 20,
-    borderTopEndRadius: 20,
-
-    borderBottomLeftRadius: 1,
-    borderBottomEndRadius: 50,
-    marginTop: 10,
-    padding: 10,
-    width: '30%',
-    aspectRatio: 1,
-    boxShadow: `inset 0 0 10px 0 rgba(0, 0, 0, 0.5)`,
-
-    backgroundColor: '#FFF',
   },
 });
 

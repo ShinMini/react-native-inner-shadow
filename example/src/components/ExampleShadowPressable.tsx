@@ -16,18 +16,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#0081a7',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 126,
+    width: 166,
     height: 66,
-    marginBottom: 10,
-    borderRadius: 30,
-    borderTopStartRadius: 10,
-    borderTopLeftRadius: 20,
-    borderTopEndRadius: 20,
-    // borderRadius: 50,
+
+    borderRadius: 15,
+    borderTopStartRadius: 50,
+    borderTopLeftRadius: 50,
+    borderTopEndRadius: 10,
+
+    borderBottomLeftRadius: 10,
+    borderBottomEndRadius: 40,
   },
   context: {
     fontSize: 20,
     color: 'white',
-    fontWeight: 500,
+    fontWeight: 700,
   },
 });
