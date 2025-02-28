@@ -1,7 +1,7 @@
 {
   "name": "react-native-inner-shadow",
   "source": "./src/index.ts",
-  "version": "1.3.1",
+  "version": "2.0.0",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
@@ -25,6 +25,7 @@
   ],
   "scripts": {
     "example": "yarn workspace react-native-inner-shadow-example",
+    "dev": "yarn example start",
     "start": "react-native start",
     "test": "npx jest src",
     "typecheck": "tsc",
