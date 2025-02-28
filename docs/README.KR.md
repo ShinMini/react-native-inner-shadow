@@ -104,7 +104,7 @@ cd ios && bundle exec pod install && cd ..
 
 <div>
   <img width="45%" max-width="450px" alt="내부 그림자 및 선형 그림자 샘플" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-thubnail.jpg?raw=true" />
-  <img width="45%" max-width="450px" alt="내부 그림자 프레스 및 토글 샘플 gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif?raw=true" />
+  <img width="45%" max-width="450px" alt="내부 그림자 프레스 및 토글 샘플 gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif.gif?raw=true" />
 </div>
 
 ---

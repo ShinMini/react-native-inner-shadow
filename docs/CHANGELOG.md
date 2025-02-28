@@ -2,10 +2,16 @@
 
 ---
 
+## v.2.0.1
+
+chore: bump package version to 2.0.1
+
+- Updated package.json version number
+- Fixed image link in README and README.KR by adding .gif extension
+
 ## v.2.0.0
 
-feat!: can configure any border corner to any shadow component
-
+- feat!: can configure any border corner to any shadow component
 - Replaced Group and Rect with RoundedRect in CornerRadii
 - Removed makeRoundedRectPath utility function from utils.ts
 - Updated CornerRadii to use InputRRect type from react-native-skia
