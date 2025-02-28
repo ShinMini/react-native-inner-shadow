@@ -1,16 +1,14 @@
 import React, { memo } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, View, type LayoutChangeEvent } from 'react-native';
 import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
 import Animated, {
-  interpolate,
   interpolateColor,
   useAnimatedReaction,
   useDerivedValue,
-  useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
-import type { ShadowToggleProps } from '../types';
+import type { LinearShadowToggleProps, ShadowToggleProps } from '../types';
 import {
   COMMON_STYLES,
   DAMPING_DURATION,
@@ -19,30 +17,24 @@ import {
   REFLECTED_LIGHT_COLOR,
   SHADOW_BLUR,
   SHADOW_COLOR,
-  SHADOW_SPACE,
 } from '../constants';
 
-import { getBackgroundColor, getShadowProperty, numerify } from '../utils';
+import {
+  getBackgroundColor,
+  getShadowProperty,
+  isLinearProps,
+  numerify,
+} from '../utils';
+import LinearGradientFill from './ShadowLinearGradientFill';
+import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
 
-/**
- * ShadowToggle
- * ----------------
- * A toggle component that casts a shadow when active.
- * The shadow effect is created using the `@shopify/react-native-skia` library.
- *
- * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
- * @param shadowSpace - The space between the shadow and the component
- * @param isActive - Whether the shadow is active
- * @param activeColor - The color of the shadow when active
- */
-export const ShadowToggle = memo(function ShadowToggle({
-  width = 0,
-  height = 0,
+export const UnifiedShadowToggle = memo(function ShadowToggle({
+  width,
+  height,
   isActive = false,
   activeColor,
-  shadowSpace = SHADOW_SPACE,
   shadowBlur = SHADOW_BLUR,
   shadowColor = SHADOW_COLOR,
   reflectedLightColor = REFLECTED_LIGHT_COLOR,
@@ -50,79 +42,70 @@ export const ShadowToggle = memo(function ShadowToggle({
   damping = DAMPING_RATIO,
   isReflectedLightEnabled = true,
   shadowOffset,
-  reflectedLightOffset,
+  reflectedLightOffset: rfOffset,
   reflectedLightBlur,
   style,
   backgroundColor,
   children,
   ...props
-}: ShadowToggleProps) {
-  const [boxSize, setBoxSize] = React.useState({
-    width,
-    height,
-  });
-
+}: ShadowToggleProps | LinearShadowToggleProps) {
   // Determine the final background color (pulling from `props.style` or a default).
   const _backgroundColor = getBackgroundColor({
-    style,
     backgroundColor,
+    style,
   });
+
   const shadowProps = getShadowProperty({
     shadowOffset,
     shadowColor,
     shadowBlur,
-    reflectedLightOffset,
+    reflectedLightOffset: rfOffset,
     reflectedLightColor,
     reflectedLightBlur,
   });
 
   const boxRadius = numerify(style?.borderRadius, 12);
+  const isLinear = isLinearProps(props);
 
-  const depth = useSharedValue<number>(INITIAL_DEPTH);
-  const offsetWidth = useDerivedValue(() =>
-    interpolate(
-      depth.value,
-      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
-      [
-        shadowProps.shadowOffset.width,
-        0,
-        shadowProps.shadowOffset.width * damping,
-      ]
-    )
+  const styleWidth = width ?? numerify(style?.width, 0);
+  const styleHeight = height ?? numerify(style?.height, 0);
+
+  const [layoutSize, setLayoutSize] = React.useState({
+    width: styleWidth,
+    height: styleHeight,
+  });
+  // Decide if we even need to attach onLayout; turns on when width or height is: undefined, NaN, or 0
+  const needMeasure = !styleWidth || !styleHeight;
+
+  // onLayout only does something if we truly need measure
+  const onLayout = React.useCallback(
+    (e: LayoutChangeEvent) => {
+      if (!needMeasure) return;
+
+      const { width: w, height: h } = e.nativeEvent.layout;
+      setLayoutSize({ width: w, height: h });
+    },
+    [needMeasure]
   );
-  const offsetHeight = useDerivedValue(() =>
-    interpolate(
-      depth.value,
-      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
-      [
-        shadowProps.shadowOffset.height,
-        0,
-        shadowProps.shadowOffset.height * damping,
-      ]
-    )
-  );
-  const rfOffsetWidth = useDerivedValue(() =>
-    interpolate(
-      depth.value,
-      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
-      [
-        shadowProps.reflectedLightOffset.width,
-        0,
-        shadowProps.reflectedLightOffset.width * damping,
-      ]
-    )
-  );
-  const rfOffsetHeight = useDerivedValue(() =>
-    interpolate(
-      depth.value,
-      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
-      [
-        shadowProps.reflectedLightOffset.height,
-        0,
-        shadowProps.reflectedLightOffset.height * damping,
-      ]
-    )
-  );
+  const {
+    depth,
+    offset,
+    reflectedLightOffset,
+    inset,
+    blurRadius,
+    PressedAnimatedStyle,
+  } = useAnimatedOffset({
+    offset: shadowProps.shadowOffset,
+    reflectedLightOffset: shadowProps.reflectedLightOffset,
+    blurRadius: shadowProps.shadowBlur,
+    damping,
+    duration,
+    onPressIn: props.onPressIn,
+    onPressOut: props.onPressOut,
+  });
+
+  // Only show the canvas if we have a valid size
+  const canRenderCanvas = layoutSize.width > 0 && layoutSize.height > 0;
 
   const animatedBackgroundColor = useDerivedValue(() =>
     interpolateColor(
@@ -132,14 +115,6 @@ export const ShadowToggle = memo(function ShadowToggle({
     )
   );
 
-  const inset = useDerivedValue(() => depth.value <= 0);
-  const blur = useDerivedValue(() =>
-    interpolate(
-      depth.value,
-      [-INITIAL_DEPTH, 0, INITIAL_DEPTH],
-      [shadowProps.shadowBlur * 1.5, 0, shadowProps.shadowBlur]
-    )
-  );
   useAnimatedReaction(
     () => isActive,
     (next) => {
@@ -154,42 +129,41 @@ export const ShadowToggle = memo(function ShadowToggle({
   );
 
   return (
-    <PressButton
-      {...props}
-      onLayout={({ nativeEvent: { layout } }) =>
-        setBoxSize({ width: layout.width, height: layout.height })
-      }
-      style={[style, COMMON_STYLES.canvasWrapper]}
-    >
-      {boxSize.width === 0 && boxSize.height === 0 ? null : (
+    <View onLayout={onLayout} style={[COMMON_STYLES.canvasWrapper]}>
+      {canRenderCanvas && (
         <Canvas
           style={[
-            style,
             COMMON_STYLES.canvas,
-            { width: boxSize.width, height: boxSize.height },
+            { width: layoutSize.width * 1.4, height: layoutSize.height * 1.4 },
           ]}
         >
           <RoundedRect
-            x={shadowSpace}
-            y={shadowSpace}
-            width={boxSize.width - shadowSpace * 2}
-            height={boxSize.height - shadowSpace * 2}
+            x={0}
+            y={0}
+            width={layoutSize.width}
+            height={layoutSize.height}
             r={boxRadius}
             color={animatedBackgroundColor} // The background fill of the rect
           >
+            {isLinear && (
+              <LinearGradientFill
+                {...props} // from, to, colors, etc.
+                width={layoutSize.width}
+                height={layoutSize.height}
+              />
+            )}
             <Shadow
-              dx={offsetWidth}
-              dy={offsetHeight}
-              blur={blur}
+              dx={offset.dx}
+              dy={offset.dy}
+              blur={blurRadius}
               color={shadowColor}
               inner={inset}
             />
-
             {isReflectedLightEnabled && (
               <Shadow
-                dx={rfOffsetWidth}
-                dy={rfOffsetHeight}
-                blur={blur}
+                dx={reflectedLightOffset.dx}
+                dy={reflectedLightOffset.dy}
+                blur={blurRadius}
                 color={reflectedLightColor}
                 inner
               />
@@ -197,7 +171,46 @@ export const ShadowToggle = memo(function ShadowToggle({
           </RoundedRect>
         </Canvas>
       )}
-      {children}
-    </PressButton>
+      <PressButton {...props} style={[style, COMMON_STYLES.canvasWrapper]}>
+        <Animated.View style={PressedAnimatedStyle}>{children}</Animated.View>
+      </PressButton>
+    </View>
   );
+});
+
+/**
+ * ShadowToggle
+ * ----------------
+ * A toggle component that casts a shadow when active.
+ * The shadow effect is created using the `@shopify/react-native-skia` library.
+ *
+ * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
+ * @param shadowSpace - The space between the shadow and the component
+ * @param isActive - Whether the shadow is active
+ * @param activeColor - The color of the shadow when active
+ */
+export const ShadowToggle = memo(function ShadowToggle({
+  ...props
+}: ShadowToggleProps) {
+  return <UnifiedShadowToggle {...props} />;
+});
+
+/**
+ * LinearShadowToggle
+ * ----------------
+ * A toggle component that casts a linear gradient shadow when active.
+ * The shadow effect is created using the `@shopify/react-native-skia` library.
+ *
+ * @param initialDepth - deprecated: set shadow depth using `shadowOffset` instead
+ * @param shadowSpace - The space between the shadow and the component
+ * @param isActive - Whether the shadow is active
+ * @param activeColor - The color of the shadow when active
+ * @param colors - The colors of the linear gradient
+ * @param from - The direction of the linear gradient
+ * @param to - The direction of the linear gradient
+ */
+export const LinearShadowToggle = memo(function LinearShadowToggle({
+  ...props
+}: LinearShadowToggleProps) {
+  return <UnifiedShadowToggle {...props} />;
 });
