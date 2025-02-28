@@ -1,5 +1,3 @@
-// useAnimatedOffset.tsx
-
 import {
   useDerivedValue,
   interpolate,
@@ -92,7 +90,7 @@ export function useAnimatedOffset(props: UseAnimatedOffsetProps) {
     interpolate(
       depth.value,
       [-INITIAL_DEPTH, INITIAL_DEPTH],
-      [-props.offset.width * props.damping, 0]
+      [-props.offset.width * 0.5, 0]
     )
   );
 
@@ -100,7 +98,7 @@ export function useAnimatedOffset(props: UseAnimatedOffsetProps) {
     interpolate(
       depth.value,
       [-INITIAL_DEPTH, INITIAL_DEPTH],
-      [-props.offset.height * props.damping, 0]
+      [-props.offset.height * 0.5, 0]
     )
   );
 
