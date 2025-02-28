@@ -21,6 +21,7 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 - feat!: can configure any border corner to any shadow component
 - refactor!: simplify pressable component by removing complicated code by replacing and **deprecating** `shadowSpace`.
+- refactor: adjust damping calculation in useAnimatedOffset hook
 - refactor: enhance shadow types and improve type documentation
 - feat: unify `ShadowPressable` and `ShadowToggle` with linear gradient support
 - feat: export `LinearShadowPressable` and `LinearShadowToggle` components
@@ -102,7 +103,7 @@ cd ios && bundle exec pod install && cd ..
 
 <div>
   <img width="45%" max-width="450px" alt="Inner shadow & linear shadow sample" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-thubnail.jpg?raw=true" />
-  <img width="45%" max-width="450px" alt="Inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-pressable-thumbnail.gif?raw=true" />
+  <img width="45%" max-width="450px" alt="Inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif?raw=true" />
 </div>
 
 ---

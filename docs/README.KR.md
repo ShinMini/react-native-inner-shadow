@@ -21,6 +21,7 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 - feat!: can configure any border corner to any shadow component
 - **refactor!**: 복잡한 코드를 제거하여 프레스 컴포넌트를 단순화하고, `shadowSpace`를 **더 이상 사용하지 않음(Deprecated)**.
+- refactor: adjust damping calculation in useAnimatedOffset hook
 - **refactor**: 그림자 타입을 개선하고 타입 문서를 강화하였습니다.
 - **feat**: 선형 그라데이션 지원과 함께 `ShadowPressable`과 `ShadowToggle`을 통합하였습니다.
 - **feat**: `LinearShadowPressable` 및 `LinearShadowToggle` 컴포넌트를 새로 추가하여 내장되었습니다.
@@ -103,7 +104,7 @@ cd ios && bundle exec pod install && cd ..
 
 <div>
   <img width="45%" max-width="450px" alt="내부 그림자 및 선형 그림자 샘플" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-thubnail.jpg?raw=true" />
-  <img width="45%" max-width="450px" alt="내부 그림자 프레스 및 토글 샘플 gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-pressable-thumbnail.gif?raw=true" />
+  <img width="45%" max-width="450px" alt="내부 그림자 프레스 및 토글 샘플 gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif?raw=true" />
 </div>
 
 ---

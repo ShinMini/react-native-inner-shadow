@@ -16,6 +16,12 @@ refactor!: simplify pressable component by removing complicated code by replacin
 
 - `shadowSpace` now `shadowSpace` replaced with `style.padding` properties
 
+refactor: adjust damping calculation in useAnimatedOffset hook
+
+- Simplified damping calculation by using a fixed 0.5 multiplier
+- Removed custom damping prop usage in offset interpolation
+- Streamlined animation offset calculation for improved consistency
+
 refactor: enhance shadow types and improve type documentation
 
 - Expanded and refined shadow type definitions in `types.ts`
