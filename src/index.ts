@@ -1,10 +1,13 @@
 export type {
   LINEAR_DIRECTION,
+  ShadowProps,
   ShadowViewProps,
   InnerShadowProps,
   LinearInnerShadowProps,
   ShadowPressableProps,
+  LinearShadowPressableProps,
   ShadowToggleProps,
+  LinearShadowToggleProps,
 } from './types';
 
 export {
