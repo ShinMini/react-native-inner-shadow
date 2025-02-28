@@ -85,56 +85,6 @@ export function getBorderRadius(style?: Partial<ViewStyle>) {
 }
 
 /**
- * Creates an SVG path string for a rectangle [0, 0, width, height]
- * with potentially different corner radii for each corner.
- *
- * If you only need one uniform radius, set all to the same value.
- *
- * @privateRemarks
- * This function is used to create an SVG path string for a rectangle with potentially different corner radii for each corner.
- *
- * @param width - The width of the rectangle.
- * @param height - The height of the rectangle.
- * @param rtl - The top-left radius.
- * @param rtr - The top-right radius.
- * @param rbr - The bottom-right radius.
- * @param rbl - The bottom-left radius.
- *
- * @returns The SVG path string for the rectangle.
- */
-export function makeRoundedRectPath(
-  width: number,
-  height: number,
-  rtl: number, // top-left
-  rtr: number, // top-right
-  rbr: number, // bottom-right
-  rbl: number // bottom-left
-): string {
-  // Clamping corner radii: we don't want them bigger than the rectangle size
-  const w = Math.max(0, width);
-  const h = Math.max(0, height);
-
-  // radius must not exceed half of the rectangle's width/height
-  const _rtl = Math.min(rtl, w / 2, h / 2);
-  const _rtr = Math.min(rtr, w / 2, h / 2);
-  const _rbr = Math.min(rbr, w / 2, h / 2);
-  const _rbl = Math.min(rbl, w / 2, h / 2);
-
-  return `
-    M ${_rtl},0
-    L ${w - _rtr},0
-    A ${_rtr} ${_rtr} 0 0 1 ${w} ${_rtr}
-    L ${w} ${h - _rbr}
-    A ${_rbr} ${_rbr} 0 0 1 ${w - _rbr} ${h}
-    L ${_rbl} ${h}
-    A ${_rbl} ${_rbl} 0 0 1 0 ${h - _rbl}
-    L 0 ${_rtl}
-    A ${_rtl} ${_rtl} 0 0 1 ${_rtl} 0
-    Z
-  `.trim();
-}
-
-/**
  * getBackgroundColor retrieves the final background color
  * from either:
  *   1) props.backgroundColor

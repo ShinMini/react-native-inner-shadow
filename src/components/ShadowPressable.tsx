@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Pressable, View, type LayoutChangeEvent } from 'react-native';
-import { Canvas, RoundedRect, Shadow } from '@shopify/react-native-skia';
+import { Canvas, Shadow } from '@shopify/react-native-skia';
 import Animated from 'react-native-reanimated';
 
 import type {
@@ -25,6 +25,7 @@ import {
 } from '../utils';
 import LinearGradientFill from './ShadowLinearGradientFill';
 import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
+import { CornerRadii } from './CornerRadii';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
 
@@ -60,7 +61,6 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
     reflectedLightBlur,
   });
 
-  const boxRadius = numerify(style?.borderRadius, 12);
   const isLinear = isLinearProps(props);
 
   const styleWidth = width ?? numerify(style?.width, 0);
@@ -114,13 +114,11 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
             { width: layoutSize.width * 1.4, height: layoutSize.height * 1.4 },
           ]}
         >
-          <RoundedRect
-            x={0}
-            y={0}
+          <CornerRadii
             width={layoutSize.width}
             height={layoutSize.height}
-            r={boxRadius}
-            color={_backgroundColor} // The background fill of the rect
+            style={style}
+            backgroundColor={_backgroundColor}
           >
             {isLinear && (
               <LinearGradientFill
@@ -147,7 +145,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
                 inner
               />
             )}
-          </RoundedRect>
+          </CornerRadii>
         </Canvas>
       )}
       <PressButton

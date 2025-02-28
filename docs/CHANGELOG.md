@@ -4,6 +4,14 @@
 
 ## v.2.0.0
 
+feat!: can configure any border corner to any shadow component
+
+- Replaced Group and Rect with RoundedRect in CornerRadii
+- Removed makeRoundedRectPath utility function from utils.ts
+- Updated CornerRadii to use InputRRect type from react-native-skia
+- Simplified corner radius calculation and rendering
+- Improved component compatibility with Skia's RoundedRect
+
 refactor!: simplify pressable component by removing complicated code by replacing and **deprecating** `shadowSpace`.
 
 - `shadowSpace` now `shadowSpace` replaced with `style.padding` properties

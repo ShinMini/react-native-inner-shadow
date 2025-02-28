@@ -1,14 +1,15 @@
 import React from 'react';
-import { Group, Rect } from '@shopify/react-native-skia';
+import { RoundedRect, type InputRRect } from '@shopify/react-native-skia';
 
 import type { ViewStyle } from 'react-native';
-import { getBorderRadius, makeRoundedRectPath } from '../utils';
+import { getBorderRadius } from '../utils';
+import type { SharedValue } from 'react-native-reanimated';
 
 type CornerRadiiProps = {
   width: number;
   height: number;
   style?: ViewStyle;
-  backgroundColor: string;
+  backgroundColor: SharedValue<string> | string;
   children?: React.ReactNode;
 };
 export const CornerRadii = React.memo(function CornerRadii({
@@ -18,7 +19,7 @@ export const CornerRadii = React.memo(function CornerRadii({
   children,
   backgroundColor,
 }: CornerRadiiProps) {
-  const roundedClip = React.useMemo(() => {
+  const rrct = React.useMemo(() => {
     const {
       topLeftRadius,
       topRightRadius,
@@ -26,21 +27,18 @@ export const CornerRadii = React.memo(function CornerRadii({
       bottomLeftRadius,
     } = getBorderRadius(style);
 
-    return makeRoundedRectPath(
-      width,
-      height,
-      topLeftRadius,
-      topRightRadius,
-      bottomRightRadius,
-      bottomLeftRadius
-    );
+    return {
+      rect: { x: 0, y: 0, width: width, height: height },
+      topLeft: { x: topLeftRadius, y: topLeftRadius },
+      topRight: { x: topRightRadius, y: topRightRadius },
+      bottomRight: { x: bottomRightRadius, y: bottomRightRadius },
+      bottomLeft: { x: bottomLeftRadius, y: bottomLeftRadius },
+    } satisfies InputRRect;
   }, [width, height, style]);
 
   return (
-    <Group clip={roundedClip}>
-      <Rect x={0} y={0} width={width} height={height} color={backgroundColor}>
-        {children}
-      </Rect>
-    </Group>
+    <RoundedRect rect={rrct} color={backgroundColor}>
+      {children}
+    </RoundedRect>
   );
 });
