@@ -2,11 +2,44 @@ import type { AnimatedProp, Color } from '@shopify/react-native-skia';
 import type { ReactNode } from 'react';
 import type { PressableProps, ViewProps, ViewStyle } from 'react-native';
 
+/**
+ * ShadowViewProps represents the props accepted by shadow view components.
+ * It can be either an InnerShadowProps or a LinearInnerShadowProps.
+ *
+ * @remarks
+ * Use this type to ensure that your shadow view components receive all required
+ * properties for rendering either an inset shadow or a linear gradient inner shadow.
+ */
 export type ShadowViewProps = InnerShadowProps | LinearInnerShadowProps;
 
 /**
- * ShadowProps defines the basic requirements for
- * a shadow component.
+ * ShadowProps defines the basic requirements for a shadow component.
+ *
+ * @remarks
+ * These properties determine the appearance of the shadow, including its color,
+ * offset, blur, and opacity. They also provide support for reflected light effects.
+ *
+ * @defaultValue
+ * - inset: `false`
+ * - shadowColor: `#2F2F2FBC`
+ * - shadowOffset: `{ width: 2, height: 2 }`
+ * - shadowBlur: `3` (range: `[0, 20]`)
+ * - shadowRadius: `3` (range: `[0, 20]`)
+ * - shadowOpacity: `0.3` (range: `[0, 1]`)
+ * - reflectedLightColor: `#FFFFFF8D`
+ * - reflectedLightOffset: `{ width: -2, height: -2 }`
+ * - reflectedLightBlur: `3` (range: `[0, 20]`)
+ *
+ * @example
+ * ```ts
+ * const shadowProps: ShadowProps = {
+ *   inset: true,
+ *   shadowColor: '#000000',
+ *   shadowOffset: { width: 4, height: 4 },
+ *   shadowBlur: 5,
+ *   shadowOpacity: 0.5,
+ * };
+ * ```
  */
 export type ShadowProps = {
   /**
@@ -65,9 +98,7 @@ export type ShadowProps = {
    *
    * @example
    * ```ts
-   * <ShadowView style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)' }}>
-   *   <View style={{ width: 100, height: 100, backgroundColor: 'red' }} />
-   * </ShadowView>
+   *  boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)'
    * ```
    */
   boxShadow?: string;
@@ -93,22 +124,19 @@ export type ShadowProps = {
 };
 
 /**
- * InnerShadowProps defines the basic requirements for
- * an inset-shadow component.
+ * InnerShadowProps defines the basic requirements for an inset-shadow component.
  *
- * These props control:
- * - Basic layout (width, height, backgroundColor)
- * - Shadow styling (color, blur, offset)
- * - Optional reflected light styling (color, blur, offset)
- * - PressableProps allows the shadowed element to be intractable.
+ * For the **optimized performance**, it is **recommended** to set the `width`, `height` and `backgroundColor` of the shadowed component.
  *
  * @remarks
- * For the optimized performance, it is recommended to set the `width`, `height` and `backgroundColor` of the shadowed component.
+ * This interface extends React Native's ViewProps along with ShadowProps, and adds
+ * properties specific to rendering an inner shadow. It is intended for components that
+ * wish to render their children with an inset shadow effect.
  *
  * See {@link ShadowProps} for more information on the shadow properties.
  *
  * @example
- * ```ts
+ * ```tsx
  * <ShadowView width={100} height={100} backgroundColor="#FFFFFF" inset>
  *   <Text>Hello, world!</Text>
  * </ShadowView>
@@ -143,6 +171,21 @@ export interface InnerShadowProps extends ViewProps, ShadowProps {
  */
 export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
 
+/**
+ * GradientLinearProps define the properties for configuring a linear gradient.
+ *
+ * @remarks
+ * These properties are used by linear inner shadow components to define gradient transitions.
+ *
+ * @example
+ * ```tsx
+ * const gradientProps: GradientLinearProps = {
+ *   from: 'top',
+ *   to: 'bottom',
+ *   colors: ['#FFFFFF', '#2F2F2FBC'],
+ * };
+ * ```
+ */
 export type GradientLinearProps = {
   /**
    * The start direction of the linear gradient.
@@ -166,17 +209,17 @@ export type GradientLinearProps = {
  * LinearInnerShadowViewProps extends InnerShadowProps
  * to incorporate linear gradient capabilities.
  *
- * @param from - The start direction of the linear gradient (e.g., 'top')
- * @param to - The end direction of the linear gradient (e.g., 'bottom')
- * @param colors - An array of colors for the gradient. Using multiple colors
- *                 creates more visually interesting transitions.
- * @remarks
  * The colors prop is an array of colors for the gradient. Using multiple colors
  * creates more visually interesting transitions.
+ *
+ * @remarks
+ * In addition to all inner shadow properties, this type requires gradient properties
+ * such as `from`, `to`, and `colors`, enabling developers to create complex gradient shadows.
+ *
  * See {@link LinearShadowProps} and {@link ShadowProps} for more information.
  *
  * @example
- * ```ts
+ * ```tsx
  * <LinearShadowView from="top" to="bottom" colors={['#FFFFFF', '#2F2F2FBC']}>
  *   <Text>Hello, world!</Text>
  * </LinearShadowView>
@@ -186,6 +229,13 @@ export interface LinearInnerShadowProps
   extends InnerShadowProps,
     GradientLinearProps {}
 
+/**
+ * ShadowPressableProps are used for pressable shadow components.
+ *
+ * @remarks
+ * Extends React Native’s PressableProps to allow interactive shadow components.
+ * Deprecated properties such as `shadowSpace` and `initialDepth` are provided for legacy support. (below v1.3.1)
+ */
 export type ShadowPressableProps = PressableProps &
   Omit<InnerShadowProps, 'inset'> & {
     /**
@@ -220,6 +270,23 @@ export type ShadowPressableProps = PressableProps &
 export type LinearShadowPressableProps = ShadowPressableProps &
   GradientLinearProps;
 
+/**
+ * `ShadowToggleProps` provide properties for interactive toggleable shadow components.
+ *
+ * @remarks
+ * Use this type when you need to indicate an active state for a shadow component.
+ *
+ * @Params -`isActive`, `activeColor`.
+ *
+ * See {@link ShadowPressableProps} for more information.
+ *
+ * @example
+ * ```tsx
+ *    <ShadowToggle isActive={isActive} activeColor="#E9C46A" onPress={onPressToggle}>
+ *      <Text>Hello, world!</Text>
+ *    </ShadowToggle>
+ * ```
+ */
 export type ShadowToggleProps = ShadowPressableProps & {
   /**
    * current state of the toggle
@@ -235,29 +302,43 @@ export type ShadowToggleProps = ShadowPressableProps & {
 
 export type LinearShadowToggleProps = ShadowToggleProps & GradientLinearProps;
 
+/**
+ * `GetBackgroundColorProps` defines properties for getting background color.
+ */
 export type GetBackgroundColorProps = Pick<
   InnerShadowProps,
   'backgroundColor' | 'style'
 >;
 
+/**
+ * `GetShadowPropertyProps` defines properties for getting shadow property.
+ */
 export type GetShadowPropertyProps = Omit<
   ShadowProps,
   'boxShadow' | 'shadowRadius' | 'shadowOpacity'
 >;
 
+/**
+ * `SetReflectedLightDirectionAndScaleProps` defines properties for setting reflected light direction and scale.
+ */
 export type SetReflectedLightDirectionAndScaleProps = {
   inset?: boolean;
   reflectedLightScale?: number;
   defaultScale: number;
 };
 
+/**
+ * `GetOuterShadowOffsetProps` defines properties for calculating outer shadow offset.
+ */
 export type GetOuterShadowOffsetProps = {
   elevation?: number;
 } & Omit<
   ShadowProps,
   'reflectedLightColor' | 'reflectedLightOffset' | 'reflectedLightBlur'
 >;
-
+/**
+ * `GetLinearDirectionProps` defines the required properties for computing a linear gradient.
+ */
 export type GetLinearDirectionProps = {
   width: number;
   height: number;

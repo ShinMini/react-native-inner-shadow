@@ -1,4 +1,4 @@
-import { type ViewStyle } from 'react-native';
+import type { ViewStyle } from 'react-native';
 
 import { vec } from '@shopify/react-native-skia';
 
@@ -25,7 +25,18 @@ import {
   SHADOW_RADIUS,
 } from './constants';
 
-// At this time(17.Feb.2025), we do not support the way to convert the string (percentage) to a number.
+/**
+ * Converts a value to a number, returning a default value if the conversion fails.
+ *
+ * @privateRemarks
+ * At this time(17.Feb.2025), we do not support the way to convert the string (percentage) to a number.
+ *
+ * @template T - The type of the default value.
+ *
+ * @param value - The value to convert to a number.
+ *
+ * @returns The converted number, or the default value if the conversion fails.
+ */
 export function numerify<T extends null | number>(
   value: unknown,
   defaultValue: T
@@ -78,6 +89,18 @@ export function getBorderRadius(style?: Partial<ViewStyle>) {
  * with potentially different corner radii for each corner.
  *
  * If you only need one uniform radius, set all to the same value.
+ *
+ * @privateRemarks
+ * This function is used to create an SVG path string for a rectangle with potentially different corner radii for each corner.
+ *
+ * @param width - The width of the rectangle.
+ * @param height - The height of the rectangle.
+ * @param rtl - The top-left radius.
+ * @param rtr - The top-right radius.
+ * @param rbr - The bottom-right radius.
+ * @param rbl - The bottom-left radius.
+ *
+ * @returns The SVG path string for the rectangle.
  */
 export function makeRoundedRectPath(
   width: number,
@@ -119,6 +142,10 @@ export function makeRoundedRectPath(
  *   3) BACKGROUND_COLOR
  *
  * This ensures there is always a valid color for the component’s background.
+ *
+ * {@link GetBackgroundColorProps | props} - The props object containing background color settings.
+ *
+ * @returns The final background color for the component.
  */
 export function getBackgroundColor(props: GetBackgroundColorProps) {
   const backgroundColor =
@@ -132,15 +159,16 @@ export function getBackgroundColor(props: GetBackgroundColorProps) {
  * the main shadow and any reflected light. It merges default values
  * with provided props to form a complete “shadow settings” object.
  *
- * - shadowOffset / reflectedLightOffset: how far the shadows/highlights
+ * - `shadowOffset` / `reflectedLightOffset`: how far the shadows/highlights
  *   are shifted in x and y.
- * - shadowColor / reflectedLightColor: colors used for each effect.
- * - shadowBlur / reflectedLightBlur: blur radius for the softness/spread
+ * - `shadowColor` / `reflectedLightColor`: colors used for each effect.
+ * - `shadowBlur` / `reflectedLightBlur`: blur radius for the softness/spread
  *   of the shadow or highlight.
  *
- * @param props - The props object containing shadow-related settings.
- * @returns {
- * shadowOffset, reflectedLightOffset, shadowColor, reflectedLightColor, shadowBlur, reflectedLightBlur}
+ * {@link GetShadowPropertyProps} - The props object containing shadow-related settings.
+ *
+ * @returns `{
+ * shadowOffset, reflectedLightOffset, shadowColor, reflectedLightColor, shadowBlur, reflectedLightBlur }`
  */
 export function getShadowProperty({
   inset,
@@ -229,6 +257,13 @@ function setReflectedLightDirectionAndScale({
   return (defaultScale * REFLECTED_LIGHT_OFFSET_SCALE) / defaultScale;
 }
 
+/**
+ * `getOuterShadowOffset` calculates the outer shadow offset properties.
+ *
+ * {@link GetOuterShadowOffsetProps} - The props object containing outer shadow offset settings.
+ *
+ * @returns `{ shadowColor, shadowOffset, shadowBlur, shadowOpacity, shadowRadius, elevation, boxShadow }`
+ */
 export function getOuterShadowOffset({
   inset,
   shadowColor,
@@ -255,8 +290,13 @@ export function getOuterShadowOffset({
 /**
  * `getLinearDirection` calculates the start and end points for a linear gradient
  * based on the provided direction (from, to).
- * The direction is specified as a string, e.g., 'top', 'bottom', 'left', 'right'.
- * The width and height are used to calculate the midpoints for each direction.
+ *
+ * - The direction is specified as a string, e.g., 'top', 'bottom', 'left', 'right'.
+ * - The width and height are used to calculate the midpoints for each direction.
+ *
+ * {@link GetLinearDirectionProps} - The props object containing linear direction settings.
+ *
+ * @returns `{ start, end }`
  */
 export function getLinearDirection({
   width,
@@ -277,6 +317,10 @@ export function getLinearDirection({
 /**
  * `isLinearProps` checks if the provided props are for a linear gradient.
  * If the `colors` property is an array, we assume it's a linear gradient.
+ *
+ * @param props - see {@link InnerShadowProps} and {@link LinearInnerShadowProps}
+ *
+ * @returns `true` if the props are for a linear gradient, `false` otherwise.
  */
 export function isLinearProps(
   props: InnerShadowProps | LinearInnerShadowProps
