@@ -99,6 +99,12 @@ export interface InnerShadowProps extends ViewProps {
  */
 export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
 
+export type LinearShadowProps = {
+  from?: LINEAR_DIRECTION;
+  to?: LINEAR_DIRECTION;
+  colors: AnimatedProp<Color[]>;
+};
+
 /**
  * LinearInnerShadowViewProps extends InnerShadowProps
  * to incorporate linear gradient capabilities.
@@ -108,11 +114,9 @@ export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
  * @param colors - An array of colors for the gradient. Using multiple colors
  *                 creates more visually interesting transitions.
  */
-export interface LinearInnerShadowProps extends InnerShadowProps {
-  from?: LINEAR_DIRECTION;
-  to?: LINEAR_DIRECTION;
-  colors: AnimatedProp<Color[]>;
-}
+export interface LinearInnerShadowProps
+  extends InnerShadowProps,
+    LinearShadowProps {}
 
 export type ShadowPressableProps = PressableProps &
   Omit<InnerShadowProps, 'inset'> & {
@@ -143,6 +147,9 @@ export type ShadowPressableProps = PressableProps &
     damping?: number; //0.8;
   };
 
+export type LinearShadowPressableProps = ShadowPressableProps &
+  LinearShadowProps;
+
 export type ShadowToggleProps = ShadowPressableProps & {
   /**
    * current state of the toggle
@@ -155,6 +162,8 @@ export type ShadowToggleProps = ShadowPressableProps & {
    */
   activeColor?: string;
 };
+
+export type LinearShadowToggleProps = ShadowToggleProps & LinearShadowProps;
 
 export type GetBackgroundColorProps = Pick<
   InnerShadowProps,
@@ -175,10 +184,16 @@ export type GetShadowPropertyProps = Pick<
 export type SetReflectedLightDirectionAndScaleProps = {
   inset?: boolean;
   reflectedLightScale?: number;
-  shadowEffectScale: number;
+  defaultScale: number;
 };
 
-export type GetOuterShadowOffsetProps = Pick<
-  InnerShadowProps,
-  'inset' | 'shadowOffset' | 'shadowColor' | 'shadowBlur'
->;
+export type GetOuterShadowOffsetProps = {
+  inset?: boolean;
+  shadowColor?: string;
+  shadowOffset?: { width: number; height: number };
+  shadowBlur?: number;
+  shadowOpacity?: number;
+  shadowRadius?: number;
+  elevation?: number;
+  boxShadow?: string;
+};

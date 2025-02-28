@@ -19,7 +19,10 @@ import {
   REFLECTED_LIGHT_OFFSET_SCALE,
   SHADOW_BLUR,
   SHADOW_COLOR,
+  SHADOW_ELEVATION,
   SHADOW_OFFSET_SCALE,
+  SHADOW_OPACITY,
+  SHADOW_RADIUS,
 } from './constants';
 
 // At this time(17.Feb.2025), we do not support the way to convert the string (percentage) to a number.
@@ -27,7 +30,7 @@ export function numerify<T extends null | number>(
   value: unknown,
   defaultValue: T
 ) {
-  const num = Number(value);
+  const num = Number(value); // if value === null return 0
   return Number.isNaN(num) ? defaultValue : num;
 }
 
@@ -148,8 +151,14 @@ export function getShadowProperty({
   reflectedLightBlur,
   reflectedLightColor,
 }: GetShadowPropertyProps) {
-  const SHADOW_OFFSET_WIDTH = shadowOffset?.width ?? SHADOW_OFFSET_SCALE;
-  const SHADOW_OFFSET_HEIGHT = shadowOffset?.height ?? SHADOW_OFFSET_SCALE;
+  const SHADOW_OFFSET_WIDTH = numerify(
+    shadowOffset?.width,
+    SHADOW_OFFSET_SCALE
+  );
+  const SHADOW_OFFSET_HEIGHT = numerify(
+    shadowOffset?.height,
+    SHADOW_OFFSET_SCALE
+  );
 
   // By default, the reflected light offset is the inverse of the main shadow
   // so it appears on the opposite corner/side.
@@ -157,13 +166,13 @@ export function getShadowProperty({
   const REFLECTED_LIGHT_OFFSET_WIDTH = setReflectedLightDirectionAndScale({
     inset,
     reflectedLightScale: reflectedLightOffset?.width,
-    shadowEffectScale: SHADOW_OFFSET_WIDTH,
+    defaultScale: SHADOW_OFFSET_WIDTH,
   });
 
   const REFLECTED_LIGHT_OFFSET_HEIGHT = setReflectedLightDirectionAndScale({
     inset,
     reflectedLightScale: reflectedLightOffset?.height,
-    shadowEffectScale: SHADOW_OFFSET_HEIGHT,
+    defaultScale: SHADOW_OFFSET_HEIGHT,
   });
 
   // "Blur" here maps to how soft or large the shadow/highlight is.
@@ -201,7 +210,7 @@ export function getShadowProperty({
 function setReflectedLightDirectionAndScale({
   inset,
   reflectedLightScale,
-  shadowEffectScale,
+  defaultScale,
 }: SetReflectedLightDirectionAndScaleProps) {
   // When user provides a reflected light offset, use that.
   if (reflectedLightScale !== undefined) {
@@ -209,17 +218,15 @@ function setReflectedLightDirectionAndScale({
   }
 
   // When shadow is 0, reflected light should be 0.
-  if (shadowEffectScale === 0) {
+  if (defaultScale === 0) {
     return 0;
   }
 
   // When inset is true, the reflected light should be opposite the shadow.
   if (inset) {
-    return (
-      -(shadowEffectScale * REFLECTED_LIGHT_OFFSET_SCALE) / shadowEffectScale
-    );
+    return -(defaultScale * REFLECTED_LIGHT_OFFSET_SCALE) / defaultScale;
   }
-  return (shadowEffectScale * REFLECTED_LIGHT_OFFSET_SCALE) / shadowEffectScale;
+  return (defaultScale * REFLECTED_LIGHT_OFFSET_SCALE) / defaultScale;
 }
 
 export function getOuterShadowOffset({
@@ -227,15 +234,21 @@ export function getOuterShadowOffset({
   shadowColor,
   shadowOffset,
   shadowBlur,
+  shadowOpacity = SHADOW_OPACITY,
+  shadowRadius = SHADOW_RADIUS,
+  elevation = SHADOW_ELEVATION,
+  boxShadow,
 }: GetOuterShadowOffsetProps) {
   if (!inset) {
     return {
       shadowColor,
       shadowOffset,
       // Map blur to opacity (0 ~ 1) and radius (more subtle scaling)
-      shadowOpacity: shadowBlur ? Math.min(shadowBlur / 20, 1) : 0.3,
-      shadowRadius: (shadowBlur ?? 5) * 0.8,
-      elevation: shadowBlur,
+      shadowBlur,
+      shadowOpacity,
+      shadowRadius,
+      elevation,
+      boxShadow,
     };
   }
   return {};
