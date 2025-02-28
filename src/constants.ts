@@ -7,7 +7,6 @@ const SHADOW_OFFSET_SCALE = 2.5 as const;
 const REFLECTED_LIGHT_OFFSET_SCALE = 2 as const;
 
 const INITIAL_DEPTH = 2 as const;
-const SHADOW_SPACE = 6 as const;
 
 const SHADOW_OPACITY = 0.3 as const;
 const SHADOW_RADIUS = 3 as const;
@@ -40,7 +39,6 @@ const COMMON_STYLES = StyleSheet.create({
 export {
   BACKGROUND_COLOR,
   INITIAL_DEPTH,
-  SHADOW_SPACE,
   SHADOW_OPACITY,
   SHADOW_RADIUS,
   SHADOW_BLUR,
