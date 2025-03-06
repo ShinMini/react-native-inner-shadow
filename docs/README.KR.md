@@ -4,30 +4,30 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 **react-native-inner-shadow**는 [React Native Skia](https://shopify.github.io/react-native-skia/)를 사용하여 **인셋(내부) 그림자**와 **반사광(하이라이트) 효과**를 생성하는 그림자 컴포넌트 라이브러리입니다. 이 라이브러리는 단색 배경(예: `ShadowView`)과 선형 그라데이션 배경(예: `LinearShadowView`)을 모두 지원하여 인셋 그림자를 활용한 UI를 구성할 수 있습니다. 또한, [Reanimated](https://docs.swmansion.com/react-native-reanimated/)를 사용하여 프레스나 토글 상태에 애니메이션 효과를 제공하는 인터랙티브 컴포넌트들도 함께 제공합니다.
 
-<p style="color: gray; font-size: 0.8em;">🎉
-*참고하세요!: 이제, 모든 그림자 컴포넌트에 리니어 그레디언트 및 디테일한 border-radius 값 적용이 가능합니다! - v2.0.0~
-</p>
+🎉 ***New** in v2.0.0: 이제 모든 그림자 컴포넌트에 리니어 그레디언트 및 디테일한 border-radius 값 적용이 가능합니다!*
 
 [![npm](https://img.shields.io/npm/v/react-native-inner-shadow.svg)](https://www.npmjs.com/package/react-native-inner-shadow) ![ISC License](https://img.shields.io/npm/l/react-native-inner-shadow.svg) <a href="https://github.com/ShinMini/react-native-inner-shadow"> <img src="https://img.shields.io/npm/types/typescript" alt="ts-banner" /> </a>
-
-![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
-<!-- ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square) -->
+![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square) ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square)
 
 ---
 
-<h2 style="color: #555555; font-style: italic;">v2.0.0의 새로운 기능</h2>
+<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.1</span>?</h2>
 
-## v2.0.0
+- feat!: 모든 그림자 컴포넌트의 모서리를 개별적으로 설정 가능
+- refactor!: `shadowSpace` 기능을 **deprecated**하고 코드를 단순화하여 pressable 컴포넌트 개선
+- feat: `ShadowPressable`과 `ShadowToggle`에 선형 그라데이션 지원 통합
+- feat: `LinearShadowPressable`과 `LinearShadowToggle` 컴포넌트 추가
 
-- feat!: can configure any border corner to any shadow component
-- **refactor!**: 복잡한 코드를 제거하여 프레스 컴포넌트를 단순화하고, `shadowSpace`를 **더 이상 사용하지 않음(Deprecated)**.
-- refactor: adjust damping calculation in useAnimatedOffset hook
-- **refactor**: 그림자 타입을 개선하고 타입 문서를 강화하였습니다.
-- **feat**: 선형 그라데이션 지원과 함께 `ShadowPressable`과 `ShadowToggle`을 통합하였습니다.
-- **feat**: `LinearShadowPressable` 및 `LinearShadowToggle` 컴포넌트를 새로 추가하여 내장되었습니다.
-- **refactor(chore)**: 사용하지 않는 `SHADOW_SPACE` 상수를 제거하였습니다.
-- **docs**: 포괄적인 주석과 예제를 통해 타입 문서를 개선하였습니다.
-- **Note**: 최신 업데이트 및 변경 사항은 [CHANGELOG](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/CHANGELOG.md)를 참조하세요.
+<details close>
+  <summary>...자세히 보기</summary>
+
+- refactor: useAnimatedOffset 훅의 감쇠 계산 방식 조정
+- refactor: 그림자 타입 개선 및 타입 문서화 강화
+- refactor(chore): 사용하지 않는 `SHADOW_SPACE` 상수 제거
+- docs: 포괄적인 주석과 예제로 타입 문서화 개선
+- **참고**: 최신 업데이트 및 변경사항은 [CHANGELOG](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/CHANGELOG.md)를 참조하세요
+
+</details>
 
 ---
 
@@ -77,7 +77,6 @@ cd ios && bundle exec pod install && cd ..
 ## 목차
 
 - [react-native-inner-shadow](#react-native-inner-shadow)
-  - [v2.0.0](#v200)
   - [설치](#설치)
   - [목차](#목차)
   - [미리보기](#미리보기)
@@ -377,5 +376,7 @@ const styles = StyleSheet.create({
 
 ---
 
-**즐겁게 3D 느낌의 UI를 구축하세요!**
-버그 리포트, 제안, 혹은 기여를 원하시면 [이슈를 열거나](https://github.com/ShinMini/react-native-inner-shadow/issues) 풀 리퀘스트를 제출해 주세요.
+**이제 React-Native에서 자유롭게 3D 그림자 UI를 추가하세요 :)**
+버그 리포트, 제안, 혹은 기여를 원하시는 경우 언제든, [이슈를 열거나](https://github.com/ShinMini/react-native-inner-shadow/issues) 풀 리퀘스트를 제출해 주세요.
+
+> 영어 / 한국어 가능한 contributor 모집 중입니다!

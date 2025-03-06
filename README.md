@@ -4,30 +4,30 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 **react-native-inner-shadow** is a shadow component library that uses [React Native Skia](https://shopify.github.io/react-native-skia/) to create **inset shadows** and **reflected light** (highlight) effects. It supports both solid backgrounds (using `ShadowView`) and linear gradient backgrounds (using `LinearShadowView`) for building UIs with inset shadows. Additionally, it provides interactive components that animate press or toggle states using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
 
-<p style="color: gray; font-size: 0.8em;">🎉
-*Note!: Now, you can apply linear gradients and detailed border-radius values to all shadow components! - v2.0.0~.
-</p>
+🎉 ***New** in v2.0.0: Linear gradients and precise border-radius control for all shadow components!*
 
 [![npm](https://img.shields.io/npm/v/react-native-inner-shadow.svg)](https://www.npmjs.com/package/react-native-inner-shadow) ![ISC License](https://img.shields.io/npm/l/react-native-inner-shadow.svg) <a href="https://github.com/ShinMini/react-native-inner-shadow"> <img src="https://img.shields.io/npm/types/typescript" alt="ts-banner" /> </a>
-
-![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
-<!-- ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square) -->
+![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square) ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square)
 
 ---
 
-<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.0</span>?</h2>
-
-## v.2.0.0
+<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.1</span>?</h2>
 
 - feat!: can configure any border corner to any shadow component
 - refactor!: simplify pressable component by removing complicated code by replacing and **deprecating** `shadowSpace`.
-- refactor: adjust damping calculation in useAnimatedOffset hook
-- refactor: enhance shadow types and improve type documentation
 - feat: unify `ShadowPressable` and `ShadowToggle` with linear gradient support
 - feat: export `LinearShadowPressable` and `LinearShadowToggle` components
+
+<details close>
+  <summary>...more details</summary>
+
+- refactor: adjust damping calculation in useAnimatedOffset hook
+- refactor: enhance shadow types and improve type documentation
 - refactor(chore): remove unused `SHADOW_SPACE` constant
 - docs: enhance type documentation with comprehensive comments and examples
 - **Note**: For the latest updates and changes, refer to the [CHANGELOG](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/CHANGELOG.md)
+
+</details>
 
 ---
 
@@ -77,7 +77,6 @@ cd ios && bundle exec pod install && cd ..
 ## Table of Contents
 
 - [react-native-inner-shadow](#react-native-inner-shadow)
-  - [v.2.0.0](#v200)
   - [Installation](#installation)
   - [Table of Contents](#table-of-contents)
   - [Preview](#preview)
@@ -215,7 +214,7 @@ const styles = StyleSheet.create({
 ### ShadowPressable Props
 
 <details close>
-  <summary>Expand/Collapse</summary>
+  <summary>expands props</summary>
 
 | Prop                          | Type      | Default         | Description                                                                                   |
 | ----------------------------- | --------- | --------------  | --------------------------------------------------------------------------------------------- |
@@ -288,7 +287,7 @@ const styles = StyleSheet.create({
 ### Key Props
 
 <details close>
-  <summary>Expand/Collapse</summary>
+  <summary>expands props</summary>
 
 | Prop                          | Type      | Default  | Description                                                                                         |
 | ----------------------------- | --------- | -------  | --------------------------------------------------------------------------------------------------- |
