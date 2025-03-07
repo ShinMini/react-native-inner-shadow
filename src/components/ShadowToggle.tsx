@@ -83,7 +83,10 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
       if (!needMeasure) return;
 
       const { width: w, height: h } = e.nativeEvent.layout;
-      setLayoutSize({ width: w, height: h });
+      setLayoutSize((prev) => {
+        if (prev.width === w && prev.height === h) return prev;
+        return { width: w, height: h };
+      });
     },
     [needMeasure]
   );
