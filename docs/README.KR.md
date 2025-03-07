@@ -4,22 +4,25 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 **react-native-inner-shadow**는 [React Native Skia](https://shopify.github.io/react-native-skia/)를 사용하여 **인셋(내부) 그림자**와 **반사광(하이라이트) 효과**를 생성하는 그림자 컴포넌트 라이브러리입니다. 이 라이브러리는 단색 배경(예: `ShadowView`)과 선형 그라데이션 배경(예: `LinearShadowView`)을 모두 지원하여 인셋 그림자를 활용한 UI를 구성할 수 있습니다. 또한, [Reanimated](https://docs.swmansion.com/react-native-reanimated/)를 사용하여 프레스나 토글 상태에 애니메이션 효과를 제공하는 인터랙티브 컴포넌트들도 함께 제공합니다.
 
-🎉 ***New** in v2.0.0: 이제 모든 그림자 컴포넌트에 리니어 그레디언트 및 디테일한 border-radius 값 적용이 가능합니다!*
+🎉 ***New** in v2.0.2: 이제 모든 그림자 컴포넌트에 리니어 그레디언트 및 디테일한 border-radius 값 적용이 가능합니다!*
 
 [![npm](https://img.shields.io/npm/v/react-native-inner-shadow.svg)](https://www.npmjs.com/package/react-native-inner-shadow) ![ISC License](https://img.shields.io/npm/l/react-native-inner-shadow.svg) <a href="https://github.com/ShinMini/react-native-inner-shadow"> <img src="https://img.shields.io/npm/types/typescript" alt="ts-banner" /> </a>
 ![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square) ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square)
 
 ---
 
-<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.1</span>?</h2>
+<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.2</span>?</h2>
+
+- fix: shadow 컴포넌트의 onLayout prop 수정(custom onLayout 추가 가능)
+- refactor: shadow 컴포넌트의 레이아웃 크기 상태 업데이트 최적화
+
+<details close>
+  <summary>...자세히 보기</summary>
 
 - feat!: 모든 그림자 컴포넌트의 모서리를 개별적으로 설정 가능
 - refactor!: `shadowSpace` 기능을 **deprecated**하고 코드를 단순화하여 pressable 컴포넌트 개선
 - feat: `ShadowPressable`과 `ShadowToggle`에 선형 그라데이션 지원 통합
 - feat: `LinearShadowPressable`과 `LinearShadowToggle` 컴포넌트 추가
-
-<details close>
-  <summary>...자세히 보기</summary>
 
 - refactor: useAnimatedOffset 훅의 감쇠 계산 방식 조정
 - refactor: 그림자 타입 개선 및 타입 문서화 강화

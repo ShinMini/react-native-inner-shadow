@@ -11,20 +11,18 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 ---
 
-<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.1</span>?</h2>
+<h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.2</span>?</h2>
 
+- refactor: optimize layout size state updates in shadow components
+- fix: fix onLayout prop in shadow components
+
+<details close>
+  <summary>...more details</summary>
 - feat!: can configure any border corner to any shadow component
 - refactor!: simplify pressable component by removing complicated code by replacing and **deprecating** `shadowSpace`.
 - feat: unify `ShadowPressable` and `ShadowToggle` with linear gradient support
 - feat: export `LinearShadowPressable` and `LinearShadowToggle` components
 
-<details close>
-  <summary>...more details</summary>
-
-- refactor: adjust damping calculation in useAnimatedOffset hook
-- refactor: enhance shadow types and improve type documentation
-- refactor(chore): remove unused `SHADOW_SPACE` constant
-- docs: enhance type documentation with comprehensive comments and examples
 - **Note**: For the latest updates and changes, refer to the [CHANGELOG](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/CHANGELOG.md)
 
 </details>

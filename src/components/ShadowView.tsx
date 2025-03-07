@@ -34,6 +34,7 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
   reflectedLightColor,
   reflectedLightBlur,
   children,
+  onLayout: propsOnLayout,
   ...props
 }: InnerShadowProps | LinearInnerShadowProps) {
   // Extract base fields
@@ -71,6 +72,7 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
   // onLayout only does something if we truly need measure
   const onLayout = React.useCallback(
     (e: LayoutChangeEvent) => {
+      propsOnLayout?.(e);
       if (!needMeasure) return;
 
       const { width: w, height: h } = e.nativeEvent.layout;
@@ -79,7 +81,7 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
         return { width: w, height: h };
       });
     },
-    [needMeasure]
+    [needMeasure, propsOnLayout]
   );
 
   // Create offset style for outer shadow if needed

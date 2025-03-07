@@ -48,6 +48,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
   style,
   backgroundColor,
   children,
+  onLayout: propsOnLayout,
   ...props
 }: ShadowToggleProps | LinearShadowToggleProps) {
   // Determine the final background color (pulling from `props.style` or a default).
@@ -74,12 +75,12 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
     width: styleWidth,
     height: styleHeight,
   });
-  // Decide if we even need to attach onLayout; turns on when width or height is: undefined, NaN, or 0
   const needMeasure = !styleWidth || !styleHeight;
 
   // onLayout only does something if we truly need measure
   const onLayout = React.useCallback(
     (e: LayoutChangeEvent) => {
+      propsOnLayout?.(e);
       if (!needMeasure) return;
 
       const { width: w, height: h } = e.nativeEvent.layout;
@@ -88,7 +89,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
         return { width: w, height: h };
       });
     },
-    [needMeasure]
+    [needMeasure, propsOnLayout]
   );
 
   const {

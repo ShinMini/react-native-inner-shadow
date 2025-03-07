@@ -44,6 +44,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
   style,
   backgroundColor,
   children,
+  onLayout: propsOnLayout,
   ...props
 }: ShadowPressableProps | LinearShadowPressableProps) {
   // Determine the final background color (pulling from `props.style` or a default).
@@ -70,12 +71,11 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
     width: styleWidth,
     height: styleHeight,
   });
-  // Decide if we even need to attach onLayout; turns on when width or height is: undefined, NaN, or 0
   const needMeasure = !styleWidth || !styleHeight;
 
-  // onLayout only does something if we truly need measure
   const onLayout = React.useCallback(
     (e: LayoutChangeEvent) => {
+      propsOnLayout?.(e);
       if (!needMeasure) return;
 
       const { width: w, height: h } = e.nativeEvent.layout;
@@ -84,7 +84,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
         return { width: w, height: h };
       });
     },
-    [needMeasure]
+    [needMeasure, propsOnLayout]
   );
 
   const {
@@ -105,7 +105,6 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
     onPressOut: props.onPressOut,
   });
 
-  // Only show the canvas if we have a valid size
   const canRenderCanvas = layoutSize.width > 0 && layoutSize.height > 0;
 
   return (

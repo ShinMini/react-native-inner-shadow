@@ -2,6 +2,17 @@
 
 ---
 
+## v2.0.2
+
+fix: fix onLayout prop in shadow components
+refactor: optimize layout size state updates in shadow components
+
+- Updated ShadowPressable, ShadowToggle, and ShadowView to prevent unnecessary re-renders
+- Added comparison logic in setLayoutSize to only update when dimensions change
+- Improved performance by using functional state update with previous value check
+
+---
+
 ## v.2.0.1
 
 chore: bump package version to 2.0.1

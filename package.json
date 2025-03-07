@@ -1,7 +1,7 @@
 {
   "name": "react-native-inner-shadow",
   "source": "./src/index.ts",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
@@ -12,7 +12,7 @@
   "repository": "https://github.com/ShinMini/react-native-inner-shadow",
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
   "license": "ISC",
-  "description": "Inner Shadows with linear design UI in react-native",
+  "description": "react native inner shadows with linear gradient design UI",
   "keywords": [
     "react-native",
     "react-native-inner-shadow",
