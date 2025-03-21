@@ -305,10 +305,22 @@ export type LinearShadowToggleProps = ShadowToggleProps & GradientLinearProps;
 /**
  * `GetBackgroundColorProps` defines properties for getting background color.
  */
-export type GetBackgroundColorProps = Pick<
-  InnerShadowProps,
-  'backgroundColor' | 'style'
->;
+export type GetBackgroundColorProps = {
+  backgroundColor?: string;
+  styleBackground?: ViewStyle['backgroundColor'];
+};
+
+export type GetBorderRadiusProps = {
+  borderRadius?: ViewStyle['borderRadius'];
+  borderTopStartRadius?: ViewStyle['borderTopStartRadius'];
+  borderTopLeftRadius?: ViewStyle['borderTopLeftRadius'];
+  borderTopEndRadius?: ViewStyle['borderTopEndRadius'];
+  borderTopRightRadius?: ViewStyle['borderTopRightRadius'];
+  borderBottomStartRadius?: ViewStyle['borderBottomStartRadius'];
+  borderBottomLeftRadius?: ViewStyle['borderBottomLeftRadius'];
+  borderBottomEndRadius?: ViewStyle['borderBottomEndRadius'];
+  borderBottomRightRadius?: ViewStyle['borderBottomRightRadius'];
+};
 
 /**
  * `GetShadowPropertyProps` defines properties for getting shadow property.

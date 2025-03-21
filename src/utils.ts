@@ -1,9 +1,8 @@
-import type { ViewStyle } from 'react-native';
-
 import { vec } from '@shopify/react-native-skia';
 
 import type {
   GetBackgroundColorProps,
+  GetBorderRadiusProps,
   GetLinearDirectionProps,
   GetOuterShadowOffsetProps,
   GetShadowPropertyProps,
@@ -45,7 +44,7 @@ export function numerify<T extends null | number>(
   return Number.isNaN(num) ? defaultValue : num;
 }
 
-export function getBorderRadius(style?: Partial<ViewStyle>) {
+export function getBorderRadius(style?: GetBorderRadiusProps) {
   const borderRadius = numerify(style?.borderRadius, null);
 
   const topStartRadius = numerify(style?.borderTopStartRadius, borderRadius);
@@ -88,7 +87,7 @@ export function getBorderRadius(style?: Partial<ViewStyle>) {
  * getBackgroundColor retrieves the final background color
  * from either:
  *   1) props.backgroundColor
- *   2) style.backgroundColor
+ *   2) props.style.backgroundColor
  *   3) BACKGROUND_COLOR
  *
  * This ensures there is always a valid color for the component’s background.
@@ -97,11 +96,13 @@ export function getBorderRadius(style?: Partial<ViewStyle>) {
  *
  * @returns The final background color for the component.
  */
-export function getBackgroundColor(props: GetBackgroundColorProps) {
-  const backgroundColor =
-    props.backgroundColor ?? props.style?.backgroundColor ?? BACKGROUND_COLOR;
+export function getBackgroundColor({
+  backgroundColor,
+  styleBackground,
+}: GetBackgroundColorProps) {
+  const bgColor = backgroundColor ?? styleBackground ?? BACKGROUND_COLOR;
 
-  return backgroundColor as string;
+  return bgColor as string;
 }
 
 /**

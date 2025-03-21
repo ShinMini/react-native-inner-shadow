@@ -25,7 +25,17 @@ export const CornerRadii = React.memo(function CornerRadii({
       topRightRadius,
       bottomRightRadius,
       bottomLeftRadius,
-    } = getBorderRadius(style);
+    } = getBorderRadius({
+      borderRadius: style?.borderRadius,
+      borderTopStartRadius: style?.borderTopStartRadius,
+      borderTopLeftRadius: style?.borderTopLeftRadius,
+      borderTopEndRadius: style?.borderTopEndRadius,
+      borderTopRightRadius: style?.borderTopRightRadius,
+      borderBottomStartRadius: style?.borderBottomStartRadius,
+      borderBottomLeftRadius: style?.borderBottomLeftRadius,
+      borderBottomEndRadius: style?.borderBottomEndRadius,
+      borderBottomRightRadius: style?.borderBottomRightRadius,
+    });
 
     return {
       rect: { x: 0, y: 0, width: width, height: height },
@@ -34,7 +44,19 @@ export const CornerRadii = React.memo(function CornerRadii({
       bottomRight: { x: bottomRightRadius, y: bottomRightRadius },
       bottomLeft: { x: bottomLeftRadius, y: bottomLeftRadius },
     } satisfies InputRRect;
-  }, [width, height, style]);
+  }, [
+    width,
+    height,
+    style?.borderRadius,
+    style?.borderTopStartRadius,
+    style?.borderTopLeftRadius,
+    style?.borderTopEndRadius,
+    style?.borderTopRightRadius,
+    style?.borderBottomStartRadius,
+    style?.borderBottomLeftRadius,
+    style?.borderBottomEndRadius,
+    style?.borderBottomRightRadius,
+  ]);
 
   return (
     <RoundedRect rect={rrct} color={backgroundColor}>

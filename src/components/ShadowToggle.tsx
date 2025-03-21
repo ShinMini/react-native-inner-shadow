@@ -1,5 +1,10 @@
-import React, { memo } from 'react';
-import { Pressable, View, type LayoutChangeEvent } from 'react-native';
+import React, { memo, useMemo, useState } from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  View,
+  type LayoutChangeEvent,
+} from 'react-native';
 import { Canvas, Shadow } from '@shopify/react-native-skia';
 import Animated, {
   interpolateColor,
@@ -32,8 +37,8 @@ import { CornerRadii } from './CornerRadii';
 const PressButton = Animated.createAnimatedComponent(Pressable);
 
 export const UnifiedShadowToggle = memo(function ShadowToggle({
-  width,
-  height,
+  width: propWidth,
+  height: propHeight,
   isActive = false,
   activeColor,
   shadowBlur = SHADOW_BLUR,
@@ -51,10 +56,10 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
   onLayout: propsOnLayout,
   ...props
 }: ShadowToggleProps | LinearShadowToggleProps) {
-  // Determine the final background color (pulling from `props.style` or a default).
-  const _backgroundColor = getBackgroundColor({
+  const flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
+  const bgColor = getBackgroundColor({
     backgroundColor,
-    style,
+    styleBackground: flatStyle.backgroundColor,
   });
 
   const shadowProps = getShadowProperty({
@@ -68,28 +73,23 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
 
   const isLinear = isLinearProps(props);
 
-  const styleWidth = width ?? numerify(style?.width, 0);
-  const styleHeight = height ?? numerify(style?.height, 0);
+  const initialW = propWidth ?? numerify(flatStyle.width, 0);
+  const initialH = propHeight ?? numerify(flatStyle.height, 0);
+  const [layout, setLayout] = useState({ width: initialW, height: initialH });
 
-  const [layoutSize, setLayoutSize] = React.useState({
-    width: styleWidth,
-    height: styleHeight,
-  });
-  const needMeasure = !styleWidth || !styleHeight;
-
-  // onLayout only does something if we truly need measure
   const onLayout = React.useCallback(
     (e: LayoutChangeEvent) => {
       propsOnLayout?.(e);
-      if (!needMeasure) return;
 
-      const { width: w, height: h } = e.nativeEvent.layout;
-      setLayoutSize((prev) => {
-        if (prev.width === w && prev.height === h) return prev;
-        return { width: w, height: h };
-      });
+      if (initialW && initialH) return;
+      const { width, height } = e.nativeEvent.layout;
+      setLayout((prev) =>
+        prev.width === width && prev.height === height
+          ? prev
+          : { width, height }
+      );
     },
-    [needMeasure, propsOnLayout]
+    [initialW, initialH, propsOnLayout]
   );
 
   const {
@@ -109,14 +109,15 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
     onPressOut: props.onPressOut,
   });
 
-  // Only show the canvas if we have a valid size
-  const canRenderCanvas = layoutSize.width > 0 && layoutSize.height > 0;
+  const finalWidth = layout.width;
+  const finalHeight = layout.height;
+  const canRenderCanvas = finalWidth && finalHeight;
 
   const animatedBackgroundColor = useDerivedValue(() =>
     interpolateColor(
       depth.value,
       [INITIAL_DEPTH, -INITIAL_DEPTH],
-      [_backgroundColor, activeColor || _backgroundColor]
+      [bgColor, activeColor || bgColor]
     )
   );
 
@@ -135,24 +136,24 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
 
   return (
     <View onLayout={onLayout} style={[COMMON_STYLES.canvasWrapper]}>
-      {canRenderCanvas && (
+      {canRenderCanvas ? (
         <Canvas
           style={[
             COMMON_STYLES.canvas,
-            { width: layoutSize.width * 1.4, height: layoutSize.height * 1.4 },
+            { width: finalWidth * 1.4, height: finalHeight * 1.4 },
           ]}
         >
           <CornerRadii
-            width={layoutSize.width}
-            height={layoutSize.height}
+            width={finalWidth}
+            height={finalHeight}
             style={style}
             backgroundColor={animatedBackgroundColor}
           >
             {isLinear && (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
-                width={layoutSize.width}
-                height={layoutSize.height}
+                width={finalWidth}
+                height={finalHeight}
               />
             )}
             <Shadow
@@ -173,7 +174,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
             )}
           </CornerRadii>
         </Canvas>
-      )}
+      ) : null}
       <PressButton {...props} style={[style, COMMON_STYLES.canvasWrapper]}>
         <Animated.View style={PressedAnimatedStyle}>{children}</Animated.View>
       </PressButton>
@@ -190,11 +191,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
  * @param isActive - Whether the shadow is active
  * @param activeColor - The color of the shadow when active
  */
-export const ShadowToggle = memo(function ShadowToggle({
-  ...props
-}: ShadowToggleProps) {
-  return <UnifiedShadowToggle {...props} />;
-});
+export const ShadowToggle: React.FC<ShadowToggleProps> = UnifiedShadowToggle;
 
 /**
  * LinearShadowToggle
@@ -208,8 +205,5 @@ export const ShadowToggle = memo(function ShadowToggle({
  * @param from - The direction of the linear gradient
  * @param to - The direction of the linear gradient
  */
-export const LinearShadowToggle = memo(function LinearShadowToggle({
-  ...props
-}: LinearShadowToggleProps) {
-  return <UnifiedShadowToggle {...props} />;
-});
+export const LinearShadowToggle: React.FC<LinearShadowToggleProps> =
+  UnifiedShadowToggle;
