@@ -1,5 +1,13 @@
 # Changelog
 
+--
+
+## v2.1.0
+
+- performance: optimize shadow component rendering
+- fix: fix shadow component layout size calculation
+- fix: fix shadow component border-radius calculation
+
 ---
 
 ## v2.0.2

@@ -1,6 +1,6 @@
 # react-native-inner-shadow
 
-English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/README.KR.md)
+[English](https://www.npmjs.com/package/react-native-inner-shadow) | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/README.KR.md)
 
 **react-native-inner-shadow** is a shadow component library that uses [React Native Skia](https://shopify.github.io/react-native-skia/) to create **inset shadows** and **reflected light** (highlight) effects. It supports both solid backgrounds (using `ShadowView`) and linear gradient backgrounds (using `LinearShadowView`) for building UIs with inset shadows. Additionally, it provides interactive components that animate press or toggle states using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
 
@@ -13,6 +13,9 @@ English | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob
 
 <h2 style="color: #555555; font-style: italic;">What's New in <span style="color: #F36565; font-style: normal;">v2.0.2</span>?</h2>
 
+- performance: optimize shadow component rendering
+- fix: fix shadow component layout size calculation
+- fix: fix shadow component border-radius calculation
 - refactor: optimize layout size state updates in shadow components
 - fix: fix onLayout prop in shadow components
 
