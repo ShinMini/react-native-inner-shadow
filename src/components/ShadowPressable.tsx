@@ -5,7 +5,7 @@ import {
   View,
   type LayoutChangeEvent,
 } from 'react-native';
-import { Canvas, Shadow } from '@shopify/react-native-skia';
+import { Canvas, Fill, Shadow } from '@shopify/react-native-skia';
 import Animated from 'react-native-reanimated';
 
 import type {
@@ -24,7 +24,7 @@ import {
 
 import {
   getBackgroundColor,
-  getShadowProperty,
+  computeShadowProperties,
   isLinearProps,
   numerify,
 } from '../utils';
@@ -53,12 +53,16 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
   ...props
 }: ShadowPressableProps | LinearShadowPressableProps) {
   const flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
-  const bgColor = getBackgroundColor({
-    backgroundColor,
-    styleBackground: flatStyle.backgroundColor,
-  });
+  const bgColor = useMemo(
+    () =>
+      getBackgroundColor({
+        backgroundColor,
+        styleBackground: flatStyle.backgroundColor,
+      }),
+    [backgroundColor, flatStyle.backgroundColor]
+  );
 
-  const shadowProps = getShadowProperty({
+  const shadowProps = computeShadowProperties({
     shadowOffset,
     shadowColor,
     shadowBlur,
@@ -123,15 +127,17 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
           <CornerRadii
             width={finalWidth}
             height={finalHeight}
-            style={style}
+            style={flatStyle}
             backgroundColor={bgColor}
           >
-            {isLinear && (
+            {isLinear ? (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
                 width={finalWidth}
                 height={finalHeight}
               />
+            ) : (
+              <Fill color={bgColor} />
             )}
 
             <Shadow
@@ -142,7 +148,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
               inner={inset}
             />
 
-            {isReflectedLightEnabled && (
+            {isReflectedLightEnabled ? (
               <Shadow
                 dx={reflectedLightOffset.dx}
                 dy={reflectedLightOffset.dy}
@@ -150,7 +156,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
                 color={reflectedLightColor}
                 inner
               />
-            )}
+            ) : null}
           </CornerRadii>
         </Canvas>
       ) : null}

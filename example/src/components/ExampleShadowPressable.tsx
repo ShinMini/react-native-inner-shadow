@@ -4,8 +4,16 @@ import { StyleSheet, Text } from 'react-native';
 import { ShadowPressable } from 'react-native-inner-shadow';
 
 export const ExampleShadowPressable = (): React.JSX.Element => {
+  const onPress = () => {
+    console.log('Pressed!');
+  };
+
   return (
-    <ShadowPressable style={styles.shadowView} reflectedLightColor="#ffffff8d">
+    <ShadowPressable
+      style={styles.shadowView}
+      onPress={onPress}
+      reflectedLightColor="#ffffff8d"
+    >
       <Text style={[styles.context]}>Press Me!</Text>
     </ShadowPressable>
   );

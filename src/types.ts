@@ -323,20 +323,20 @@ export type GetBorderRadiusProps = {
 };
 
 /**
- * `GetShadowPropertyProps` defines properties for getting shadow property.
+ * `ShadowPropertyConfig` defines properties for getting shadow property.
  */
-export type GetShadowPropertyProps = Omit<
+export type ShadowPropertyConfig = Omit<
   ShadowProps,
   'boxShadow' | 'shadowRadius' | 'shadowOpacity'
 >;
 
 /**
- * `SetReflectedLightDirectionAndScaleProps` defines properties for setting reflected light direction and scale.
+ * `ReflectedLightPositionConfig` defines properties for setting reflected light direction and scale.
  */
-export type SetReflectedLightDirectionAndScaleProps = {
+export type ReflectedLightPositionConfig = {
   inset?: boolean;
   reflectedLightScale?: number;
-  defaultScale: number;
+  baseShadowOffset: number;
 };
 
 /**

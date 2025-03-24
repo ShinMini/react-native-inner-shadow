@@ -12,7 +12,7 @@ export type {
 
 export {
   getBackgroundColor,
-  getShadowProperty,
+  computeShadowProperties,
   getLinearDirection,
   isLinearProps,
 } from './utils';

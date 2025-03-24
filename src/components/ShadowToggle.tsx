@@ -26,7 +26,7 @@ import {
 
 import {
   getBackgroundColor,
-  getShadowProperty,
+  computeShadowProperties,
   isLinearProps,
   numerify,
 } from '../utils';
@@ -62,7 +62,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
     styleBackground: flatStyle.backgroundColor,
   });
 
-  const shadowProps = getShadowProperty({
+  const shadowProps = computeShadowProperties({
     shadowOffset,
     shadowColor,
     shadowBlur,

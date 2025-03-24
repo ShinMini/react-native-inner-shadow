@@ -4,7 +4,7 @@ import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import {
   getOuterShadowOffset,
   getBackgroundColor,
-  getShadowProperty,
+  computeShadowProperties,
   isLinearProps,
   numerify,
 } from '../utils';
@@ -43,7 +43,7 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
     backgroundColor,
     styleBackground: flatStyle.backgroundColor,
   });
-  const shadowProps = getShadowProperty({
+  const shadowProps = computeShadowProperties({
     shadowOffset,
     shadowColor,
     shadowBlur,
