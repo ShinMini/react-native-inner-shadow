@@ -1,6 +1,27 @@
 # Changelog
 
---
+---
+
+## v2.2.0
+
+- performance: optimize shadow component rendering
+- fix: fix shadow component layout size calculation
+- fix: fix shadow component border-radius calculation
+
+fix: component layout and shadow rendering
+
+- Add canvas padding constant to prevent shadow clipping
+- Centralize shadow property handling in useShadowProperties hook
+- Fix component positioning and z-index layering
+- Clean up redundant style properties and wrapper elements
+- Address shadow rendering issues for toggle and pressable components
+
+feat: refine shadow rendering and default behavior
+
+Apply consistent code formatting and streamline shadow implementation
+with unified reflected light behavior and improved gradient handling.
+
+---
 
 ## v2.1.0
 
