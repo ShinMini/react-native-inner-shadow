@@ -1,11 +1,6 @@
-import React, { memo, useMemo, useState } from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  View,
-  type LayoutChangeEvent,
-} from 'react-native';
-import { Canvas, Fill, Shadow } from '@shopify/react-native-skia';
+import React, { memo } from 'react';
+import { Pressable, View } from 'react-native';
+import { Canvas, Shadow } from '@shopify/react-native-skia';
 import Animated from 'react-native-reanimated';
 
 import type {
@@ -13,84 +8,42 @@ import type {
   ShadowPressableProps,
 } from '../types';
 import {
+  CANVAS_PADDING,
   COMMON_STYLES,
   DAMPING_DURATION,
   DAMPING_RATIO,
   IS_REFLECTED_LIGHT_ENABLED,
-  REFLECTED_LIGHT_COLOR,
-  SHADOW_BLUR,
-  SHADOW_COLOR,
 } from '../constants';
 
-import {
-  getBackgroundColor,
-  computeShadowProperties,
-  isLinearProps,
-  numerify,
-} from '../utils';
+import { isLinearProps } from '../utils';
+
 import LinearGradientFill from './ShadowLinearGradientFill';
-import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
 import { CornerRadii } from './CornerRadii';
+
+import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
+import { useShadowProperties } from '../hooks/useShadowProperties';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
 
 export const UnifiedShadowPressable = memo(function ShadowPressable({
   width: propWidth,
   height: propHeight,
-  shadowBlur = SHADOW_BLUR,
-  shadowColor = SHADOW_COLOR,
-  reflectedLightColor = REFLECTED_LIGHT_COLOR,
   duration = DAMPING_DURATION,
   damping = DAMPING_RATIO,
   isReflectedLightEnabled = IS_REFLECTED_LIGHT_ENABLED,
-  shadowOffset,
-  reflectedLightOffset: rfOffset,
-  reflectedLightBlur,
   style,
-  backgroundColor,
   children,
   onLayout: propsOnLayout,
   ...props
 }: ShadowPressableProps | LinearShadowPressableProps) {
-  const flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
-  const bgColor = useMemo(
-    () =>
-      getBackgroundColor({
-        backgroundColor,
-        styleBackground: flatStyle.backgroundColor,
-      }),
-    [backgroundColor, flatStyle.backgroundColor]
-  );
-
-  const shadowProps = computeShadowProperties({
-    shadowOffset,
-    shadowColor,
-    shadowBlur,
-    reflectedLightOffset: rfOffset,
-    reflectedLightColor,
-    reflectedLightBlur,
-  });
-
-  const isLinear = isLinearProps(props);
-
-  const initialW = propWidth ?? numerify(flatStyle.width, 0);
-  const initialH = propHeight ?? numerify(flatStyle.height, 0);
-  const [layout, setLayout] = useState({ width: initialW, height: initialH });
-
-  const onLayout = React.useCallback(
-    (e: LayoutChangeEvent) => {
-      propsOnLayout?.(e);
-
-      if (initialW && initialH) return;
-      const { width, height } = e.nativeEvent.layout;
-      setLayout((prev) =>
-        prev.width === width && prev.height === height
-          ? prev
-          : { width, height }
-      );
-    },
-    [initialW, initialH, propsOnLayout]
-  );
+  const { flatStyle, bgColor, shadowProps, layout, canRenderCanvas, onLayout } =
+    useShadowProperties({
+      propWidth,
+      propHeight,
+      style,
+      propsOnLayout,
+      ...props,
+    });
 
   const {
     onPressIn,
@@ -110,41 +63,39 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
     onPressOut: props.onPressOut,
   });
 
-  const finalWidth = layout.width;
-  const finalHeight = layout.height;
-
-  const canRenderCanvas = finalWidth && finalHeight;
+  const isLinear = isLinearProps(props);
 
   return (
-    <View onLayout={onLayout} style={[COMMON_STYLES.canvasWrapper]}>
+    <View onLayout={onLayout} style={COMMON_STYLES.canvasContainer}>
       {canRenderCanvas ? (
         <Canvas
           style={[
             COMMON_STYLES.canvas,
-            { width: finalWidth * 1.4, height: finalHeight * 1.4 },
+            {
+              width: layout.width + CANVAS_PADDING * 2,
+              height: layout.height + CANVAS_PADDING * 2,
+            },
           ]}
         >
           <CornerRadii
-            width={finalWidth}
-            height={finalHeight}
+            width={layout.width}
+            height={layout.height}
             style={flatStyle}
             backgroundColor={bgColor}
           >
             {isLinear ? (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
-                width={finalWidth}
-                height={finalHeight}
+                width={layout.width}
+                height={layout.height}
               />
-            ) : (
-              <Fill color={bgColor} />
-            )}
+            ) : null}
 
             <Shadow
               dx={offset.dx}
               dy={offset.dy}
               blur={blurRadius}
-              color={shadowColor}
+              color={shadowProps.shadowColor}
               inner={inset}
             />
 
@@ -153,7 +104,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
                 dx={reflectedLightOffset.dx}
                 dy={reflectedLightOffset.dy}
                 blur={blurRadius}
-                color={reflectedLightColor}
+                color={shadowProps.reflectedLightColor}
                 inner
               />
             ) : null}
@@ -162,7 +113,12 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
       ) : null}
       <PressButton
         {...props}
-        style={[style, COMMON_STYLES.canvasWrapper]}
+        style={[
+          // eslint-disable-next-line react-native/no-inline-styles
+          { zIndex: 1 },
+          flatStyle,
+          COMMON_STYLES.canvasWrapper,
+        ]}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
       >

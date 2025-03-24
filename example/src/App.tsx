@@ -21,6 +21,9 @@ function App(): React.JSX.Element {
       <LinearShadowView
         from="top"
         to="right"
+        shadowOffset={{ width: 10, height: 10 }}
+        shadowColor="#000"
+        shadowBlur={10}
         style={styles.shadowView}
         colors={['#f1c40f', '#e74c3c']}
       >

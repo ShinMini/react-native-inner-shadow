@@ -1,19 +1,15 @@
-import React, { memo, useMemo, useState } from 'react';
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import React, { memo } from 'react';
+import { View } from 'react-native';
 
-import {
-  getOuterShadowOffset,
-  getBackgroundColor,
-  computeShadowProperties,
-  isLinearProps,
-  numerify,
-} from '../utils';
+import { isLinearProps } from '../utils';
 import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
-import { COMMON_STYLES } from '../constants';
+import { CANVAS_PADDING, COMMON_STYLES } from '../constants';
 
 import { Canvas, Shadow } from '@shopify/react-native-skia';
 import LinearGradientFill from './ShadowLinearGradientFill';
 import { CornerRadii } from './CornerRadii';
+
+import { useShadowProperties } from './../hooks/useShadowProperties';
 
 /**
  * A unified interface for both "solid" (InnerShadow) and "linear" (LinearShadow).
@@ -26,77 +22,30 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
   inset,
   isReflectedLightEnabled,
   style,
-  backgroundColor,
-  shadowOffset,
-  shadowColor,
-  shadowBlur,
-  reflectedLightOffset,
-  reflectedLightColor,
-  reflectedLightBlur,
   onLayout: propsOnLayout,
   children,
   ...props
 }: InnerShadowProps | LinearInnerShadowProps) {
   // Extract base fields
-  const flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
-  const bgColor = getBackgroundColor({
-    backgroundColor,
-    styleBackground: flatStyle.backgroundColor,
-  });
-  const shadowProps = computeShadowProperties({
-    shadowOffset,
-    shadowColor,
-    shadowBlur,
-    reflectedLightOffset,
-    reflectedLightColor,
-    reflectedLightBlur,
-  });
-
-  const isLinear = isLinearProps(props);
-
+  const { flatStyle, bgColor, shadowProps, layout, canRenderCanvas, onLayout } =
+    useShadowProperties({
+      propWidth,
+      propHeight,
+      style,
+      inset,
+      propsOnLayout,
+      ...props,
+    });
   // If isReflectedLightEnabled is undefined, default to `props.inset` (typical).
   const _isReflectedLightEnabled = isReflectedLightEnabled ?? inset;
-
-  const initialW = propWidth ?? numerify(flatStyle.width, 0);
-  const initialH = propHeight ?? numerify(flatStyle.height, 0);
-  const [layout, setLayout] = useState({ width: initialW, height: initialH });
-
-  const onLayout = React.useCallback(
-    (e: LayoutChangeEvent) => {
-      propsOnLayout?.(e);
-      if (initialW && initialH) return;
-      const { width, height } = e.nativeEvent.layout;
-      setLayout((prev) =>
-        prev.width === width && prev.height === height
-          ? prev
-          : { width, height }
-      );
-    },
-    [initialW, initialH, propsOnLayout]
-  );
-  // Create offset style for outer shadow if needed
-  const outerShadowOffset = React.useMemo(
-    () =>
-      getOuterShadowOffset({
-        ...shadowProps,
-        inset,
-      }),
-    [shadowProps, inset]
-  );
-
-  // 현재 적용할 실제 크기 (명시 prop 우선, 아니면 측정값)
-  const finalWidth = layout.width;
-  const finalHeight = layout.height;
-
-  const canRenderCanvas = finalWidth && finalHeight;
+  const isLinear = isLinearProps(props);
 
   return (
     <View
-      {...props}
+      // {...props}
       style={[
-        outerShadowOffset, // Possibly sets outer drop-shadow if needed
-        COMMON_STYLES.canvasWrapper,
-        style,
+        flatStyle, // TODO: replace the origin shadow effect with Skia
+        COMMON_STYLES.canvasContainer,
       ]}
       onLayout={onLayout}
     >
@@ -104,32 +53,34 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
         <Canvas
           style={[
             COMMON_STYLES.canvas,
-            { width: finalWidth, height: finalHeight },
+            {
+              width: layout.width + CANVAS_PADDING * 2,
+              height: layout.height + CANVAS_PADDING * 2,
+            },
           ]}
         >
           <CornerRadii
-            width={finalWidth}
-            height={finalHeight}
-            style={style}
+            width={layout.width}
+            height={layout.height}
+            style={flatStyle}
             backgroundColor={bgColor}
           >
-            {isLinear && (
+            {/* Separate linear gradient */}
+            {isLinear ? (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
-                width={finalWidth}
-                height={finalHeight}
+                width={layout.width}
+                height={layout.height}
               />
-            )}
-            {inset && (
-              <Shadow
-                dx={shadowProps.shadowOffset.width}
-                dy={shadowProps.shadowOffset.height}
-                blur={shadowProps.shadowBlur}
-                color={shadowProps.shadowColor}
-                inner
-              />
-            )}
-            {_isReflectedLightEnabled && (
+            ) : null}
+            <Shadow
+              dx={shadowProps.shadowOffset.width}
+              dy={shadowProps.shadowOffset.height}
+              blur={shadowProps.shadowBlur}
+              color={shadowProps.shadowColor}
+              inner={inset}
+            />
+            {_isReflectedLightEnabled ? (
               <Shadow
                 dx={shadowProps.reflectedLightOffset.width}
                 dy={shadowProps.reflectedLightOffset.height}
@@ -137,11 +88,14 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
                 color={shadowProps.reflectedLightColor}
                 inner
               />
-            )}
+            ) : null}
           </CornerRadii>
         </Canvas>
       ) : null}
-      {children}
+      {/* TODO: replace the origin shadow effect with Skia */}
+      <View {...props} style={COMMON_STYLES.canvasWrapper}>
+        {children}
+      </View>
     </View>
   );
 });

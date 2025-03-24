@@ -4,6 +4,7 @@ import { RoundedRect, type InputRRect } from '@shopify/react-native-skia';
 import type { ViewStyle } from 'react-native';
 import { getBorderRadius } from '../utils';
 import type { SharedValue } from 'react-native-reanimated';
+import { CANVAS_PADDING } from '../constants';
 
 type CornerRadiiProps = {
   width: number;
@@ -38,7 +39,12 @@ export const CornerRadii = React.memo(function CornerRadii({
     });
 
     return {
-      rect: { x: 0, y: 0, width: width, height: height },
+      rect: {
+        x: CANVAS_PADDING,
+        y: CANVAS_PADDING,
+        width: width,
+        height: height,
+      },
       topLeft: { x: topLeftRadius, y: topLeftRadius },
       topRight: { x: topRightRadius, y: topRightRadius },
       bottomRight: { x: bottomRightRadius, y: bottomRightRadius },

@@ -15,6 +15,8 @@ export const ExampleShadowToggle = (): React.JSX.Element => {
       isActive={isActive}
       activeColor="#E9C46A"
       onPress={onPressToggle}
+      // TODO: FIX IT
+      shadowOffset={{ width: -4, height: -2 }}
     >
       <Text style={styles.context}>{isActive ? 'ON' : 'OFF'}</Text>
     </ShadowToggle>

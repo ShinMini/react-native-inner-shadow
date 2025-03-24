@@ -10,10 +10,14 @@ import {
   computeShadowProperties,
   isLinearProps,
   numerify,
-  getOuterShadowOffset,
 } from '../utils';
-import type { ShadowProps } from '../types';
-import type { GradientLinearProps } from '../../lib/typescript/module/src/types';
+import type { ShadowProps, GradientLinearProps } from '../types';
+import {
+  SHADOW_BLUR,
+  REFLECTED_LIGHT_BLUR,
+  REFLECTED_LIGHT_COLOR,
+  SHADOW_COLOR,
+} from '../constants';
 
 interface UseShadowPropertiesParams extends ShadowProps {
   propWidth?: number;
@@ -24,12 +28,11 @@ interface UseShadowPropertiesParams extends ShadowProps {
 }
 
 interface ShadowPropertiesResult {
-  flatStyle: ReturnType<typeof StyleSheet.flatten>;
+  flatStyle?: ViewStyle;
   bgColor: string;
   shadowProps: ReturnType<typeof computeShadowProperties>;
   isLinear: boolean;
   layout: { width: number; height: number };
-  outerShadowOffset?: object;
   canRenderCanvas: boolean;
   onLayout: (e: LayoutChangeEvent) => void;
 }
@@ -40,12 +43,11 @@ export const useShadowProperties = ({
   style,
   backgroundColor,
   shadowOffset,
-  shadowColor,
-  shadowBlur,
+  shadowColor = SHADOW_COLOR,
+  shadowBlur = SHADOW_BLUR,
   reflectedLightOffset,
-  reflectedLightColor,
-  reflectedLightBlur,
-  inset,
+  reflectedLightColor = REFLECTED_LIGHT_COLOR,
+  reflectedLightBlur = REFLECTED_LIGHT_BLUR,
   propsOnLayout,
   ...props
 }:
@@ -109,18 +111,6 @@ export const useShadowProperties = ({
     [initialW, initialH, propsOnLayout]
   );
 
-  // Create outer shadow offset if needed
-  const outerShadowOffset = useMemo(
-    () =>
-      inset !== undefined
-        ? getOuterShadowOffset({
-            ...shadowProps,
-            inset,
-          })
-        : undefined,
-    [shadowProps, inset]
-  );
-
   // Check if canvas can be rendered
   const canRenderCanvas = Boolean(layout.width && layout.height);
 
@@ -130,7 +120,6 @@ export const useShadowProperties = ({
     shadowProps,
     isLinear,
     layout,
-    outerShadowOffset,
     canRenderCanvas,
     onLayout,
   };

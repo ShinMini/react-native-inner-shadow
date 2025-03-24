@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+const CANVAS_PADDING = 50 as const;
+
 const BACKGROUND_COLOR = '#FFFFFF' as const;
 
 // These two scales are opposite each other to create a "reflected light" effect.
@@ -24,19 +26,22 @@ const DAMPING_RATIO = 0.8 as const;
 const IS_REFLECTED_LIGHT_ENABLED = true as const;
 
 const COMMON_STYLES = StyleSheet.create({
+  canvasContainer: {
+    backgroundColor: 'transparent',
+  },
   canvasWrapper: {
     backgroundColor: 'transparent',
   },
   canvas: {
     position: 'absolute',
-    left: 0,
-
-    top: 0,
+    left: -CANVAS_PADDING,
+    top: -CANVAS_PADDING,
     backgroundColor: 'transparent',
   },
 } as const);
 
 export {
+  CANVAS_PADDING,
   BACKGROUND_COLOR,
   INITIAL_DEPTH,
   SHADOW_OPACITY,
