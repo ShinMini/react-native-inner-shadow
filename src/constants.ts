@@ -18,7 +18,7 @@ const SHADOW_ELEVATION = 3 as const;
 const REFLECTED_LIGHT_BLUR = 3 as const;
 
 const SHADOW_COLOR = '#2F2F2FBC' as const;
-const REFLECTED_LIGHT_COLOR = '#FFFFFF8D' as const;
+const REFLECTED_LIGHT_COLOR = '#FFFFFF4D' as const;
 
 const DAMPING_DURATION = 150 as const;
 const DAMPING_RATIO = 0.8 as const;

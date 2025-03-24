@@ -52,9 +52,9 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
 
   const {
     depth,
+    inset,
     offset,
     reflectedLightOffset,
-    inset,
     blurRadius,
     PressedAnimatedStyle,
   } = useAnimatedOffset({
@@ -70,7 +70,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
   const animatedBackgroundColor = useDerivedValue(() =>
     interpolateColor(
       depth.value,
-      [INITIAL_DEPTH, -INITIAL_DEPTH],
+      [INITIAL_DEPTH, -INITIAL_DEPTH * damping],
       [bgColor, activeColor || bgColor]
     )
   );
@@ -106,13 +106,14 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
             style={flatStyle}
             backgroundColor={animatedBackgroundColor}
           >
-            {isLinear && (
+            {isLinear ? (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
                 width={layout.width}
                 height={layout.height}
               />
-            )}
+            ) : null}
+
             <Shadow
               dx={offset.dx}
               dy={offset.dy}
@@ -120,6 +121,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
               color={shadowProps.shadowColor}
               inner={inset}
             />
+
             {isReflectedLightEnabled ? (
               <Shadow
                 dx={reflectedLightOffset.dx}

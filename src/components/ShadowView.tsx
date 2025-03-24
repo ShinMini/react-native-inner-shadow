@@ -3,7 +3,11 @@ import { View } from 'react-native';
 
 import { isLinearProps } from '../utils';
 import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
-import { CANVAS_PADDING, COMMON_STYLES } from '../constants';
+import {
+  CANVAS_PADDING,
+  COMMON_STYLES,
+  IS_REFLECTED_LIGHT_ENABLED,
+} from '../constants';
 
 import { Canvas, Shadow } from '@shopify/react-native-skia';
 import LinearGradientFill from './ShadowLinearGradientFill';
@@ -20,7 +24,7 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
   width: propWidth,
   height: propHeight,
   inset,
-  isReflectedLightEnabled,
+  isReflectedLightEnabled = IS_REFLECTED_LIGHT_ENABLED,
   style,
   onLayout: propsOnLayout,
   children,
@@ -37,16 +41,11 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
       ...props,
     });
   // If isReflectedLightEnabled is undefined, default to `props.inset` (typical).
-  const _isReflectedLightEnabled = isReflectedLightEnabled ?? inset;
   const isLinear = isLinearProps(props);
 
   return (
     <View
-      // {...props}
-      style={[
-        flatStyle, // TODO: replace the origin shadow effect with Skia
-        COMMON_STYLES.canvasContainer,
-      ]}
+      style={[flatStyle, COMMON_STYLES.canvasContainer]}
       onLayout={onLayout}
     >
       {canRenderCanvas ? (
@@ -80,7 +79,7 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
               color={shadowProps.shadowColor}
               inner={inset}
             />
-            {_isReflectedLightEnabled ? (
+            {isReflectedLightEnabled ? (
               <Shadow
                 dx={shadowProps.reflectedLightOffset.width}
                 dy={shadowProps.reflectedLightOffset.height}
@@ -92,7 +91,6 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
           </CornerRadii>
         </Canvas>
       ) : null}
-      {/* TODO: replace the origin shadow effect with Skia */}
       <View {...props} style={COMMON_STYLES.canvasWrapper}>
         {children}
       </View>
