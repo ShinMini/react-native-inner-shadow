@@ -1,19 +1,44 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { ExampleShadowToggle } from './components/ExampleShadowToggle';
-import { ExampleShadowPressable } from './components/ExampleShadowPressable';
-import { LinearShadowView, ShadowView } from 'react-native-inner-shadow';
+import {
+  LinearShadowView,
+  ShadowPressable,
+  ShadowToggle,
+  ShadowView,
+} from 'react-native-inner-shadow';
 
 function App(): React.JSX.Element {
+  const [isActive, setIsActive] = React.useState(false);
+  const onPressToggle = () => {
+    setIsActive((prev) => !prev);
+  };
+
   return (
     <View style={styles.container}>
       <ShadowView style={styles.toggleContainer} inset>
-        <ExampleShadowPressable />
+        <ShadowPressable
+          style={styles.shadowPressable}
+          // reflectedLightColor="red"
+          shadowOffset={{ width: -4, height: -4 }}
+          shadowBlur={6}
+          duration={100}
+          isReflectedLightEnabled // default: true
+        >
+          <Text style={[styles.context]}>Press Me!</Text>
+        </ShadowPressable>
       </ShadowView>
 
       <ShadowView style={styles.toggleContainer}>
-        <ExampleShadowToggle />
+        <ShadowToggle
+          style={styles.shadowToggle}
+          isActive={isActive}
+          activeColor="#E9C46A"
+          onPress={onPressToggle}
+          isReflectedLightEnabled={false}
+        >
+          <Text style={styles.toggleContext}>{isActive ? 'ON' : 'OFF'}</Text>
+        </ShadowToggle>
       </ShadowView>
       <ShadowView style={styles.shadowView} inset backgroundColor="#82b3dc">
         <Text>ShadowView</Text>
@@ -62,6 +87,45 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '30%',
     aspectRatio: 1,
+  },
+  shadowToggle: {
+    backgroundColor: '#fefae0',
+    // backgroundColor: '#AeBa40',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 126,
+    height: 66,
+    borderRadius: 12,
+
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
+  shadowPressable: {
+    backgroundColor: '#0081a7',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 266,
+    height: 116,
+
+    borderRadius: 15,
+    borderTopStartRadius: 50,
+    borderTopLeftRadius: 50,
+    borderTopEndRadius: 10,
+
+    borderBottomLeftRadius: 10,
+    borderBottomEndRadius: 40,
+  },
+  context: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 700,
+  },
+  toggleContext: {
+    fontSize: 16,
+    color: 'gray',
+    fontWeight: 700,
   },
 });
 
