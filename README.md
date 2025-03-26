@@ -5,7 +5,7 @@
 **react-native-inner-shadow** gives your React Native apps beautiful inset shadows and highlight effects using [React Native Skia](https://shopify.github.io/react-native-skia/). Create depth in your UI with both solid and gradient backgrounds, plus interactive shadows that respond to touches using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
 
 [![npm](https://img.shields.io/npm/v/react-native-inner-shadow.svg)](https://www.npmjs.com/package/react-native-inner-shadow) ![ISC License](https://img.shields.io/npm/l/react-native-inner-shadow.svg) <a href="https://github.com/ShinMini/react-native-inner-shadow"> <img src="https://img.shields.io/npm/types/typescript" alt="ts-banner" /> </a>
-![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square) ![downloads](https://img.shields.io/npm/dw/react-native-inner-shadow?style=flat-square)
+![downloads](https://img.shields.io/npm/dt/react-native-inner-shadow?style=flat-square) ![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
 
 <div align="center">
   <img width="45%" max-width="450px" alt="Inner shadow & linear shadow sample" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-thubnail.jpg?raw=true" />
@@ -136,7 +136,7 @@ export default function Example() {
           height: 100,
           borderRadius: 12,
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Text>Inset Shadow</Text>
@@ -170,7 +170,7 @@ export default function GradientExample() {
           height: 100,
           borderRadius: 16,
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Text style={{ color: 'white' }}>Gradient Shadow</Text>
@@ -240,12 +240,14 @@ export default function ToggleExample() {
           justifyContent: 'center',
           alignItems: 'center',
         }}
-        onPress={() => setIsActive(prev => !prev)}
+        onPress={() => setIsActive((prev) => !prev)}
       >
-        <Text style={{
-          color: isActive ? '#515050' : '#888',
-          fontWeight: 'bold'
-        }}>
+        <Text
+          style={{
+            color: isActive ? '#515050' : '#888',
+            fontWeight: 'bold',
+          }}
+        >
           {isActive ? 'ON' : 'OFF'}
         </Text>
       </ShadowToggle>
@@ -268,22 +270,16 @@ Centralizes shadow configuration for consistent behavior:
 import { useShadowProperties } from 'react-native-inner-shadow';
 
 // Inside your component:
-const {
-  flatStyle,
-  bgColor,
-  shadowProps,
-  layout,
-  canRenderCanvas,
-  onLayout
-} = useShadowProperties({
-  propWidth,
-  propHeight,
-  style,
-  inset: true,
-  shadowOffset: { width: 3, height: 3 },
-  shadowBlur: 5,
-  propsOnLayout: customOnLayoutHandler
-});
+const { flatStyle, bgColor, shadowProps, layout, canRenderCanvas, onLayout } =
+  useShadowProperties({
+    propWidth,
+    propHeight,
+    style,
+    inset: true,
+    shadowOffset: { width: 3, height: 3 },
+    shadowBlur: 5,
+    propsOnLayout: customOnLayoutHandler,
+  });
 ```
 
 #### useAnimatedOffset
@@ -302,7 +298,7 @@ const {
   reflectedLightOffset,
   inset,
   blurRadius,
-  PressedAnimatedStyle
+  PressedAnimatedStyle,
 } = useAnimatedOffset({
   offset: shadowProps.shadowOffset,
   reflectedLightOffset: shadowProps.reflectedLightOffset,
@@ -310,7 +306,7 @@ const {
   damping: 0.8,
   duration: 150,
   onPressIn: customPressInHandler,
-  onPressOut: customPressOutHandler
+  onPressOut: customPressOutHandler,
 });
 ```
 
@@ -347,22 +343,21 @@ import React, { memo, useMemo } from 'react';
 import { ShadowView } from 'react-native-inner-shadow';
 
 const OptimizedShadowItem = memo(({ title, color }) => {
-  const styles = useMemo(() => ({
-    container: {
-      width: 150,
-      height: 100,
-      borderRadius: 12,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }
-  }), []);
+  const styles = useMemo(
+    () => ({
+      container: {
+        width: 150,
+        height: 100,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+    }),
+    []
+  );
 
   return (
-    <ShadowView
-      backgroundColor={color}
-      inset
-      style={styles.container}
-    >
+    <ShadowView backgroundColor={color} inset style={styles.container}>
       <Text>{title}</Text>
     </ShadowView>
   );
@@ -375,72 +370,72 @@ const OptimizedShadowItem = memo(({ title, color }) => {
 
 The library provides default values in `src/constants.ts`:
 
-| Constant | Value | Description |
-|----------|-------|-------------|
-| CANVAS_PADDING | 50 | Space to prevent shadow clipping |
-| BACKGROUND_COLOR | '#FFFFFF' | Default background color |
-| SHADOW_OFFSET_SCALE | 2.5 | Default shadow offset scale |
-| REFLECTED_LIGHT_OFFSET_SCALE | 2 | Default reflection offset scale |
-| SHADOW_BLUR | 2 | Default shadow blur radius |
-| REFLECTED_LIGHT_BLUR | 3 | Default reflection blur radius |
-| SHADOW_COLOR | '#2F2F2FBC' | Default shadow color |
-| REFLECTED_LIGHT_COLOR | '#FFFFFF4D' | Default reflection color |
-| DAMPING_DURATION | 150 | Animation duration (ms) |
-| DAMPING_RATIO | 0.8 | Animation damping ratio |
+| Constant                     | Value       | Description                      |
+| ---------------------------- | ----------- | -------------------------------- |
+| CANVAS_PADDING               | 50          | Space to prevent shadow clipping |
+| BACKGROUND_COLOR             | '#FFFFFF'   | Default background color         |
+| SHADOW_OFFSET_SCALE          | 2.5         | Default shadow offset scale      |
+| REFLECTED_LIGHT_OFFSET_SCALE | 2           | Default reflection offset scale  |
+| SHADOW_BLUR                  | 2           | Default shadow blur radius       |
+| REFLECTED_LIGHT_BLUR         | 3           | Default reflection blur radius   |
+| SHADOW_COLOR                 | '#2F2F2FBC' | Default shadow color             |
+| REFLECTED_LIGHT_COLOR        | '#FFFFFF4D' | Default reflection color         |
+| DAMPING_DURATION             | 150         | Animation duration (ms)          |
+| DAMPING_RATIO                | 0.8         | Animation damping ratio          |
 
 ### Component Props
 
 <details>
 <summary><b>ShadowView Props</b></summary>
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| inset | boolean | false | Makes shadow appear inside the component |
-| backgroundColor | string | '#FFFFFF' | Background color |
-| shadowColor | string | '#2F2F2FBC' | Shadow color |
-| shadowOffset | { width: number, height: number } | { width: 2.5, height: 2.5 } | Shadow position |
-| shadowBlur | number | 2 | Shadow blur radius |
-| reflectedLightColor | string | '#FFFFFF4D' | Highlight color |
-| reflectedLightOffset | { width: number, height: number } | Auto-calculated | Highlight position |
-| reflectedLightBlur | number | 3 | Highlight blur radius |
-| isReflectedLightEnabled | boolean | true | Whether to show highlights |
-| style | ViewStyle | - | React Native style object |
-| children | ReactNode | - | Component children |
+| Prop                    | Type                              | Default                     | Description                              |
+| ----------------------- | --------------------------------- | --------------------------- | ---------------------------------------- |
+| inset                   | boolean                           | false                       | Makes shadow appear inside the component |
+| backgroundColor         | string                            | '#FFFFFF'                   | Background color                         |
+| shadowColor             | string                            | '#2F2F2FBC'                 | Shadow color                             |
+| shadowOffset            | { width: number, height: number } | { width: 2.5, height: 2.5 } | Shadow position                          |
+| shadowBlur              | number                            | 2                           | Shadow blur radius                       |
+| reflectedLightColor     | string                            | '#FFFFFF4D'                 | Highlight color                          |
+| reflectedLightOffset    | { width: number, height: number } | Auto-calculated             | Highlight position                       |
+| reflectedLightBlur      | number                            | 3                           | Highlight blur radius                    |
+| isReflectedLightEnabled | boolean                           | true                        | Whether to show highlights               |
+| style                   | ViewStyle                         | -                           | React Native style object                |
+| children                | ReactNode                         | -                           | Component children                       |
 
 </details>
 
 <details>
 <summary><b>LinearShadowView Props</b> (extends ShadowView Props)</summary>
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| from | 'top' \| 'bottom' \| 'left' \| 'right' | 'top' | Gradient start direction |
-| to | 'top' \| 'bottom' \| 'left' \| 'right' | 'bottom' | Gradient end direction |
-| colors | Color[] | - | Array of gradient colors |
+| Prop   | Type                                   | Default  | Description              |
+| ------ | -------------------------------------- | -------- | ------------------------ |
+| from   | 'top' \| 'bottom' \| 'left' \| 'right' | 'top'    | Gradient start direction |
+| to     | 'top' \| 'bottom' \| 'left' \| 'right' | 'bottom' | Gradient end direction   |
+| colors | Color[]                                | -        | Array of gradient colors |
 
 </details>
 
 <details>
 <summary><b>ShadowPressable Props</b></summary>
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| duration | number | 150 | Animation duration (ms) |
-| damping | number | 0.8 | How deeply shadows indent on press |
-| isReflectedLightEnabled | boolean | true | Whether to show highlights |
-| ...ShadowView Props | - | - | All ShadowView props are supported |
-| ...PressableProps | - | - | All React Native Pressable props |
+| Prop                    | Type    | Default | Description                        |
+| ----------------------- | ------- | ------- | ---------------------------------- |
+| duration                | number  | 150     | Animation duration (ms)            |
+| damping                 | number  | 0.8     | How deeply shadows indent on press |
+| isReflectedLightEnabled | boolean | true    | Whether to show highlights         |
+| ...ShadowView Props     | -       | -       | All ShadowView props are supported |
+| ...PressableProps       | -       | -       | All React Native Pressable props   |
 
 </details>
 
 <details>
 <summary><b>ShadowToggle Props</b></summary>
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| isActive | boolean | false | Current toggle state |
-| activeColor | string | - | Background color when active |
-| ...ShadowPressable Props | - | - | All ShadowPressable props |
+| Prop                     | Type    | Default | Description                  |
+| ------------------------ | ------- | ------- | ---------------------------- |
+| isActive                 | boolean | false   | Current toggle state         |
+| activeColor              | string  | -       | Background color when active |
+| ...ShadowPressable Props | -       | -       | All ShadowPressable props    |
 
 </details>
 
@@ -449,17 +444,20 @@ The library provides default values in `src/constants.ts`:
 ### Common Issues
 
 1. **Shadows Not Showing**
+
    - Make sure width and height are defined (either in style or as props)
    - Check border radius values are reasonable for your component size
    - Verify shadow colors have opacity (e.g., '#00000066' not '#000000')
 
 2. **Dependency Errors**
+
    - Ensure all three dependencies are properly installed
    - Check your babel.config.js includes 'react-native-reanimated/plugin'
    - For iOS, run pod install after installation
    - For Expo, make sure you're using compatible versions of all packages
 
 3. **Performance Problems**
+
    - Specify fixed dimensions when possible
    - Use React.memo() for components in lists
    - Check if you're creating new styles on each render
