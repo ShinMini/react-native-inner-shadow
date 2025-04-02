@@ -1,7 +1,7 @@
 {
   "name": "react-native-inner-shadow",
   "source": "./src/index.ts",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
@@ -13,31 +13,6 @@
   "homepage": "https://github.com/ShinMini/react-native-inner-shadow#readme",
   "license": "ISC",
   "description": "react native inner shadows with linear gradient design UI",
-  "keywords": [
-    "react-native",
-    "react-native-inner-shadow",
-    "android",
-    "ios",
-    "react-native-reanimated",
-    "react-native-skia",
-    "react-native-linear-gradient",
-    "react-native-linear-shadow",
-    "react-native-linear-inner-shadow",
-    "inner-shadow",
-    "inset",
-    "inset-shadow",
-    "react-native-shadow",
-    "shadow-pressable",
-    "shadow-toggle",
-    "inner-shadow-pressable",
-    "inner-shadow-toggle",
-    "shadow",
-    "shadows",
-    "gradient",
-    "linear-gradient",
-    "linear-shadow",
-    "linear-inner-shadow"
-  ],
   "scripts": {
     "example": "yarn workspace react-native-inner-shadow-example",
     "dev": "yarn example start",
@@ -50,10 +25,11 @@
     "release": "release-it"
   },
   "peerDependencies": {
-    "@shopify/react-native-skia": ">=1.0.0",
-    "react": "*",
-    "react-native": ">=0.6.0",
-    "react-native-reanimated": ">=3.0.0"
+    "@shopify/react-native-skia": "<=1.5.0",
+    "react": "<=18.3.1",
+    "react-dom": "<=18.3.1",
+    "react-native": "<=0.76.6",
+    "react-native-reanimated": "~3.16.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -209,5 +185,30 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/"
+  ],
+  "keywords": [
+    "react-native",
+    "react-native-inner-shadow",
+    "android",
+    "ios",
+    "react-native-reanimated",
+    "react-native-skia",
+    "react-native-linear-gradient",
+    "react-native-linear-shadow",
+    "react-native-linear-inner-shadow",
+    "inner-shadow",
+    "inset",
+    "inset-shadow",
+    "react-native-shadow",
+    "shadow-pressable",
+    "shadow-toggle",
+    "inner-shadow-pressable",
+    "inner-shadow-toggle",
+    "shadow",
+    "shadows",
+    "gradient",
+    "linear-gradient",
+    "linear-shadow",
+    "linear-inner-shadow"
   ]
 }
