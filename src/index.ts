@@ -17,6 +17,10 @@ export {
   isLinearProps,
 } from './utils';
 
+// hooks
+export { useShadowProperties } from './hooks/useShadowProperties';
+export { useAnimatedOffset } from './hooks/useAnimatedOffset';
+
 export { ShadowView, LinearShadowView } from './components/ShadowView';
 export {
   ShadowPressable,
