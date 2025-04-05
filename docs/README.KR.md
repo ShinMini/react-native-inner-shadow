@@ -62,13 +62,13 @@
 
 ```bash
 # npm 사용
-npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+npm install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
 
 # Yarn 사용
-yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+yarn add react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
 
 # Expo 사용
-npx expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+npx expo install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
 ```
 
 ### 설정

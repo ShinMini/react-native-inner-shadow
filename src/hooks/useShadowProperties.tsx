@@ -1,4 +1,3 @@
-// useShadowProperties.tsx
 import { useMemo, useState } from 'react';
 import {
   StyleSheet,

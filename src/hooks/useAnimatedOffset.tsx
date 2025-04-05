@@ -4,7 +4,6 @@ import {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
-  type AnimatedStyleProp,
 } from 'react-native-reanimated';
 import { INITIAL_DEPTH } from '../constants';
 import type {
@@ -102,17 +101,14 @@ export function useAnimatedOffset(props: UseAnimatedOffsetProps) {
     )
   );
 
-  const PressedAnimatedStyle = useAnimatedStyle<AnimatedStyleProp<ViewStyle>>(
-    // @ts-expect-error - AnimatedStyle TS type is not working
-    () => {
-      return {
-        transform: [
-          { translateX: translateX.value },
-          { translateY: translateY.value },
-        ],
-      };
-    }
-  );
+  const PressedAnimatedStyle = useAnimatedStyle<ViewStyle>(() => {
+    return {
+      transform: [
+        { translateX: translateX.value },
+        { translateY: translateY.value },
+      ],
+    };
+  });
 
   return {
     onPressIn,

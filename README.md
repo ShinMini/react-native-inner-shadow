@@ -2,7 +2,7 @@
 
 [English](https://www.npmjs.com/package/react-native-inner-shadow) | [한국어](https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/README.KR.md)
 
-**react-native-inner-shadow** gives your React Native apps beautiful inset shadows and highlight effects using [React Native Skia](https://shopify.github.io/react-native-skia/). Create depth in your UI with both solid and gradient backgrounds, plus interactive shadows that respond to touches using [Reanimated](https://docs.swmansion.com/react-native-reanimated/).
+**react-native-inner-shadow** gives your React Native apps beautiful inset shadows and highlight effects using [React Native Skia](https://shopify.github.io/react-native-skia/docs/getting-started/installation). Create depth in your UI with both solid and gradient backgrounds, plus interactive shadows that respond to touches using [Reanimated](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started).
 
 [![npm](https://img.shields.io/npm/v/react-native-inner-shadow.svg)](https://www.npmjs.com/package/react-native-inner-shadow) ![ISC License](https://img.shields.io/npm/l/react-native-inner-shadow.svg) <a href="https://github.com/ShinMini/react-native-inner-shadow"> <img src="https://img.shields.io/npm/types/typescript" alt="ts-banner" /> </a>
 ![downloads](https://img.shields.io/npm/dt/react-native-inner-shadow?style=flat-square) ![downloads](https://img.shields.io/npm/dm/react-native-inner-shadow?style=flat-square)
@@ -62,13 +62,13 @@
 
 ```bash
 # Using npm
-npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+npm install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
 
 # Using Yarn
-yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+yarn add react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
 
 # Using Expo
-npx expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
+npx expo install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
 ```
 
 ### Setup
