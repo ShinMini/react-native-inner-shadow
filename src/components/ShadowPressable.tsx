@@ -113,6 +113,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
       ) : null}
       <PressButton
         {...props}
+        // eslint-disable-next-line react-native/no-inline-styles
         style={[{ zIndex: 1 }, flatStyle, COMMON_STYLES.canvasWrapper]}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
