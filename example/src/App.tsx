@@ -21,7 +21,7 @@ function App(): React.JSX.Element {
           style={styles.shadowPressable}
           // reflectedLightColor="red"
           shadowOffset={{ width: -4, height: -4 }}
-          shadowBlur={6}
+          shadowBlur={3}
           duration={100}
           isReflectedLightEnabled // default: true
         >
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#0081a7',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 266,
-    height: 116,
+    width: 226,
+    height: 60,
 
     borderRadius: 15,
     borderTopStartRadius: 50,
