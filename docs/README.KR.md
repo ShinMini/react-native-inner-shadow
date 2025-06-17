@@ -12,8 +12,9 @@
   <img width="45%" max-width="450px" alt="내부 그림자 프레스 및 토글 샘플 gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif.gif?raw=true" />
 </div>
 
-## 🔄 v2.2.0 업데이트 내용
+## 🔄 v2.3.1 업데이트 내용
 
+- **버그 수정**: 그림자 렌더링 문제 해결; skia 버전 호환성 문제 수정(with react v19)
 - **성능 최적화**: 더 부드러운 애니메이션과 리소스 사용량 감소
 - **레이아웃 개선**: 정확한 컴포넌트 크기 계산 방식 수정
 - **보더 래디어스 개선**: 각 모서리를 개별적으로 설정 가능
@@ -62,13 +63,13 @@
 
 ```bash
 # npm 사용
-npm install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
+npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 
 # Yarn 사용
-yarn add react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
+yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 
 # Expo 사용
-npx expo install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
+npx expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
 ### 설정

@@ -12,8 +12,9 @@
   <img width="45%" max-width="450px" alt="Inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif.gif?raw=true" />
 </div>
 
-## 🔄 What's New in v2.2.0
+## 🔄 What's New in v2.3.1
 
+- **Updated dependencies**: Now using the latest versions of Skia and Reanimated for improved compatibility
 - **Performance boost**: Optimized rendering for smoother animations and less resource usage
 - **Reliable layouts**: Fixed size calculations for consistent component dimensions
 - **Better border radius**: Individual corner customization with proper shadow rendering
@@ -62,13 +63,13 @@
 
 ```bash
 # Using npm
-npm install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
+npm install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 
 # Using Yarn
-yarn add react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
+yarn add react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 
 # Using Expo
-npx expo install react-native-inner-shadow @shopify/react-native-skia@next react-native-reanimated
+npx expo install react-native-inner-shadow @shopify/react-native-skia react-native-reanimated
 ```
 
 ### Setup

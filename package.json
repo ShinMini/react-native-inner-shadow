@@ -1,7 +1,7 @@
 {
   "name": "react-native-inner-shadow",
   "source": "./src/index.ts",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
@@ -25,11 +25,11 @@
     "release": "release-it"
   },
   "peerDependencies": {
-    "@shopify/react-native-skia": "^2.0.0-next.2",
     "react": ">=18.3.1",
     "react-dom": ">=18.3.1",
     "react-native": ">=0.76.6",
-    "react-native-reanimated": ">=3.16.1"
+    "react-native-reanimated": ">=3.16.1",
+    "@shopify/react-native-skia": ">=2.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -48,6 +48,7 @@
     "@react-native/metro-config": "0.75.4",
     "@react-native/typescript-config": "0.75.4",
     "@release-it/conventional-changelog": "^9.0.2",
+    "@shopify/react-native-skia": "^2.0.4",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
@@ -59,11 +60,10 @@
     "expo": "^52.0.27",
     "jest": "^29.6.3",
     "prettier": "^3.4.2",
-    "@shopify/react-native-skia": "^2.0.0-next.2",
     "react": "19.0.0",
     "react-native": "0.78.2",
-    "react-native-reanimated": "^3.17.2",
     "react-native-builder-bob": "^0.35.2",
+    "react-native-reanimated": "^3.17.2",
     "react-test-renderer": "18.3.1",
     "release-it": "^17.10.0",
     "typescript": "5.0.4"
@@ -191,19 +191,13 @@
     "react-native-inner-shadow",
     "android",
     "ios",
-    "react-native-reanimated",
-    "react-native-skia",
-    "react-native-linear-gradient",
     "react-native-linear-shadow",
     "react-native-linear-inner-shadow",
     "inner-shadow",
-    "inset",
     "inset-shadow",
     "react-native-shadow",
     "shadow-pressable",
     "shadow-toggle",
-    "inner-shadow-pressable",
-    "inner-shadow-toggle",
     "shadow",
     "shadows",
     "gradient",
