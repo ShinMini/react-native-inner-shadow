@@ -2,9 +2,9 @@ import React from 'react';
 import { RoundedRect, type InputRRect } from '@shopify/react-native-skia';
 
 import type { ViewStyle } from 'react-native';
-import { getBorderRadius } from '../utils';
+import { getBorderRadius } from '../../utils';
 import type { SharedValue } from 'react-native-reanimated';
-import { CANVAS_PADDING } from '../constants';
+import { CANVAS_PADDING } from '../../constants';
 
 type CornerRadiiProps = {
   width: number;
