@@ -9,10 +9,14 @@ import type {
   InnerShadowProps,
   LinearInnerShadowProps,
   ReflectedLightPositionConfig,
+  RadialGradientProps,
+  RadialInnerShadowProps,
+  GradientLinearProps,
 } from './types';
 
 import {
   BACKGROUND_COLOR,
+  CANVAS_PADDING,
   REFLECTED_LIGHT_BLUR,
   REFLECTED_LIGHT_COLOR,
   REFLECTED_LIGHT_OFFSET_SCALE,
@@ -245,14 +249,35 @@ export function getLinearDirection({
   from,
   to,
 }: GetLinearDirectionProps) {
-  const top = vec(width / 2, 0);
-  const bottom = vec(width / 2, height);
+  const w = width + CANVAS_PADDING * 2;
+  const h = height + CANVAS_PADDING * 2;
+  const top = vec(w / 2, 0);
+  const bottom = vec(w / 2, h);
 
-  const left = vec(0, height / 2);
-  const right = vec(width, height / 2);
+  const left = vec(0, h / 2);
+  const right = vec(w, h / 2);
 
   const direction = { top, bottom, left, right };
   return { start: direction[from], end: direction[to] };
+}
+
+export function getRadialDirection({
+  width,
+  height,
+  center = { x: 0.5, y: 0.5 },
+  radius = 0.5,
+}: {
+  width: number;
+  height: number;
+  center?: { x: number; y: number };
+  radius?: number;
+}) {
+  const r = Math.min(width, height) * radius;
+  width = width + CANVAS_PADDING * 2;
+  height = height + CANVAS_PADDING * 2;
+  const c = vec(width * center.x, height * center.y);
+
+  return { c, r };
 }
 
 /**
@@ -265,6 +290,12 @@ export function getLinearDirection({
  */
 export function isLinearProps(
   props: InnerShadowProps | LinearInnerShadowProps
-): props is LinearInnerShadowProps {
+): props is LinearInnerShadowProps | RadialInnerShadowProps {
   return 'colors' in props && Array.isArray(props.colors);
+}
+
+export function isRadialProps(
+  props: GradientLinearProps | RadialGradientProps
+): props is RadialInnerShadowProps {
+  return 'center' in props && 'radius' in props;
 }

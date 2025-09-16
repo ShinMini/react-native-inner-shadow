@@ -205,6 +205,25 @@ export type GradientLinearProps = {
   colors: AnimatedProp<Color[]>;
 };
 
+export type RadialGradientProps = {
+  /**
+   * The center point of the radial gradient.
+   * @defaultValue `{ x: 0.5, y: 0.5 }` (center of the component)
+   */
+  center?: { x: number; y: number };
+  /**
+   * The radius of the radial gradient.
+   * @defaultValue `0.5` (half the size of the component)
+   */
+  radius?: number;
+
+  /**
+   * The colors of the radial gradient.
+   * @defaultValue `['#FFFFFF', '#2F2F2FBC']`
+   */
+  colors: AnimatedProp<Color[]>;
+};
+
 /**
  * LinearInnerShadowViewProps extends InnerShadowProps
  * to incorporate linear gradient capabilities.
@@ -228,6 +247,10 @@ export type GradientLinearProps = {
 export interface LinearInnerShadowProps
   extends InnerShadowProps,
     GradientLinearProps {}
+
+export interface RadialInnerShadowProps
+  extends InnerShadowProps,
+    RadialGradientProps {}
 
 /**
  * ShadowPressableProps are used for pressable shadow components.
@@ -270,6 +293,9 @@ export type ShadowPressableProps = PressableProps &
 export type LinearShadowPressableProps = ShadowPressableProps &
   GradientLinearProps;
 
+export type RadialShadowPressableProps = ShadowPressableProps &
+  RadialGradientProps;
+
 /**
  * `ShadowToggleProps` provide properties for interactive toggleable shadow components.
  *
@@ -301,6 +327,8 @@ export type ShadowToggleProps = ShadowPressableProps & {
 };
 
 export type LinearShadowToggleProps = ShadowToggleProps & GradientLinearProps;
+
+export type RadialShadowToggleProps = ShadowToggleProps & RadialGradientProps;
 
 /**
  * `GetBackgroundColorProps` defines properties for getting background color.
