@@ -1,19 +1,14 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 
-import { isLinearProps } from '../utils';
-import type { InnerShadowProps, LinearInnerShadowProps } from '../types';
-import {
-  CANVAS_PADDING,
-  COMMON_STYLES,
-  IS_REFLECTED_LIGHT_ENABLED,
-} from '../constants';
+import type {
+  InnerShadowProps,
+  LinearInnerShadowProps,
+  RadialInnerShadowProps,
+} from '../types';
+import { COMMON_STYLES } from '../constants';
 
-import { Canvas, Shadow } from '@shopify/react-native-skia';
-import LinearGradientFill from './ShadowLinearGradientFill';
-import { CornerRadii } from './CornerRadii';
-
-import { useShadowProperties } from './../hooks/useShadowProperties';
+import { BaseShadowComponent } from './BaseShadowComponent';
 
 /**
  * A unified interface for both "solid" (InnerShadow) and "linear" (LinearShadow).
@@ -21,79 +16,13 @@ import { useShadowProperties } from './../hooks/useShadowProperties';
  * gradient props (colors, from, to, etc.).
  */
 const UnifiedShadowView = memo(function UnifiedShadowView({
-  width: propWidth,
-  height: propHeight,
-  inset,
-  isReflectedLightEnabled = IS_REFLECTED_LIGHT_ENABLED,
-  style,
-  onLayout: propsOnLayout,
   children,
   ...props
-}: InnerShadowProps | LinearInnerShadowProps) {
+}: InnerShadowProps | LinearInnerShadowProps | RadialInnerShadowProps) {
   // Extract base fields
-  const { flatStyle, bgColor, shadowProps, layout, canRenderCanvas, onLayout } =
-    useShadowProperties({
-      propWidth,
-      propHeight,
-      style,
-      inset,
-      propsOnLayout,
-      ...props,
-    });
-  // If isReflectedLightEnabled is undefined, default to `props.inset` (typical).
-  const isLinear = isLinearProps(props);
-
   return (
-    <View
-      style={[flatStyle, COMMON_STYLES.canvasContainer]}
-      onLayout={onLayout}
-    >
-      {canRenderCanvas ? (
-        <Canvas
-          style={[
-            COMMON_STYLES.canvas,
-            {
-              width: layout.width + CANVAS_PADDING * 2,
-              height: layout.height + CANVAS_PADDING * 2,
-            },
-          ]}
-        >
-          <CornerRadii
-            width={layout.width}
-            height={layout.height}
-            style={flatStyle}
-            backgroundColor={bgColor}
-          >
-            {/* Separate linear gradient */}
-            {isLinear ? (
-              <LinearGradientFill
-                {...props} // from, to, colors, etc.
-                width={layout.width}
-                height={layout.height}
-              />
-            ) : null}
-            <Shadow
-              dx={shadowProps.shadowOffset.width}
-              dy={shadowProps.shadowOffset.height}
-              blur={shadowProps.shadowBlur}
-              color={shadowProps.shadowColor}
-              inner={inset}
-            />
-            {isReflectedLightEnabled ? (
-              <Shadow
-                dx={shadowProps.reflectedLightOffset.width}
-                dy={shadowProps.reflectedLightOffset.height}
-                blur={shadowProps.reflectedLightBlur}
-                color={shadowProps.reflectedLightColor}
-                inner
-              />
-            ) : null}
-          </CornerRadii>
-        </Canvas>
-      ) : null}
-      <View {...props} style={COMMON_STYLES.canvasWrapper}>
-        {children}
-      </View>
+    <View {...props} style={COMMON_STYLES.canvasWrapper}>
+      {children}
     </View>
   );
 });
@@ -111,7 +40,16 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
  * </ShadowView>
  * ```
  */
-export const ShadowView: React.FC<InnerShadowProps> = UnifiedShadowView;
+export const ShadowView: React.FC<InnerShadowProps> = ({
+  children,
+  ...props
+}) => {
+  return (
+    <BaseShadowComponent {...props}>
+      <UnifiedShadowView {...props}>{children}</UnifiedShadowView>
+    </BaseShadowComponent>
+  );
+};
 
 /**
  * LinearShadowView: for a linear gradient background shadow
@@ -131,5 +69,47 @@ export const ShadowView: React.FC<InnerShadowProps> = UnifiedShadowView;
  *  </LinearShadowView>
  * ```
  */
-export const LinearShadowView: React.FC<LinearInnerShadowProps> =
-  UnifiedShadowView;
+export const LinearShadowView: React.FC<LinearInnerShadowProps> = ({
+  children,
+  from = 'top',
+  to = 'bottom',
+  ...props
+}) => {
+  return (
+    <BaseShadowComponent {...props} from={from} to={to}>
+      <UnifiedShadowView {...props}>{children}</UnifiedShadowView>
+    </BaseShadowComponent>
+  );
+};
+
+/**
+ * RadialShadowView: for a radial gradient background shadow
+ * (requires e.g. center, radius).
+ *
+ * @remarks
+ * See {@link RadialInnerShadowProps} for a solid background shadow.
+ *
+ * @example
+ * ```ts
+ *  <RadialShadowView
+ *    style={styles.shadowView}
+ *    center={{ x: 0.5, y: 0.5 }}
+ *    radius={0.5}
+ *    colors={['#f1c40f', '#e74c3c']}
+ *  >
+ *    <Text>RadialShadowView</Text>
+ *  </RadialShadowView>
+ * ```
+ */
+export const RadialShadowView: React.FC<RadialInnerShadowProps> = ({
+  children,
+  center = { x: 0.5, y: 0.5 },
+  radius = 0.5,
+  ...props
+}) => {
+  return (
+    <BaseShadowComponent {...props} center={center} radius={radius}>
+      <UnifiedShadowView {...props}>{children}</UnifiedShadowView>
+    </BaseShadowComponent>
+  );
+};

@@ -8,7 +8,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import type { LinearShadowToggleProps, ShadowToggleProps } from '../types';
+import type {
+  LinearShadowToggleProps,
+  RadialShadowToggleProps,
+  ShadowToggleProps,
+} from '../types';
 import {
   CANVAS_PADDING,
   COMMON_STYLES,
@@ -19,9 +23,9 @@ import {
 } from '../constants';
 
 import { isLinearProps } from '../utils';
-import LinearGradientFill from './ShadowLinearGradientFill';
+import LinearGradientFill from './shapes/ShadowLinearGradientFill';
 import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
-import { CornerRadii } from './CornerRadii';
+import { CornerRadii } from './shapes/CornerRadii';
 import { useShadowProperties } from '../hooks/useShadowProperties';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
@@ -106,13 +110,13 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
             style={flatStyle}
             backgroundColor={animatedBackgroundColor}
           >
-            {isLinear ? (
+            {isLinear && (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
                 width={layout.width}
                 height={layout.height}
               />
-            ) : null}
+            )}
 
             <Shadow
               dx={offset.dx}
@@ -169,4 +173,7 @@ export const ShadowToggle: React.FC<ShadowToggleProps> = UnifiedShadowToggle;
  * @param to - The direction of the linear gradient
  */
 export const LinearShadowToggle: React.FC<LinearShadowToggleProps> =
+  UnifiedShadowToggle;
+
+export const RadialShadowToggle: React.FC<RadialShadowToggleProps> =
   UnifiedShadowToggle;

@@ -5,6 +5,7 @@ import Animated from 'react-native-reanimated';
 
 import type {
   LinearShadowPressableProps,
+  RadialShadowPressableProps,
   ShadowPressableProps,
 } from '../types';
 import {
@@ -17,8 +18,8 @@ import {
 
 import { isLinearProps } from '../utils';
 
-import LinearGradientFill from './ShadowLinearGradientFill';
-import { CornerRadii } from './CornerRadii';
+import LinearGradientFill from './shapes/ShadowLinearGradientFill';
+import { CornerRadii } from './shapes/CornerRadii';
 
 import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
 import { useShadowProperties } from '../hooks/useShadowProperties';
@@ -172,4 +173,7 @@ export const ShadowPressable: React.FC<ShadowPressableProps> =
  * @param to - The direction of the linear gradient
  */
 export const LinearShadowPressable: React.FC<LinearShadowPressableProps> =
+  UnifiedShadowPressable;
+
+export const RadialShadowPressable: React.FC<RadialShadowPressableProps> =
   UnifiedShadowPressable;
