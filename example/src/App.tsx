@@ -3,10 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import {
   LinearShadowView,
-  ShadowPressable,
   ShadowToggle,
   ShadowView,
 } from 'react-native-inner-shadow';
+import { RadialShadowView } from '../../src/components/ShadowView';
+import { RadialShadowPressable } from '../../src/components/ShadowPressable';
 
 function App(): React.JSX.Element {
   const [isActive, setIsActive] = React.useState(false);
@@ -17,16 +18,17 @@ function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <ShadowView style={styles.toggleContainer} inset>
-        <ShadowPressable
+        <RadialShadowPressable
           style={styles.shadowPressable}
           // reflectedLightColor="red"
           shadowOffset={{ width: -4, height: -4 }}
           shadowBlur={3}
           duration={100}
           isReflectedLightEnabled // default: true
+          colors={['#3498db', '#2c3e50']}
         >
           <Text style={[styles.context]}>Press Me!</Text>
-        </ShadowPressable>
+        </RadialShadowPressable>
       </ShadowView>
 
       <ShadowView style={styles.toggleContainer}>
@@ -40,20 +42,42 @@ function App(): React.JSX.Element {
           <Text style={styles.toggleContext}>{isActive ? 'ON' : 'OFF'}</Text>
         </ShadowToggle>
       </ShadowView>
+
+      {/* <View style={styles.shadowView}>
+        <Text style={styles.context}>ShadowView</Text>
+      </View> */}
       <ShadowView style={styles.shadowView} inset backgroundColor="#82b3dc">
-        <Text>ShadowView</Text>
+        <Text style={styles.context}>ShadowView</Text>
       </ShadowView>
+
       <LinearShadowView
-        from="top"
+        from="left"
         to="right"
         shadowOffset={{ width: 10, height: 10 }}
-        shadowColor="#000"
-        shadowBlur={10}
+        shadowColor="#0000008c"
+        shadowBlur={4}
         style={styles.shadowView}
-        colors={['#f1c40f', '#e74c3c']}
+        colors={['#ffeda5', '#e74c3c']}
       >
-        <Text>LinearShadowView</Text>
+        <Text style={styles.context}>LinearShadowView</Text>
       </LinearShadowView>
+
+      <RadialShadowView
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{
+          borderRadius: 90,
+          marginTop: 10,
+          width: 120,
+          height: 120,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        colors={['#daff47', '#3498db']}
+        center={{ x: 0.5, y: 0.5 }}
+        radius={0.5}
+      >
+        <Text style={styles.context}>RadialShadowView</Text>
+      </RadialShadowView>
     </View>
   );
 }
@@ -62,6 +86,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f0f0f0',
     flex: 1,
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -73,8 +98,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   shadowView: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ff6f61',
     // borderRadius: '30%',
     borderRadius: 30,
     borderTopStartRadius: 10,
@@ -84,9 +111,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 4,
     borderBottomEndRadius: 50,
     marginTop: 10,
-    padding: 10,
-    width: '30%',
-    aspectRatio: 1,
+    // padding: 10,
+
+    width: 226,
+    height: 60,
+    // width: '30%',
+    // aspectRatio: 1, // width / height = 3.5
   },
   shadowToggle: {
     backgroundColor: '#fefae0',
@@ -106,7 +136,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0081a7',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 226,
+    width: 180,
     height: 60,
 
     borderRadius: 15,
@@ -118,7 +148,7 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 40,
   },
   context: {
-    fontSize: 20,
+    fontSize: 16,
     color: 'white',
     fontWeight: 700,
   },

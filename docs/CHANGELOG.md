@@ -2,6 +2,70 @@
 
 ---
 
+## v2.4.0 (feat/radial-shadow branch)
+
+### 🚀 New Features
+
+- **feat: add radial shadow support** - Added comprehensive radial gradient shadow functionality
+  - Introduced `RadialInnerShadowProps` type for radial gradient configurations
+  - Added `RadialShadowPressableProps` and `RadialShadowToggleProps` for interactive components
+  - Implemented `getRadialDirection()` utility function for radial gradient calculations
+  - Added `isRadialProps()` type guard for radial gradient detection
+
+- **feat: add reusable base shadow component** - Created `BaseShadowComponent` for improved code reuse
+  - Centralized common shadow rendering logic across all shadow components
+  - Reduced code duplication between ShadowView, ShadowPressable, and ShadowToggle
+  - Improved maintainability and consistency across shadow components
+
+### 🏗️ Architecture Improvements
+
+- **refactor: separate shadow shapes components** - Reorganized component structure
+  - Moved `CornerRadii.tsx` to `src/components/shapes/` folder
+  - Moved `ShadowLinearGradientFill.tsx` to `src/components/shapes/` folder
+  - Improved project organization with dedicated shapes directory
+
+- **performance: optimize for reduced repaint cost** - Enhanced performance when size is fixed
+  - Optimized shadow component rendering to minimize unnecessary re-renders
+  - Improved layout calculation efficiency
+  - Reduced computational overhead in shadow property calculations
+
+### 🔧 Technical Changes
+
+- **Enhanced type system** - Extended shadow type definitions
+  - Added `RadialGradientProps` interface with center and radius properties
+  - Updated utility functions to support radial gradient detection
+  - Improved type safety across shadow components
+
+- **Updated component architecture** - Streamlined shadow component implementation
+  - All shadow components now extend from `BaseShadowComponent`(currently only ShadowView)
+  - Consistent prop handling across ShadowView, ShadowPressable, and ShadowToggle
+  - Unified shadow rendering pipeline
+
+---
+
+## v2.3.1
+
+- feat(release): update version to 2.3.1 and improve dependency compatibility
+- chore: change shadowPressable style
+- chore: disable eslint rule for inline styles in ShadowPressable component
+
+---
+
+## v2.3.0
+
+- chore: update version to 2.3.0 and adjust dependencies
+- chore: refactor ShadowPressable styles and export new hooks
+- fix: @shopify/react-native-skia version changes
+
+---
+
+## v2.2.1
+
+- chore: update version to 2.2.1 and refine peerDependencies and keywords
+- docs(chore): update README
+
+---
+
 ## v2.2.0
 
 - performance: optimize shadow component rendering

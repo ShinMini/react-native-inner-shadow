@@ -12,29 +12,30 @@
   <img width="45%" max-width="450px" alt="Inner shadow pressable & toggle sample gif" src="https://github.com/ShinMini/react-native-inner-shadow/blob/main/docs/imgs/rn-inner-shadow-gif.gif?raw=true" />
 </div>
 
-## 🔄 What's New in v2.3.1
+## 🔄 What's New in v2.4.0
 
-- **Updated dependencies**: Now using the latest versions of Skia and Reanimated for improved compatibility
-- **Performance boost**: Optimized rendering for smoother animations and less resource usage
-- **Reliable layouts**: Fixed size calculations for consistent component dimensions
-- **Better border radius**: Individual corner customization with proper shadow rendering
+- **🌟 Radial Gradient Support**: Added comprehensive radial shadow functionality with `RadialShadowView`, `RadialShadowPressable`, and `RadialShadowToggle`
+- **🏗️ Improved Architecture**: Introduced `BaseShadowComponent` for better code reuse and maintainability
+- **📁 Better Organization**: Reorganized components with dedicated `shapes/` directory for better project structure
+- **⚡ Performance Optimized**: Enhanced rendering performance with reduced repaint costs and smarter layout calculations
+- **🔧 Enhanced Type System**: Added comprehensive radial gradient types and improved type safety
 
 <details>
   <summary>More details</summary>
 
-- Added padding to prevent shadow clipping at edges
-- Created `useShadowProperties` hook for cleaner, more consistent shadow handling
-- Fixed z-index layering for proper component stacking
-- Removed unnecessary wrapper elements for better performance
-- Improved shadow rendering across all components
-- Enhanced gradient handling for smoother color transitions
+- **New Radial Gradient Types**: Added `RadialInnerShadowProps`, `RadialShadowPressableProps`, and `RadialShadowToggleProps`
+- **Utility Functions**: Implemented `getRadialDirection()` and `isRadialProps()` for radial gradient support
+- **Architecture Refactoring**: Created `BaseShadowComponent` to centralize common shadow rendering logic
+- **Project Reorganization**: Moved shape components to dedicated `src/components/shapes/` directory
+- **Performance Improvements**: Optimized rendering to minimize unnecessary re-renders and reduce computational overhead
+- **Enhanced Type System**: Extended type definitions for better type safety and developer experience
 
 </details>
 
 ## 📋 Table of Contents
 
 - [react-native-inner-shadow](#react-native-inner-shadow)
-  - [🔄 What's New in v2.2.0](#-whats-new-in-v220)
+  - [🔄 What's New in v2.4.0](#-whats-new-in-v240)
   - [📋 Table of Contents](#-table-of-contents)
   - [🚀 Installation](#-installation)
     - [Setup](#setup)
@@ -42,6 +43,7 @@
   - [🧩 Basic Components](#-basic-components)
     - [ShadowView](#shadowview)
     - [LinearShadowView](#linearshadowview)
+    - [RadialShadowView](#radialshadowview)
   - [🔄 Interactive Components](#-interactive-components)
     - [ShadowPressable](#shadowpressable)
     - [ShadowToggle](#shadowtoggle)
@@ -99,7 +101,8 @@ cd ios && pod install && cd ..
 
 - **Inset shadows**: Create depth effects not possible with React Native's standard shadows
 - **Reflected light**: Add subtle highlights for a more realistic 3D appearance
-- **Linear gradients**: Combine shadows with beautiful gradient backgrounds
+- **Linear gradients**: Combine shadows with beautiful linear gradient backgrounds
+- **Radial gradients**: Create circular gradient effects with customizable center and radius
 - **Interactive components**:
   - Pressable buttons with tactile shadow animations
   - Toggle switches with state-dependent shadow effects
@@ -149,14 +152,14 @@ export default function Example() {
 
 ### LinearShadowView
 
-For gradient backgrounds with shadows:
+For linear gradient backgrounds with shadows:
 
 ```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 import { LinearShadowView } from 'react-native-inner-shadow';
 
-export default function GradientExample() {
+export default function LinearGradientExample() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <LinearShadowView
@@ -174,8 +177,42 @@ export default function GradientExample() {
           alignItems: 'center',
         }}
       >
-        <Text style={{ color: 'white' }}>Gradient Shadow</Text>
+        <Text style={{ color: 'white' }}>Linear Gradient</Text>
       </LinearShadowView>
+    </View>
+  );
+}
+```
+
+### RadialShadowView
+
+For radial gradient backgrounds with shadows:
+
+```tsx
+import React from 'react';
+import { View, Text } from 'react-native';
+import { RadialShadowView } from 'react-native-inner-shadow';
+
+export default function RadialGradientExample() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <RadialShadowView
+        inset
+        center={{ x: 0.5, y: 0.5 }}
+        radius={0.8}
+        colors={['#4FACFE', '#00F2FE']}
+        shadowOffset={{ width: 3, height: 3 }}
+        shadowBlur={6}
+        style={{
+          width: 150,
+          height: 150,
+          borderRadius: 75,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text style={{ color: 'white', fontWeight: 'bold' }}>Radial Gradient</Text>
+      </RadialShadowView>
     </View>
   );
 }
@@ -413,6 +450,17 @@ The library provides default values in `src/constants.ts`:
 | from   | 'top' \| 'bottom' \| 'left' \| 'right' | 'top'    | Gradient start direction |
 | to     | 'top' \| 'bottom' \| 'left' \| 'right' | 'bottom' | Gradient end direction   |
 | colors | Color[]                                | -        | Array of gradient colors |
+
+</details>
+
+<details>
+<summary><b>RadialShadowView Props</b> (extends ShadowView Props)</summary>
+
+| Prop   | Type                           | Default           | Description                                    |
+| ------ | ------------------------------ | ----------------- | ---------------------------------------------- |
+| center | { x: number, y: number }       | { x: 0.5, y: 0.5 } | Center point of radial gradient (0.0 to 1.0) |
+| radius | number                         | 0.5               | Radius of radial gradient (0.0 to 1.0)        |
+| colors | Color[]                        | -                 | Array of gradient colors                       |
 
 </details>
 
