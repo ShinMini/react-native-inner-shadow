@@ -257,7 +257,21 @@ export function getLinearDirection({
   const left = vec(0, h / 2);
   const right = vec(w, h / 2);
 
-  const direction = { top, bottom, left, right };
+  const topLeft = vec(0, 0);
+  const topRight = vec(w, 0);
+  const bottomLeft = vec(0, h);
+  const bottomRight = vec(w, h);
+
+  const direction = {
+    top,
+    bottom,
+    left,
+    right,
+    topLeft,
+    topRight,
+    bottomLeft,
+    bottomRight,
+  };
   return { start: direction[from], end: direction[to] };
 }
 

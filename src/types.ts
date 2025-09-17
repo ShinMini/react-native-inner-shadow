@@ -165,10 +165,17 @@ export interface InnerShadowProps extends ViewProps, ShadowProps {
 
 /**
  * LINEAR_DIRECTION defines the four basic directions for
- * linear gradients. Additional or diagonal directions can be
- * implemented if needed (e.g., 'topLeft', 'bottomRight', etc.).
+ * linear gradients. Additional or diagonal directions
  */
-export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
+export type LINEAR_DIRECTION =
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight';
 
 /**
  * GradientLinearProps define the properties for configuring a linear gradient.
@@ -189,12 +196,22 @@ export type GradientLinearProps = {
   /**
    * The start direction of the linear gradient.
    * @defaultValue `top`
-   */
+   *
+   * @values {'top'|'bottom'|'left'|'right'|'topLeft'|'topRight'|'bottomLeft'|'bottomRight'}
+   *
+   * @remarks
+   * Supported directions type `LINEAR_DIRECTION`
+   **/
   from?: LINEAR_DIRECTION;
   /**
    * The end direction of the linear gradient.
    * @defaultValue `bottom`
-   */
+   *
+   * @values {'top'|'bottom'|'left'|'right'|'topLeft'|'topRight'|'bottomLeft'|'bottomRight'}
+   *
+   * @remarks
+   * Supported directions type `LINEAR_DIRECTION`
+   **/
   to?: LINEAR_DIRECTION;
 
   /**
