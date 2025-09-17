@@ -161,7 +161,6 @@ export interface InnerShadowProps extends ViewProps, ShadowProps {
    * @defaultValue `#FFFFFF`
    */
   backgroundColor?: string;
-  style?: ViewStyle;
 }
 
 /**

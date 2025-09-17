@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import {
   StyleSheet,
   type LayoutChangeEvent,
+  type StyleProp,
   type ViewStyle,
 } from 'react-native';
 import {
@@ -20,7 +21,7 @@ import {
 interface UseShadowPropertiesParams extends ShadowProps {
   propWidth?: number;
   propHeight?: number;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   backgroundColor?: string;
   propsOnLayout?: (e: LayoutChangeEvent) => void;
 }
@@ -50,14 +51,15 @@ export const useShadowProperties = ({
   | UseShadowPropertiesParams
   | (UseShadowPropertiesParams &
       GradientLinearProps)): ShadowPropertiesResult => {
+  // Flatten styles
+  let flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
+
   if (propWidth) {
-    style = { ...style, width: propWidth };
+    flatStyle = { ...flatStyle, width: propWidth };
   }
   if (propHeight) {
-    style = { ...style, height: propHeight };
+    style = { ...flatStyle, height: propHeight };
   }
-  // Flatten styles
-  const flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
 
   // Get background color
   const bgColor = useMemo(

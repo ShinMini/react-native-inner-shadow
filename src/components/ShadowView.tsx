@@ -17,11 +17,12 @@ import { BaseShadowComponent } from './BaseShadowComponent';
  */
 const UnifiedShadowView = memo(function UnifiedShadowView({
   children,
+  style,
   ...props
 }: InnerShadowProps | LinearInnerShadowProps | RadialInnerShadowProps) {
   // Extract base fields
   return (
-    <View {...props} style={COMMON_STYLES.canvasWrapper}>
+    <View {...props} style={[style, COMMON_STYLES.canvasWrapper]}>
       {children}
     </View>
   );
