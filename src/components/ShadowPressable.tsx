@@ -36,7 +36,10 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
   children,
   onLayout: propsOnLayout,
   ...props
-}: ShadowPressableProps | LinearShadowPressableProps) {
+}:
+  | ShadowPressableProps
+  | LinearShadowPressableProps
+  | RadialShadowPressableProps) {
   const { flatStyle, bgColor, shadowProps, layout, canRenderCanvas, onLayout } =
     useShadowProperties({
       propWidth,
@@ -172,8 +175,14 @@ export const ShadowPressable: React.FC<ShadowPressableProps> =
  * @param from - The direction of the linear gradient
  * @param to - The direction of the linear gradient
  */
-export const LinearShadowPressable: React.FC<LinearShadowPressableProps> =
-  UnifiedShadowPressable;
+export const LinearShadowPressable: React.FC<LinearShadowPressableProps> = ({
+  from = 'top',
+  to = 'bottom',
+  ...props
+}) => <UnifiedShadowPressable from={from} to={to} {...props} />;
 
-export const RadialShadowPressable: React.FC<RadialShadowPressableProps> =
-  UnifiedShadowPressable;
+export const RadialShadowPressable: React.FC<RadialShadowPressableProps> = ({
+  center = { x: 0.5, y: 0.5 },
+  radius = 0.5,
+  ...props
+}) => <UnifiedShadowPressable center={center} radius={radius} {...props} />;
