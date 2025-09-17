@@ -2,20 +2,41 @@
 
 ---
 
-## v2.4.0 (feat/radial-shadow branch)
+## v2.4.0
 
 ### 🚀 New Features
 
 - **feat: add radial shadow support** - Added comprehensive radial gradient shadow functionality
-  - Introduced `RadialInnerShadowProps` type for radial gradient configurations
+  - Introduced `RadialShadowView` series component with radial shadows effects
+  - Support `RadialInnerShadowProps` type for radial gradient configurations
   - Added `RadialShadowPressableProps` and `RadialShadowToggleProps` for interactive components
-  - Implemented `getRadialDirection()` utility function for radial gradient calculations
-  - Added `isRadialProps()` type guard for radial gradient detection
+  <!-- - Implemented `getRadialDirection()` utility function for radial gradient calculations -->
+  <!-- - Added `isRadialProps()` type guard for radial gradient detection -->
 
-- **feat: add reusable base shadow component** - Created `BaseShadowComponent` for improved code reuse
-  - Centralized common shadow rendering logic across all shadow components
-  - Reduced code duplication between ShadowView, ShadowPressable, and ShadowToggle
-  - Improved maintainability and consistency across shadow components
+- **feat: extend LinearShadow direction props(`from`, `to`)** - Added diagonal direction support
+  - Extended `from` and `to` props to support diagonal directions: 'topLeft', 'topRight', 'bottomLeft', 'bottomRight'
+
+- **fix: amend padding & margin rendering size issue** - Resolved layout sizing problems
+  - Fixed incorrect size calculations when using padding and margin styles
+  - Ensured accurate shadow rendering with various style configurations
+  - Also fixed issues with `transform` styles affecting layout size
+  - Improved component reliability and visual consistency
+
+- **fix: support use fixed width & height with style** - Enabled fixed dimension support
+  - Allowed `width` and `height` to be set either style prop or Component props(even both)
+  - Prioritized fixed style dimensions over layout measurements(e.g., width: '60%') for better performance
+  - Priority: component prop > style prop > layout measurement
+
+- **fix: support `backgroundColor` with style prop** - better performance and flexibility
+  - Enabled `backgroundColor` to be set via style prop for all shadow components
+  - Improved performance by reducing unnecessary re-renders when using style-based background colors
+  - Enhanced flexibility in styling shadow components
+  - **Note:** `backgroundColor` prop still works and has higher priority than style prop
+
+<!-- - **feat: add reusable base shadow component** - Created `BaseShadowComponent` for improved code reuse -->
+  <!-- - Centralized common shadow rendering logic across all shadow components -->
+  <!-- - Reduced code duplication between ShadowView, and LinearShadowView. -->
+  <!-- - Improved maintainability and consistency across shadow components -->
 
 ### 🏗️ Architecture Improvements
 

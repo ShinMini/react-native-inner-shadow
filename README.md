@@ -15,20 +15,23 @@
 ## 🔄 What's New in v2.4.0
 
 - **🌟 Radial Gradient Support**: Added comprehensive radial shadow functionality with `RadialShadowView`, `RadialShadowPressable`, and `RadialShadowToggle`
-- **🏗️ Improved Architecture**: Introduced `BaseShadowComponent` for better code reuse and maintainability
-- **📁 Better Organization**: Reorganized components with dedicated `shapes/` directory for better project structure
+- **🧭 Extended Linear Directions**: Added diagonal direction support for LinearShadow components (`topLeft`, `topRight`, `bottomLeft`, `bottomRight`)
+- **🎨 Enhanced Styling**: Improved `backgroundColor` support through style props with better performance and flexibility
+- **� Layout Improvements**: Fixed padding, margin, and transform style rendering issues for accurate shadow positioning
 - **⚡ Performance Optimized**: Enhanced rendering performance with reduced repaint costs and smarter layout calculations
-- **🔧 Enhanced Type System**: Added comprehensive radial gradient types and improved type safety
+- **🏗️ Better Architecture**: Reorganized components with dedicated `shapes/` directory for improved project structure
 
 <details>
   <summary>More details</summary>
 
 - **New Radial Gradient Types**: Added `RadialInnerShadowProps`, `RadialShadowPressableProps`, and `RadialShadowToggleProps`
-- **Utility Functions**: Implemented `getRadialDirection()` and `isRadialProps()` for radial gradient support
-- **Architecture Refactoring**: Created `BaseShadowComponent` to centralize common shadow rendering logic
-- **Project Reorganization**: Moved shape components to dedicated `src/components/shapes/` directory
+- **Diagonal Linear Gradients**: Extended `from` and `to` props to support diagonal directions: `'topLeft'`, `'topRight'`, `'bottomLeft'`, `'bottomRight'`
+- **Fixed Dimension Support**: Enhanced width/height handling with priority: component prop > style prop > layout measurement
+- **Styling Flexibility**: `backgroundColor` can now be set via style prop with improved performance
+- **Layout Bug Fixes**: Resolved incorrect size calculations with padding, margin, and transform styles
+- **Project Reorganization**: Moved `CornerRadii.tsx` and `ShadowLinearGradientFill.tsx` to dedicated `src/components/shapes/` directory
 - **Performance Improvements**: Optimized rendering to minimize unnecessary re-renders and reduce computational overhead
-- **Enhanced Type System**: Extended type definitions for better type safety and developer experience
+- **Enhanced Type System**: Added `RadialGradientProps` interface and improved type safety across shadow components
 
 </details>
 
@@ -101,7 +104,7 @@ cd ios && pod install && cd ..
 
 - **Inset shadows**: Create depth effects not possible with React Native's standard shadows
 - **Reflected light**: Add subtle highlights for a more realistic 3D appearance
-- **Linear gradients**: Combine shadows with beautiful linear gradient backgrounds
+- **Linear gradients**: Combine shadows with beautiful linear gradient backgrounds including diagonal directions
 - **Radial gradients**: Create circular gradient effects with customizable center and radius
 - **Interactive components**:
   - Pressable buttons with tactile shadow animations
@@ -110,10 +113,12 @@ cd ios && pod install && cd ..
   - Per-corner border radius control
   - Precise control over shadow properties
   - Animated transitions
+  - Enhanced backgroundColor support through style props
 - **Performance optimized**:
   - Smart layout management
   - Minimal re-renders
   - Efficient canvas usage
+  - Fixed dimension support with flexible width/height handling
 
 ## 🧩 Basic Components
 
@@ -445,11 +450,11 @@ The library provides default values in `src/constants.ts`:
 <details>
 <summary><b>LinearShadowView Props</b> (extends ShadowView Props)</summary>
 
-| Prop   | Type                                   | Default  | Description              |
-| ------ | -------------------------------------- | -------- | ------------------------ |
-| from   | 'top' \| 'bottom' \| 'left' \| 'right' | 'top'    | Gradient start direction |
-| to     | 'top' \| 'bottom' \| 'left' \| 'right' | 'bottom' | Gradient end direction   |
-| colors | Color[]                                | -        | Array of gradient colors |
+| Prop   | Type                                                                                   | Default  | Description              |
+| ------ | -------------------------------------------------------------------------------------- | -------- | ------------------------ |
+| from   | 'top' \| 'bottom' \| 'left' \| 'right' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' | 'top'    | Gradient start direction |
+| to     | 'top' \| 'bottom' \| 'left' \| 'right' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' | 'bottom' | Gradient end direction   |
+| colors | Color[]                                                                                | -        | Array of gradient colors |
 
 </details>
 

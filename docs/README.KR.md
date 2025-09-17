@@ -15,20 +15,23 @@
 ## 🔄 v2.4.0 업데이트 내용
 
 - **🌟 방사형 그라데이션 지원**: `RadialShadowView`, `RadialShadowPressable`, `RadialShadowToggle`을 통한 포괄적인 방사형 그림자 기능
-- **🏗️ 아키텍처 개선**: 코드 재사용성과 유지보수성 향상을 위한 `BaseShadowComponent` 도입
-- **📁 프로젝트 구조 개선**: 전용 `shapes/` 디렉토리로 컴포넌트 구조 정리
+- **🧭 대각선 방향 지원**: LinearShadow 컴포넌트에 대각선 방향 지원 (`topLeft`, `topRight`, `bottomLeft`, `bottomRight`)
+- **🎨 향상된 스타일링**: 스타일 속성을 통한 `backgroundColor` 지원 개선으로 더 나은 성능과 유연성
+- **� 레이아웃 개선**: 정확한 그림자 위치를 위한 패딩, 마진, 변형 스타일 렌더링 문제 수정
 - **⚡ 성능 최적화**: 리페인트 비용 감소와 스마트한 레이아웃 계산으로 렌더링 성능 향상
-- **🔧 타입 시스템 강화**: 포괄적인 방사형 그라데이션 타입 추가 및 타입 안전성 향상
+- **🏗️ 아키텍처 개선**: 향상된 프로젝트 구조를 위한 전용 `shapes/` 디렉토리로 컴포넌트 재구성
 
 <details>
   <summary>자세히 보기</summary>
 
 - **새로운 방사형 그라데이션 타입**: `RadialInnerShadowProps`, `RadialShadowPressableProps`, `RadialShadowToggleProps` 추가
-- **유틸리티 함수**: 방사형 그라데이션 지원을 위한 `getRadialDirection()` 및 `isRadialProps()` 구현
-- **아키텍처 리팩토링**: 공통 그림자 렌더링 로직 중앙화를 위한 `BaseShadowComponent` 생성
-- **프로젝트 구조 정리**: 전용 `src/components/shapes/` 디렉토리로 shape 컴포넌트 이동
+- **대각선 선형 그라데이션**: `from` 및 `to` 속성에 대각선 방향 지원: `'topLeft'`, `'topRight'`, `'bottomLeft'`, `'bottomRight'`
+- **고정 치수 지원**: 우선순위가 있는 향상된 너비/높이 처리: 컴포넌트 속성 > 스타일 속성 > 레이아웃 측정
+- **스타일링 유연성**: 향상된 성능으로 스타일 속성을 통해 `backgroundColor` 설정 가능
+- **레이아웃 버그 수정**: 패딩, 마진, 변형 스타일 사용 시 잘못된 크기 계산 문제 해결
+- **프로젝트 구조 정리**: `CornerRadii.tsx` 및 `ShadowLinearGradientFill.tsx`를 전용 `src/components/shapes/` 디렉토리로 이동
 - **성능 개선**: 불필요한 리렌더링 최소화 및 계산 오버헤드 감소로 렌더링 최적화
-- **타입 시스템 강화**: 더 나은 타입 안전성과 개발자 경험을 위한 타입 정의 확장
+- **타입 시스템 강화**: `RadialGradientProps` 인터페이스 추가 및 그림자 컴포넌트 전반에 걸친 타입 안전성 향상
 
 </details>
 
@@ -101,7 +104,7 @@ cd ios && pod install && cd ..
 
 - **인셋 그림자**: 리액트 네이티브에서 기본적으로 제공하지 않는 내부 그림자 효과
 - **반사광 효과**: 더 사실적인 3D 느낌을 위한 미묘한 하이라이트
-- **선형 그라데이션**: 아름다운 선형 그라데이션 배경과 그림자 조합
+- **선형 그라데이션**: 대각선 방향을 포함한 아름다운 선형 그라데이션 배경과 그림자 조합
 - **방사형 그라데이션**: 사용자 정의 가능한 중심점과 반지름을 가진 원형 그라데이션 효과
 - **인터랙티브 컴포넌트**:
   - 그림자 애니메이션이 있는 프레서블 버튼
@@ -110,10 +113,12 @@ cd ios && pod install && cd ..
   - 각 모서리별 보더 래디어스 제어
   - 그림자 속성에 대한 정밀한 조절
   - 애니메이션 전환 효과
+  - 스타일 속성을 통한 향상된 backgroundColor 지원
 - **성능 최적화**:
   - 스마트 레이아웃 관리
   - 최소한의 리렌더링
   - 효율적인 캔버스 활용
+  - 유연한 너비/높이 처리로 고정 치수 지원
 
 ## 🧩 기본 컴포넌트
 
@@ -452,8 +457,8 @@ const OptimizedShadowItem = memo(({ title, color }) => {
 
 | Prop | 타입 | 기본값 | 설명 |
 |------|------|---------|-------------|
-| from | 'top' \| 'bottom' \| 'left' \| 'right' | 'top' | 그라데이션 시작 방향 |
-| to | 'top' \| 'bottom' \| 'left' \| 'right' | 'bottom' | 그라데이션 끝 방향 |
+| from | 'top' \| 'bottom' \| 'left' \| 'right' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' | 'top' | 그라데이션 시작 방향 |
+| to | 'top' \| 'bottom' \| 'left' \| 'right' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' | 'bottom' | 그라데이션 끝 방향 |
 | colors | Color[] | - | 그라데이션 색상 배열 |
 
 </details>
