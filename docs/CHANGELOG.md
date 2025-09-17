@@ -2,6 +2,91 @@
 
 ---
 
+## v2.4.0
+
+### 🚀 New Features
+
+- **feat: add radial shadow support** - Added comprehensive radial gradient shadow functionality
+  - Introduced `RadialShadowView` series component with radial shadows effects
+  - Support `RadialInnerShadowProps` type for radial gradient configurations
+  - Added `RadialShadowPressableProps` and `RadialShadowToggleProps` for interactive components
+  <!-- - Implemented `getRadialDirection()` utility function for radial gradient calculations -->
+  <!-- - Added `isRadialProps()` type guard for radial gradient detection -->
+
+- **feat: extend LinearShadow direction props(`from`, `to`)** - Added diagonal direction support
+  - Extended `from` and `to` props to support diagonal directions: 'topLeft', 'topRight', 'bottomLeft', 'bottomRight'
+
+- **fix: amend padding & margin rendering size issue** - Resolved layout sizing problems
+  - Fixed incorrect size calculations when using padding and margin styles
+  - Ensured accurate shadow rendering with various style configurations
+  - Also fixed issues with `transform` styles affecting layout size
+  - Improved component reliability and visual consistency
+
+- **fix: support use fixed width & height with style** - Enabled fixed dimension support
+  - Allowed `width` and `height` to be set either style prop or Component props(even both)
+  - Prioritized fixed style dimensions over layout measurements(e.g., width: '60%') for better performance
+  - Priority: component prop > style prop > layout measurement
+
+- **fix: support `backgroundColor` with style prop** - better performance and flexibility
+  - Enabled `backgroundColor` to be set via style prop for all shadow components
+  - Improved performance by reducing unnecessary re-renders when using style-based background colors
+  - Enhanced flexibility in styling shadow components
+  - **Note:** `backgroundColor` prop still works and has higher priority than style prop
+
+<!-- - **feat: add reusable base shadow component** - Created `BaseShadowComponent` for improved code reuse -->
+  <!-- - Centralized common shadow rendering logic across all shadow components -->
+  <!-- - Reduced code duplication between ShadowView, and LinearShadowView. -->
+  <!-- - Improved maintainability and consistency across shadow components -->
+
+### 🏗️ Architecture Improvements
+
+- **refactor: separate shadow shapes components** - Reorganized component structure
+  - Moved `CornerRadii.tsx` to `src/components/shapes/` folder
+  - Moved `ShadowLinearGradientFill.tsx` to `src/components/shapes/` folder
+  - Improved project organization with dedicated shapes directory
+
+- **performance: optimize for reduced repaint cost** - Enhanced performance when size is fixed
+  - Optimized shadow component rendering to minimize unnecessary re-renders
+  - Improved layout calculation efficiency
+  - Reduced computational overhead in shadow property calculations
+
+### 🔧 Technical Changes
+
+- **Enhanced type system** - Extended shadow type definitions
+  - Added `RadialGradientProps` interface with center and radius properties
+  - Updated utility functions to support radial gradient detection
+  - Improved type safety across shadow components
+
+- **Updated component architecture** - Streamlined shadow component implementation
+  - All shadow components now extend from `BaseShadowComponent`(currently only ShadowView)
+  - Consistent prop handling across ShadowView, ShadowPressable, and ShadowToggle
+  - Unified shadow rendering pipeline
+
+---
+
+## v2.3.1
+
+- feat(release): update version to 2.3.1 and improve dependency compatibility
+- chore: change shadowPressable style
+- chore: disable eslint rule for inline styles in ShadowPressable component
+
+---
+
+## v2.3.0
+
+- chore: update version to 2.3.0 and adjust dependencies
+- chore: refactor ShadowPressable styles and export new hooks
+- fix: @shopify/react-native-skia version changes
+
+---
+
+## v2.2.1
+
+- chore: update version to 2.2.1 and refine peerDependencies and keywords
+- docs(chore): update README
+
+---
+
 ## v2.2.0
 
 - performance: optimize shadow component rendering

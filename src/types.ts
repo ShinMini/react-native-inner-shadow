@@ -161,15 +161,21 @@ export interface InnerShadowProps extends ViewProps, ShadowProps {
    * @defaultValue `#FFFFFF`
    */
   backgroundColor?: string;
-  style?: ViewStyle;
 }
 
 /**
  * LINEAR_DIRECTION defines the four basic directions for
- * linear gradients. Additional or diagonal directions can be
- * implemented if needed (e.g., 'topLeft', 'bottomRight', etc.).
+ * linear gradients. Additional or diagonal directions
  */
-export type LINEAR_DIRECTION = 'top' | 'bottom' | 'left' | 'right';
+export type LINEAR_DIRECTION =
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight';
 
 /**
  * GradientLinearProps define the properties for configuring a linear gradient.
@@ -190,16 +196,45 @@ export type GradientLinearProps = {
   /**
    * The start direction of the linear gradient.
    * @defaultValue `top`
-   */
+   *
+   * @values {'top'|'bottom'|'left'|'right'|'topLeft'|'topRight'|'bottomLeft'|'bottomRight'}
+   *
+   * @remarks
+   * Supported directions type `LINEAR_DIRECTION`
+   **/
   from?: LINEAR_DIRECTION;
   /**
    * The end direction of the linear gradient.
    * @defaultValue `bottom`
-   */
+   *
+   * @values {'top'|'bottom'|'left'|'right'|'topLeft'|'topRight'|'bottomLeft'|'bottomRight'}
+   *
+   * @remarks
+   * Supported directions type `LINEAR_DIRECTION`
+   **/
   to?: LINEAR_DIRECTION;
 
   /**
    * The colors of the linear gradient.
+   * @defaultValue `['#FFFFFF', '#2F2F2FBC']`
+   */
+  colors: AnimatedProp<Color[]>;
+};
+
+export type RadialGradientProps = {
+  /**
+   * The center point of the radial gradient.
+   * @defaultValue `{ x: 0.5, y: 0.5 }` (center of the component)
+   */
+  center?: { x: number; y: number };
+  /**
+   * The radius of the radial gradient.
+   * @defaultValue `0.5` (half the size of the component)
+   */
+  radius?: number;
+
+  /**
+   * The colors of the radial gradient.
    * @defaultValue `['#FFFFFF', '#2F2F2FBC']`
    */
   colors: AnimatedProp<Color[]>;
@@ -228,6 +263,10 @@ export type GradientLinearProps = {
 export interface LinearInnerShadowProps
   extends InnerShadowProps,
     GradientLinearProps {}
+
+export interface RadialInnerShadowProps
+  extends InnerShadowProps,
+    RadialGradientProps {}
 
 /**
  * ShadowPressableProps are used for pressable shadow components.
@@ -270,6 +309,9 @@ export type ShadowPressableProps = PressableProps &
 export type LinearShadowPressableProps = ShadowPressableProps &
   GradientLinearProps;
 
+export type RadialShadowPressableProps = ShadowPressableProps &
+  RadialGradientProps;
+
 /**
  * `ShadowToggleProps` provide properties for interactive toggleable shadow components.
  *
@@ -301,6 +343,8 @@ export type ShadowToggleProps = ShadowPressableProps & {
 };
 
 export type LinearShadowToggleProps = ShadowToggleProps & GradientLinearProps;
+
+export type RadialShadowToggleProps = ShadowToggleProps & RadialGradientProps;
 
 /**
  * `GetBackgroundColorProps` defines properties for getting background color.

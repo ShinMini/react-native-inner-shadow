@@ -21,9 +21,18 @@ export {
 export { useShadowProperties } from './hooks/useShadowProperties';
 export { useAnimatedOffset } from './hooks/useAnimatedOffset';
 
-export { ShadowView, LinearShadowView } from './components/ShadowView';
+export {
+  ShadowView,
+  LinearShadowView,
+  RadialShadowView,
+} from './components/ShadowView';
 export {
   ShadowPressable,
   LinearShadowPressable,
+  RadialShadowPressable,
 } from './components/ShadowPressable';
-export { ShadowToggle, LinearShadowToggle } from './components/ShadowToggle';
+export {
+  ShadowToggle,
+  LinearShadowToggle,
+  RadialShadowToggle,
+} from './components/ShadowToggle';

@@ -31,6 +31,15 @@ const COMMON_STYLES = StyleSheet.create({
   },
   canvasWrapper: {
     backgroundColor: 'transparent',
+    margin: 0,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    marginVertical: 0,
+    marginHorizontal: 0,
+
+    transform: [],
   },
   canvas: {
     position: 'absolute',

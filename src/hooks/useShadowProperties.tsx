@@ -2,12 +2,12 @@ import { useMemo, useState } from 'react';
 import {
   StyleSheet,
   type LayoutChangeEvent,
+  type StyleProp,
   type ViewStyle,
 } from 'react-native';
 import {
   getBackgroundColor,
   computeShadowProperties,
-  isLinearProps,
   numerify,
 } from '../utils';
 import type { ShadowProps, GradientLinearProps } from '../types';
@@ -21,7 +21,7 @@ import {
 interface UseShadowPropertiesParams extends ShadowProps {
   propWidth?: number;
   propHeight?: number;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   backgroundColor?: string;
   propsOnLayout?: (e: LayoutChangeEvent) => void;
 }
@@ -30,7 +30,6 @@ interface ShadowPropertiesResult {
   flatStyle?: ViewStyle;
   bgColor: string;
   shadowProps: ReturnType<typeof computeShadowProperties>;
-  isLinear: boolean;
   layout: { width: number; height: number };
   canRenderCanvas: boolean;
   onLayout: (e: LayoutChangeEvent) => void;
@@ -48,13 +47,19 @@ export const useShadowProperties = ({
   reflectedLightColor = REFLECTED_LIGHT_COLOR,
   reflectedLightBlur = REFLECTED_LIGHT_BLUR,
   propsOnLayout,
-  ...props
 }:
   | UseShadowPropertiesParams
   | (UseShadowPropertiesParams &
       GradientLinearProps)): ShadowPropertiesResult => {
   // Flatten styles
-  const flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
+  let flatStyle = useMemo(() => StyleSheet.flatten(style) || {}, [style]);
+
+  if (propWidth) {
+    flatStyle = { ...flatStyle, width: propWidth };
+  }
+  if (propHeight) {
+    style = { ...flatStyle, height: propHeight };
+  }
 
   // Get background color
   const bgColor = useMemo(
@@ -87,9 +92,6 @@ export const useShadowProperties = ({
     ]
   );
 
-  // Check if linear gradient props are provided
-  const isLinear = isLinearProps(props);
-
   // Handle layout
   const initialW = propWidth ?? numerify(flatStyle.width, 0);
   const initialH = propHeight ?? numerify(flatStyle.height, 0);
@@ -99,7 +101,10 @@ export const useShadowProperties = ({
   const onLayout = useMemo(
     () => (e: LayoutChangeEvent) => {
       propsOnLayout?.(e);
-      if (initialW && initialH) return;
+      if (initialW && initialH) {
+        // console.log('Using initialW and initialH');
+        return;
+      }
       const { width, height } = e.nativeEvent.layout;
       setLayout((prev) =>
         prev.width === width && prev.height === height
@@ -117,7 +122,6 @@ export const useShadowProperties = ({
     flatStyle,
     bgColor,
     shadowProps,
-    isLinear,
     layout,
     canRenderCanvas,
     onLayout,

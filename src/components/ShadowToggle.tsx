@@ -8,7 +8,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import type { LinearShadowToggleProps, ShadowToggleProps } from '../types';
+import type {
+  LinearShadowToggleProps,
+  RadialShadowToggleProps,
+  ShadowToggleProps,
+} from '../types';
 import {
   CANVAS_PADDING,
   COMMON_STYLES,
@@ -19,9 +23,9 @@ import {
 } from '../constants';
 
 import { isLinearProps } from '../utils';
-import LinearGradientFill from './ShadowLinearGradientFill';
+import LinearGradientFill from './shapes/ShadowLinearGradientFill';
 import { useAnimatedOffset } from '../hooks/useAnimatedOffset';
-import { CornerRadii } from './CornerRadii';
+import { CornerRadii } from './shapes/CornerRadii';
 import { useShadowProperties } from '../hooks/useShadowProperties';
 
 const PressButton = Animated.createAnimatedComponent(Pressable);
@@ -38,7 +42,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
   children,
   onLayout: propsOnLayout,
   ...props
-}: ShadowToggleProps | LinearShadowToggleProps) {
+}: ShadowToggleProps | LinearShadowToggleProps | RadialShadowToggleProps) {
   const { flatStyle, bgColor, shadowProps, layout, canRenderCanvas, onLayout } =
     useShadowProperties({
       propWidth,
@@ -89,8 +93,11 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
   );
 
   return (
-    <View onLayout={onLayout} style={COMMON_STYLES.canvasContainer}>
-      {canRenderCanvas ? (
+    <View
+      onLayout={onLayout}
+      style={[flatStyle, COMMON_STYLES.canvasContainer]}
+    >
+      {canRenderCanvas && (
         <Canvas
           style={[
             COMMON_STYLES.canvas,
@@ -106,13 +113,13 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
             style={flatStyle}
             backgroundColor={animatedBackgroundColor}
           >
-            {isLinear ? (
+            {isLinear && (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
                 width={layout.width}
                 height={layout.height}
               />
-            ) : null}
+            )}
 
             <Shadow
               dx={offset.dx}
@@ -122,7 +129,7 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
               inner={inset}
             />
 
-            {isReflectedLightEnabled ? (
+            {isReflectedLightEnabled && (
               <Shadow
                 dx={reflectedLightOffset.dx}
                 dy={reflectedLightOffset.dy}
@@ -130,10 +137,10 @@ export const UnifiedShadowToggle = memo(function ShadowToggle({
                 color={shadowProps.reflectedLightColor}
                 inner
               />
-            ) : null}
+            )}
           </CornerRadii>
         </Canvas>
-      ) : null}
+      )}
       <PressButton
         {...props}
         // eslint-disable-next-line react-native/no-inline-styles
@@ -165,8 +172,29 @@ export const ShadowToggle: React.FC<ShadowToggleProps> = UnifiedShadowToggle;
  * @param isActive - Whether the shadow is active
  * @param activeColor - The color of the shadow when active
  * @param colors - The colors of the linear gradient
- * @param from - The direction of the linear gradient
- * @param to - The direction of the linear gradient
+ * @param from - The direction of the linear gradient, default is 'top'
+ * @param to - The direction of the linear gradient, default is 'bottom'
  */
-export const LinearShadowToggle: React.FC<LinearShadowToggleProps> =
-  UnifiedShadowToggle;
+export const LinearShadowToggle: React.FC<LinearShadowToggleProps> = ({
+  from = 'top',
+  to = 'bottom',
+  ...props
+}) => <UnifiedShadowToggle from={from} to={to} {...props} />;
+
+/**
+ * RadialShadowToggle
+ * ----------------
+ * A toggle component that casts a radial gradient shadow when active.
+ * The shadow effect is created using the `@shopify/react-native-skia` library.
+ *
+ * @param isActive - Whether the shadow is active
+ * @param activeColor - The color of the shadow when active
+ * @param colors - The colors of the radial gradient
+ * @param center - The center of the radial gradient, default is { x: 0.5, y: 0.5 }
+ * @param radius - The radius of the radial gradient, default is 0.5
+ */
+export const RadialShadowToggle: React.FC<RadialShadowToggleProps> = ({
+  center = { x: 0.5, y: 0.5 },
+  radius = 0.5,
+  ...props
+}) => <UnifiedShadowToggle center={center} radius={radius} {...props} />;
