@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type {
   InnerShadowProps,
@@ -17,14 +17,21 @@ import { BaseShadowComponent } from './BaseShadowComponent';
  */
 const UnifiedShadowView = memo(function UnifiedShadowView({
   children,
-  style,
+  backgroundColor,
   ...props
 }: InnerShadowProps | LinearInnerShadowProps | RadialInnerShadowProps) {
+  const flatStyle = StyleSheet.flatten(props.style) || {};
   // Extract base fields
   return (
-    <View {...props} style={[style, COMMON_STYLES.canvasWrapper]}>
-      {children}
-    </View>
+    <BaseShadowComponent
+      {...props}
+      style={flatStyle}
+      backgroundColor={backgroundColor}
+    >
+      <View {...props} style={[flatStyle, COMMON_STYLES.canvasWrapper]}>
+        {children}
+      </View>
+    </BaseShadowComponent>
   );
 });
 
@@ -41,15 +48,8 @@ const UnifiedShadowView = memo(function UnifiedShadowView({
  * </ShadowView>
  * ```
  */
-export const ShadowView: React.FC<InnerShadowProps> = ({
-  children,
-  ...props
-}) => {
-  return (
-    <BaseShadowComponent {...props}>
-      <UnifiedShadowView {...props}>{children}</UnifiedShadowView>
-    </BaseShadowComponent>
-  );
+export const ShadowView: React.FC<InnerShadowProps> = (props) => {
+  return <UnifiedShadowView {...props} />;
 };
 
 /**
@@ -71,16 +71,11 @@ export const ShadowView: React.FC<InnerShadowProps> = ({
  * ```
  */
 export const LinearShadowView: React.FC<LinearInnerShadowProps> = ({
-  children,
   from = 'top',
   to = 'bottom',
   ...props
 }) => {
-  return (
-    <BaseShadowComponent {...props} from={from} to={to}>
-      <UnifiedShadowView {...props}>{children}</UnifiedShadowView>
-    </BaseShadowComponent>
-  );
+  return <UnifiedShadowView {...props} from={from} to={to} />;
 };
 
 /**
@@ -103,14 +98,9 @@ export const LinearShadowView: React.FC<LinearInnerShadowProps> = ({
  * ```
  */
 export const RadialShadowView: React.FC<RadialInnerShadowProps> = ({
-  children,
   center = { x: 0.5, y: 0.5 },
   radius = 0.5,
   ...props
 }) => {
-  return (
-    <BaseShadowComponent {...props} center={center} radius={radius}>
-      <UnifiedShadowView {...props}>{children}</UnifiedShadowView>
-    </BaseShadowComponent>
-  );
+  return <UnifiedShadowView {...props} center={center} radius={radius} />;
 };
