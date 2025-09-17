@@ -51,39 +51,43 @@ export function numerify<T extends null | number>(
 export function getBorderRadius(style?: GetBorderRadiusProps) {
   const borderRadius = numerify(style?.borderRadius, null);
 
-  const topStartRadius = numerify(style?.borderTopStartRadius, borderRadius);
-  const topLeftRadius = numerify(
-    style?.borderTopLeftRadius,
-    topStartRadius ?? 0
+  // topStart가 더 우선순위가 높음
+  const topLeftRadius = numerify(style?.borderTopLeftRadius, borderRadius);
+  const topStartRadius = numerify(
+    style?.borderTopStartRadius,
+    topLeftRadius ?? 0
   );
 
-  const topEndRadius = numerify(style?.borderTopEndRadius, borderRadius);
-  const topRightRadius = numerify(
-    style?.borderTopRightRadius,
-    topEndRadius ?? 0
-  );
+  // topEnd가 더 우선순위가 높음
+  const topRightRadius = numerify(style?.borderTopRightRadius, borderRadius);
+  const topEndRadius = numerify(style?.borderTopEndRadius, topRightRadius ?? 0);
 
-  const bottomEndRadius = numerify(style?.borderBottomEndRadius, borderRadius);
+  // bottomEnd가 더 우선순위가 높음
   const bottomRightRadius = numerify(
     style?.borderBottomRightRadius,
-    bottomEndRadius ?? 0
-  );
-
-  const bottomStartRadius = numerify(
-    style?.borderBottomStartRadius,
     borderRadius
   );
+  const bottomEndRadius = numerify(
+    style?.borderBottomEndRadius,
+    bottomRightRadius ?? 0
+  );
+
+  // bottomStart가 더 우선순위가 높음
   const bottomLeftRadius = numerify(
     style?.borderBottomLeftRadius,
-    bottomStartRadius ?? 0
+    borderRadius
+  );
+  const bottomStartRadius = numerify(
+    style?.borderBottomStartRadius,
+    bottomLeftRadius ?? 0
   );
 
   return {
     borderRadius,
-    topLeftRadius,
-    topRightRadius,
-    bottomRightRadius,
-    bottomLeftRadius,
+    topLeftRadius: topStartRadius,
+    topRightRadius: topEndRadius,
+    bottomRightRadius: bottomEndRadius,
+    bottomLeftRadius: bottomStartRadius,
   };
 }
 
