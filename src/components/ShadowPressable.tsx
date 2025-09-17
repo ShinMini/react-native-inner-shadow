@@ -70,8 +70,11 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
   const isLinear = isLinearProps(props);
 
   return (
-    <View onLayout={onLayout} style={COMMON_STYLES.canvasContainer}>
-      {canRenderCanvas ? (
+    <View
+      onLayout={onLayout}
+      style={[flatStyle, COMMON_STYLES.canvasContainer]}
+    >
+      {canRenderCanvas && (
         <Canvas
           style={[
             COMMON_STYLES.canvas,
@@ -87,13 +90,13 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
             style={flatStyle}
             backgroundColor={bgColor}
           >
-            {isLinear ? (
+            {isLinear && (
               <LinearGradientFill
                 {...props} // from, to, colors, etc.
                 width={layout.width}
                 height={layout.height}
               />
-            ) : null}
+            )}
 
             <Shadow
               dx={offset.dx}
@@ -103,7 +106,7 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
               inner={inset}
             />
 
-            {isReflectedLightEnabled ? (
+            {isReflectedLightEnabled && (
               <Shadow
                 dx={reflectedLightOffset.dx}
                 dy={reflectedLightOffset.dy}
@@ -111,10 +114,10 @@ export const UnifiedShadowPressable = memo(function ShadowPressable({
                 color={shadowProps.reflectedLightColor}
                 inner
               />
-            ) : null}
+            )}
           </CornerRadii>
         </Canvas>
-      ) : null}
+      )}
       <PressButton
         {...props}
         // eslint-disable-next-line react-native/no-inline-styles
@@ -172,8 +175,8 @@ export const ShadowPressable: React.FC<ShadowPressableProps> =
  * @param duration - The duration of the shadow animation
  * @param damping - The damping factor of the shadow animation
  * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
- * @param from - The direction of the linear gradient
- * @param to - The direction of the linear gradient
+ * @param from - The direction of the linear gradient, default is 'top'
+ * @param to - The direction of the linear gradient, default is 'bottom'
  */
 export const LinearShadowPressable: React.FC<LinearShadowPressableProps> = ({
   from = 'top',
@@ -181,6 +184,28 @@ export const LinearShadowPressable: React.FC<LinearShadowPressableProps> = ({
   ...props
 }) => <UnifiedShadowPressable from={from} to={to} {...props} />;
 
+/**
+ * RadialShadowPressable
+ * ----------------
+ * A pressable component that casts a radial gradient shadow when pressed.
+ * The shadow effect is created using the `@shopify/react-native-skia` library.
+ *
+ * @remarks
+ * See {@link RadialShadowPressableProps} for a radial gradient shadow.
+ *
+ * @example
+ * ```ts
+ * <RadialShadowPressable style={styles.shadowView} colors={['#f1c40f', '#e74c3c']} center={{ x: 0.5, y: 0.5 }} radius={0.5}>
+ *   <Text style={[styles.context]}>Press Me!</Text>
+ * </RadialShadowPressable>
+ * ```
+ *
+ * @param duration - The duration of the shadow animation
+ * @param damping - The damping factor of the shadow animation
+ * @param isReflectedLightEnabled - Whether the reflected light effect is enabled
+ * @param center - The center point of the radial gradient, default is { x: 0.5, y: 0.5 }
+ * @param radius - The radius of the radial gradient, default is 0.5
+ */
 export const RadialShadowPressable: React.FC<RadialShadowPressableProps> = ({
   center = { x: 0.5, y: 0.5 },
   radius = 0.5,
